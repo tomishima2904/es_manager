@@ -1,0 +1,11 @@
+FROM gradle:7.6.1-jdk-alpine
+
+WORKDIR /app
+
+# ローカルのファイルをDockerイメージにコピー
+COPY . /app
+
+RUN ls
+RUN pwd
+
+CMD ["gradle", "bootRun"]
