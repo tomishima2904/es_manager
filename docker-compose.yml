@@ -3,11 +3,8 @@ version: "3"
 services:
   #コンテナ1　MySQL
   db:
-    image: mysql:latest
     container_name: mysql
-  #コンテナ2
-  app:
-    image: #springboot?
-  #コンテナ3
-  front:
-    image: #react?
+    build:
+      context: ./docker/db/
+      dockerfile: Dockerfile
+    env_file: ./.env
