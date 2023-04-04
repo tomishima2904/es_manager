@@ -5,7 +5,7 @@ services:
   db:
     container_name: mysql
     image: mysql:8
-    env_file: ./backend/.env
+    env_file: ./.env
 
   #コンテナ2 SpringBoot
   app:
