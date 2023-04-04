@@ -20,7 +20,7 @@ services:
     # volumesを設定して、ルートディレクトリ下のファイルの変更をdockerコンテナ内でも即時反映
     working_dir: /app
     volumes:
-      - ./:/app
+      - ./backend/:/app
     # dbを立ち上げた後にappコンテナを立ち上げる
     depends_on:
       - db
