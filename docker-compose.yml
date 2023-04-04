@@ -4,16 +4,22 @@ services:
   #コンテナ1　MySQL
   db:
     container_name: mysql
-    build:
-      context: ./docker/db/
-      dockerfile: Dockerfile
+    image: mysql:8
     env_file: ./.env
+
   #コンテナ2 SpringBoot
   app:
     container_name: springboot
-    build:
-      context: .
-      dockerfile: Dockerfile_app
-    ports: 
+    image: gradle:7.6.1-jdk-alpine
+    ports:
       - 8001:8001
     tty: true
+    # volumesを設定して、ルートディレクトリ下のファイルの変更をdockerコンテナ内でも即時反映
+    working_dir: /app
+    volumes:
+      - ./:/app
+    # dbを立ち上げた後にappコンテナを立ち上げる
+    depends_on:
+      - db
+    # `compose up`の際に行うコマンド (buildしてjarファイルの実行)
+    command: sh -c "gradle build && java -jar build/libs/*SNAPSHOT.jar"
