@@ -14,8 +14,9 @@ services:
     # デフォルトはTomcatサーバーが8080に指定
     ports:
       - 8001:8001
-    # コンテナが正常終了するのを防ぐ
+    # コンテナを起動したままにする
     tty: true
+    stdin_open: true
     # volumesを設定して、ルートディレクトリ下のファイルの変更をdockerコンテナ内でも即時反映
     working_dir: /app
     volumes:
