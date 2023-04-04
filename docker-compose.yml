@@ -11,8 +11,10 @@ services:
   app:
     container_name: springboot
     image: gradle:7.6.1-jdk-alpine
+    # デフォルトはTomcatサーバーが8080に指定
     ports:
       - 8001:8001
+    # コンテナが正常終了するのを防ぐ
     tty: true
     # volumesを設定して、ルートディレクトリ下のファイルの変更をdockerコンテナ内でも即時反映
     working_dir: /app
