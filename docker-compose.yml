@@ -31,7 +31,7 @@ services:
   front:
     container_name: react
     image: node:18.15.0-alpine
-    
+    env_file: ./.env
     ports:
       - 3001:3001
     #コンテナを起動したままにする
