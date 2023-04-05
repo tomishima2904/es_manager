@@ -35,3 +35,15 @@ out/
 
 ### VS Code ###
 .vscode/
+.env
+
+# Yarn auto-generated folders
+node_modules/
+.yarn/
+
+# Yarn-generated files
+yarn-error.log
+yarn.lock
+
+# Tailwind CSS etc.
+**/dist/**

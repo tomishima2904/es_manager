@@ -3,11 +3,43 @@ version: "3"
 services:
   #コンテナ1　MySQL
   db:
-    image: mysql:latest
     container_name: mysql
-  #コンテナ2
+    image: mysql:8
+    env_file: ./.env
+
+  #コンテナ2 SpringBoot
   app:
-    image: #springboot?
-  #コンテナ3
+    container_name: springboot
+    image: gradle:7.6.1-jdk-alpine
+    # デフォルトはTomcatサーバーが8080に指定
+    ports:
+      - 8001:8001
+    # コンテナを起動したままにする
+    tty: true
+    stdin_open: true
+    # volumesを設定して、ルートディレクトリ下のファイルの変更をdockerコンテナ内でも即時反映
+    working_dir: /app
+    volumes:
+      - ./backend/:/app
+    # dbを立ち上げた後にappコンテナを立ち上げる
+    depends_on:
+      - db
+    # `compose up`の際に行うコマンド (buildしてjarファイルの実行)
+    command: sh -c "gradle build && java -jar -Dserver.port=8001 build/libs/*SNAPSHOT.jar"
+  
+  #コンテナ3 react
   front:
-    image: #react?
+    container_name: react
+    image: node:18.15.0-alpine
+    env_file: ./.env
+    ports:
+      - 3001:3001
+    #コンテナを起動したままにする
+    tty: true
+    stdin_open: true
+    #volunesを設定して、./frontendのファイル変更をdockerコンテナ内でも即時反映
+    working_dir: /front
+    volumes:
+      - ./:/front
+    # `compose up`の際に行うコマンド
+    command: sh -c "cd frontend && yarn start"
