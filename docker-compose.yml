@@ -42,4 +42,4 @@ services:
     volumes:
       - ./frontend:/front
     # `compose up`の際に行うコマンド
-    command: sh -c "pwd && yarn create react-app frontend --template typescript && yarn start"
+    command: sh -c "cd frontend && yarn start"
