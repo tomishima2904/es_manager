@@ -40,6 +40,6 @@ services:
     #volunesを設定して、./frontendのファイル変更をdockerコンテナ内でも即時反映
     working_dir: /front
     volumes:
-      - ./frontend:/front
+      - ./:/front
     # `compose up`の際に行うコマンド
     command: sh -c "cd frontend && yarn start"
