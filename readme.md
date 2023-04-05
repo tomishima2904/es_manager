@@ -33,7 +33,7 @@ $ docker compose run --rm app sh -c "cd backend && java -jar -Dserver.port=8001 
 ### パッケージのインストール
 
 ```
-$ docker compose run --rm front sh -c "cd frontend && yarn install
+$ docker compose run --rm front sh -c "cd frontend && yarn install"
 ```
 
 ### React の立ち上げ
