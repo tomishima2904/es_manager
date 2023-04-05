@@ -26,3 +26,20 @@ services:
       - db
     # `compose up`の際に行うコマンド (buildしてjarファイルの実行)
     command: sh -c "gradle build && java -jar -Dserver.port=8001 build/libs/*SNAPSHOT.jar"
+  
+  #コンテナ3 react
+  front:
+    container_name: react
+    image: node:18.15.0-alpine
+    
+    ports:
+      - 3001:3001
+    #コンテナを起動したままにする
+    tty: true
+    stdin_open: true
+    #volunesを設定して、./frontendのファイル変更をdockerコンテナ内でも即時反映
+    working_dir: /front
+    volumes:
+      - ./frontend:/front
+    # `compose up`の際に行うコマンド
+    command: sh -c "pwd && yarn create react-app frontend --template typescript && yarn start"
