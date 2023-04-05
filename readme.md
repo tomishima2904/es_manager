@@ -16,7 +16,6 @@ $ docker comopse up -d db
 
 ```
 $ docker compose up (-d) app
-
 ```
 
 ### build と サーバー立ち上げ 別々にやる場合

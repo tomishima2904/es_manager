@@ -26,7 +26,7 @@ services:
       - db
     # `compose up`の際に行うコマンド (buildしてjarファイルの実行)
     command: sh -c "gradle build && java -jar -Dserver.port=8001 build/libs/*SNAPSHOT.jar"
-  
+
   #コンテナ3 react
   front:
     container_name: react
