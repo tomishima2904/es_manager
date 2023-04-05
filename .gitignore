@@ -44,3 +44,6 @@ node_modules/
 # Yarn-generated files
 yarn-error.log
 yarn.lock
+
+# Tailwind CSS etc.
+**/dist/**
