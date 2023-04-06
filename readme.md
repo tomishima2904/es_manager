@@ -27,7 +27,7 @@ $ docker compose run --rm app sh -c "cd backend && gradle build"
 $ docker compose run --rm app sh -c "cd backend && java -jar -Dserver.port=8001 build/libs/*SNAPSHOT.jar"
 ```
 
-## React (+ Tailwind CSS)
+## Next.js (+ Tailwind CSS)
 
 ### パッケージのインストール
 
@@ -35,7 +35,7 @@ $ docker compose run --rm app sh -c "cd backend && java -jar -Dserver.port=8001 
 $ docker compose run --rm front sh -c "cd frontend && yarn install"
 ```
 
-### React の立ち上げ
+### Next.js の立ち上げ
 
 下記のコマンドを実行後、[localhost:3001](http://localhost:3001)にアクセス。
 
@@ -48,5 +48,5 @@ $ docker compose up (-d) front
 下記コマンドを実行しながら、HTML や CSS を編集すると良い。
 
 ```
-$ docker compose run front sh -c "cd frontend && yarn run dev"
+$ docker compose run front sh -c "cd frontend && yarn tail"
 ```
