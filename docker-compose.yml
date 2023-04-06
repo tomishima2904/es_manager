@@ -27,9 +27,9 @@ services:
     # `compose up`の際に行うコマンド (buildしてjarファイルの実行)
     command: sh -c "gradle build && java -jar -Dserver.port=8001 build/libs/*SNAPSHOT.jar"
 
-  #コンテナ3 react
+  #コンテナ3 Next.js
   front:
-    container_name: react
+    container_name: nextjs
     image: node:18.15.0-alpine
     env_file: ./.env
     ports:
@@ -42,4 +42,4 @@ services:
     volumes:
       - ./:/front
     # `compose up`の際に行うコマンド
-    command: sh -c "cd frontend && yarn start"
+    command: sh -c "cd frontend && yarn dev"
