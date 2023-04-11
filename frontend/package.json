@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "tail": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+    "tail": "npx tailwindcss -i ./styles/style.css -o ./styles/dist.css --watch"
   },
   "dependencies": {
     "@types/node": "18.15.11",
