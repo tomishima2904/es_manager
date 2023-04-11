@@ -15,7 +15,7 @@ $ docker comopse up -d db
 下記のコマンドを実行後、[localhost:8001](http://localhost:8001)にアクセス。1〜2 分かかる。
 
 ```
-$ docker compose up (-d) app
+$ docker compose up app
 ```
 
 ### build と サーバー立ち上げ 別々にやる場合
@@ -40,13 +40,5 @@ $ docker compose run --rm front sh -c "cd frontend && yarn install"
 下記のコマンドを実行後、[localhost:3001](http://localhost:3001)にアクセス。
 
 ```
-$ docker compose up (-d) front
-```
-
-### Tailwind CSS の編集
-
-下記コマンドを実行しながら、HTML や CSS を編集すると良い。
-
-```
-$ docker compose run --rm front sh -c "cd frontend && yarn tail"
+$ docker compose up front
 ```
