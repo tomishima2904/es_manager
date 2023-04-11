@@ -48,5 +48,5 @@ $ docker compose up (-d) front
 下記コマンドを実行しながら、HTML や CSS を編集すると良い。
 
 ```
-$ docker compose run front sh -c "cd frontend && yarn tail"
+$ docker compose run --rm front sh -c "cd frontend && yarn tail"
 ```
