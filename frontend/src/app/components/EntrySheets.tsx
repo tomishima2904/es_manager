@@ -7,37 +7,50 @@ type EntrySheet = {
 };
 
 // EntrySheetsでリスト表示する際のentrysheet1行
-const RowOfEntrySheet = (props: { entry_sheet: EntrySheet }): JSX.Element => {
-  const { entry_sheet } = props;
+const RowOfEntrySheet = (props: { entrySheet: EntrySheet }): JSX.Element => {
+  const { entrySheet } = props;
+
+  // 日時を yyyy/mm/dd hh:mm の文字列に変換
+  const year = entrySheet.deadline.getFullYear();
+  const month = ("0" + (entrySheet.deadline.getMonth() + 1)).slice(-2); // 0-padding
+  const day = ("0" + entrySheet.deadline.getDate()).slice(-2);
+  const hours = ("0" + entrySheet.deadline.getHours()).slice(-2);
+  const minutes = ("0" + entrySheet.deadline.getMinutes()).slice(-2);
+  const formattedDate = `${year}/${month}/${day} ${hours}:${minutes}`;
+
   return (
-    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-      <td>{entry_sheet.company}</td>
-      <td>{entry_sheet.job}</td>
-      <td>{entry_sheet.event}</td>
-      <td>{entry_sheet.deadline.toLocaleString()}</td>
+    <tr
+      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700
+    hover:bg-gray-50 dark:hover:bg-gray-600"
+    >
+      <td className="px-6 py-4">{entrySheet.company}</td>
+      <td className="px-6 py-4">{entrySheet.job}</td>
+      <td className="px-6 py-4">{entrySheet.event}</td>
+      <td className="px-6 py-4">{formattedDate}</td>
     </tr>
   );
 };
 
 // EntrySheetsリストを表示
 const ListOfEntrySheets = (): JSX.Element => {
-  // 以下のentry_sheetsは本来はバックエンドからのAPIを受け取る
-  const entry_sheet1: EntrySheet = {
+  // 以下のentrySheetsは本来はバックエンドからのAPIを受け取る
+  const entrySheet1: EntrySheet = {
     company: "NTTデータ",
     job: "総合職",
     event: "夏インターン",
     deadline: new Date(),
   };
-  const entry_sheet2: EntrySheet = {
+  const entrySheet2: EntrySheet = {
     company: "楽天グループ",
     job: "エンジニア",
     event: "本選考",
     deadline: new Date(),
   };
-  const entry_sheets: { [key: string]: EntrySheet } = {
-    0: entry_sheet1,
-    1: entry_sheet2,
+  const entrySheets: { [key: string]: EntrySheet } = {
+    0: entrySheet1,
+    1: entrySheet2,
   };
+
   return (
     <div className="relative overflow-x-auto">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -58,8 +71,8 @@ const ListOfEntrySheets = (): JSX.Element => {
           </tr>
         </thead>
         <tbody>
-          {Object.keys(entry_sheets).map((es_id) => (
-            <RowOfEntrySheet key={es_id} entry_sheet={entry_sheets[es_id]} />
+          {Object.keys(entrySheets).map((esId) => (
+            <RowOfEntrySheet key={esId} entrySheet={entrySheets[esId]} />
           ))}
         </tbody>
       </table>
