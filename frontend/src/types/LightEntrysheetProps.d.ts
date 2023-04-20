@@ -5,3 +5,7 @@ export type LightEntrysheetProps = {
   event: string;
   deadline: Date;
 };
+
+export type EntrysheetsProps = {
+  [key: string]: LightEntrysheetProps;
+};
