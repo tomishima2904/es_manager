@@ -1,13 +1,9 @@
-// 型エイリアスで `Entrysheet型` を定義
-type EntrySheet = {
-  company: string;
-  job: string;
-  event: string;
-  deadline: Date;
-};
+import { LightEntrysheetProps } from "@/types/LightEntrysheetProps";
 
 // EntrySheetsでリスト表示する際のentrysheet1行
-const RowOfEntrySheet = (props: { entrySheet: EntrySheet }): JSX.Element => {
+const RowOfEntrysheet = (props: {
+  entrySheet: LightEntrysheetProps;
+}): JSX.Element => {
   const { entrySheet } = props;
 
   // 日時を yyyy/mm/dd hh:mm の文字列に変換
@@ -32,21 +28,21 @@ const RowOfEntrySheet = (props: { entrySheet: EntrySheet }): JSX.Element => {
 };
 
 // EntrySheetsリストを表示
-const ListOfEntrySheets = (): JSX.Element => {
+const ListOfEntrysheets = (): JSX.Element => {
   // 以下のentrySheetsは本来はバックエンドからのAPIを受け取る
-  const entrySheet1: EntrySheet = {
+  const entrySheet1: LightEntrysheetProps = {
     company: "NTTデータ",
     job: "総合職",
     event: "夏インターン",
     deadline: new Date(),
   };
-  const entrySheet2: EntrySheet = {
+  const entrySheet2: LightEntrysheetProps = {
     company: "楽天グループ",
     job: "エンジニア",
     event: "本選考",
     deadline: new Date(),
   };
-  const entrySheets: { [key: string]: EntrySheet } = {
+  const entrySheets: { [key: string]: LightEntrysheetProps } = {
     0: entrySheet1,
     1: entrySheet2,
   };
@@ -72,7 +68,7 @@ const ListOfEntrySheets = (): JSX.Element => {
         </thead>
         <tbody>
           {Object.keys(entrySheets).map((esId) => (
-            <RowOfEntrySheet key={esId} entrySheet={entrySheets[esId]} />
+            <RowOfEntrysheet key={esId} entrySheet={entrySheets[esId]} />
           ))}
         </tbody>
       </table>
@@ -80,4 +76,4 @@ const ListOfEntrySheets = (): JSX.Element => {
   );
 };
 
-export default ListOfEntrySheets;
+export default ListOfEntrysheets;
