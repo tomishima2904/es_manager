@@ -1,51 +1,43 @@
-import { LightEntrysheetProps } from "@/types/LightEntrysheetProps";
+import {
+  LightEntrysheetProps,
+  EntrysheetsProps,
+} from "@/types/LightEntrysheetProps";
 
 // EntrySheetsでリスト表示する際のentrysheet1行
 const RowOfEntrysheet = (props: {
-  entrySheet: LightEntrysheetProps;
+  entrysheet: LightEntrysheetProps;
 }): JSX.Element => {
-  const { entrySheet } = props;
-
+  const { entrysheet } = props;
   // 日時を yyyy/mm/dd hh:mm の文字列に変換
-  const year = entrySheet.deadline.getFullYear();
-  const month = ("0" + (entrySheet.deadline.getMonth() + 1)).slice(-2); // 0-padding
-  const day = ("0" + entrySheet.deadline.getDate()).slice(-2);
-  const hours = ("0" + entrySheet.deadline.getHours()).slice(-2);
-  const minutes = ("0" + entrySheet.deadline.getMinutes()).slice(-2);
-  const formattedDate = `${year}/${month}/${day} ${hours}:${minutes}`;
+  const deadline = new Date(entrysheet.deadline);
+  const formattedDate = `${deadline.getFullYear()}/${(deadline.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}/${deadline
+    .getDate()
+    .toString()
+    .padStart(2, "0")} ${deadline
+    .getHours()
+    .toString()
+    .padStart(2, "0")}:${deadline.getMinutes().toString().padStart(2, "0")}`;
 
   return (
     <tr
       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700
     hover:bg-gray-50 dark:hover:bg-gray-600"
     >
-      <td className="px-6 py-4">{entrySheet.company}</td>
-      <td className="px-6 py-4">{entrySheet.job}</td>
-      <td className="px-6 py-4">{entrySheet.event}</td>
+      <td className="px-6 py-4">{entrysheet.company}</td>
+      <td className="px-6 py-4">{entrysheet.job}</td>
+      <td className="px-6 py-4">{entrysheet.event}</td>
       <td className="px-6 py-4">{formattedDate}</td>
     </tr>
   );
 };
 
 // EntrySheetsリストを表示
-const ListOfEntrysheets = (): JSX.Element => {
-  // 以下のentrySheetsは本来はバックエンドからのAPIを受け取る
-  const entrySheet1: LightEntrysheetProps = {
-    company: "NTTデータ",
-    job: "総合職",
-    event: "夏インターン",
-    deadline: new Date(),
-  };
-  const entrySheet2: LightEntrysheetProps = {
-    company: "楽天グループ",
-    job: "エンジニア",
-    event: "本選考",
-    deadline: new Date(),
-  };
-  const entrySheets: { [key: string]: LightEntrysheetProps } = {
-    0: entrySheet1,
-    1: entrySheet2,
-  };
+const ListOfEntrysheets = (props: {
+  entrysheets: EntrysheetsProps;
+}): JSX.Element => {
+  const { entrysheets } = props;
 
   return (
     <div className="relative overflow-x-auto">
@@ -67,8 +59,8 @@ const ListOfEntrysheets = (): JSX.Element => {
           </tr>
         </thead>
         <tbody>
-          {Object.keys(entrySheets).map((esId) => (
-            <RowOfEntrysheet key={esId} entrySheet={entrySheets[esId]} />
+          {Object.keys(entrysheets).map((esId) => (
+            <RowOfEntrysheet key={esId} entrysheet={entrysheets[esId]} />
           ))}
         </tbody>
       </table>
