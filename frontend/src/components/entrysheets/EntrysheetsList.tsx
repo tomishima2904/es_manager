@@ -18,7 +18,7 @@ const Header = () => {
 };
 
 // EntrySheetsでリスト表示する際のentrysheet1行
-const RowOfEntrysheet = (props: {
+const EntrysheetItem = (props: {
   entrysheet: LightEntrysheetProps;
 }): JSX.Element => {
   const { entrysheet } = props;
@@ -48,21 +48,21 @@ const RowOfEntrysheet = (props: {
 };
 
 // EntrySheetsリストのコンポーネント
-const ListOfEntrysheets = (props: {
+const EntrysheetsList = (props: {
   entrysheets: EntrysheetsProps;
 }): JSX.Element => {
   const { entrysheets } = props;
 
   return (
-    <div className="rounded-lg bg-white">
+    <main className="flex-1 rounded-lg bg-white">
       <Header />
       <ul className="list-none">
         {Object.keys(entrysheets).map((esId) => (
-          <RowOfEntrysheet key={esId} entrysheet={entrysheets[esId]} />
+          <EntrysheetItem key={esId} entrysheet={entrysheets[esId]} />
         ))}
       </ul>
-    </div>
+    </main>
   );
 };
 
-export default ListOfEntrysheets;
+export default EntrysheetsList;
