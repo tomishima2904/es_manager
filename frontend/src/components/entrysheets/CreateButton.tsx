@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
+import { IconContext } from "react-icons";
+import { AiOutlineFileAdd } from "react-icons/ai"; // 画像icon
 
 const createNewEntrysheet = async () => {
   const ENDPOINT: string = "/api/user/entrysheets";
@@ -25,11 +27,16 @@ const createNewEntrysheet = async () => {
 
 export default function CreateButton() {
   return (
-    <button
-      className="rounded-full drop-shadow-2xl border"
-      onClick={createNewEntrysheet}
-    >
-      新規作成
-    </button>
+    <IconContext.Provider value={{ className: "w-6 h-6" }}>
+      <button
+        className="flex flex-shrink-0 justify-center items-center
+        rounded-lg border shadow-2xl drop-shadow-md
+        text-lg px-4 py-2 h-10"
+        onClick={createNewEntrysheet}
+      >
+        <AiOutlineFileAdd className="mr-2" />
+        <span>作成</span>
+      </button>
+    </IconContext.Provider>
   );
 }
