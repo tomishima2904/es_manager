@@ -11,7 +11,7 @@ export default (
 ) => {
   if (req.method === "POST") {
     const entrysheet: NewEntrysheetProps = {
-      esId: "0",
+      esId: "2",
     };
     res.status(200).json(entrysheet);
   } else {
