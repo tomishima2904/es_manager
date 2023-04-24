@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
 import EntrysheetsList from "@/components/entrysheets/EntrysheetsList";
 import Sidebar from "@/components/entrysheets/Sidebar";
-import type { EntrysheetsProps } from "@/types/LightEntrysheetProps";
 
 export default function Entrysheets() {
+  const router = useRouter();
   // TODO: axiosによるfetch操作をカスタムフック化したい
   const [entrysheets, setEntrysheets] = useState({});
   useEffect(() => {
@@ -18,7 +19,7 @@ export default function Entrysheets() {
 
   return (
     <div className="flex p-4">
-      <Sidebar />
+      <Sidebar router={router} />
       <EntrysheetsList entrysheets={entrysheets} />
     </div>
   );
