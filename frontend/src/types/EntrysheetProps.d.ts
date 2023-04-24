@@ -9,3 +9,7 @@ export type LightEntrysheetProps = {
 export type EntrysheetsProps = {
   [key: string]: LightEntrysheetProps;
 };
+
+export type NewEntrysheetProps = {
+  esId: string;
+};

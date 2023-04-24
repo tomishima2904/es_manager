@@ -1,7 +1,7 @@
 import {
   LightEntrysheetProps,
   EntrysheetsProps,
-} from "@/types/LightEntrysheetProps";
+} from "@/types/EntrysheetProps";
 
 // ヘッダー行
 const ListHeader = () => {
