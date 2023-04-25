@@ -1,8 +1,9 @@
 import { GetServerSidePropsContext } from "next";
+import EditingEntrysheet from "@/components/editing/EditingEntrysheet";
 
 const Entrysheet = ({ query }: GetServerSidePropsContext) => {
   console.log(query.esId);
-  return <div className="p-1">This is a dummy entrysheet</div>;
+  return <EditingEntrysheet />;
 };
 
 // 動的なパスの値を取得
