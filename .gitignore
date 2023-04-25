@@ -46,4 +46,4 @@ yarn-error.log
 yarn.lock
 
 # Tailwind CSS etc.
-**/dist/**
+**dist**
