@@ -3,7 +3,7 @@ import type { NextRouter } from "next/router";
 import { IconContext } from "react-icons";
 import { AiOutlineFileAdd } from "react-icons/ai"; // 画像icon
 
-export default function CreateButton(props: { router: NextRouter }) {
+export default function CreateEntrysheetButton(props: { router: NextRouter }) {
   // POSTメソッドで新しいエントリーシートを作成
   const createNewEntrysheet = async () => {
     const ENDPOINT: string = "/api/user/entrysheets";
