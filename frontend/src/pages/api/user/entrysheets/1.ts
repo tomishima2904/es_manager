@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
 
-export default (
+const handler = (
   req: NextApiRequest,
   res: NextApiResponse<RichEntrysheetProps>
 ) => {
@@ -14,7 +14,7 @@ export default (
     questions: {
       "0": {
         question: "志望動機は?",
-        max_chars: 400,
+        maxChars: 400,
         answers: {
           "0": "とても楽しいそうだからです。",
           "1": "アットホームだ",
@@ -22,7 +22,7 @@ export default (
       },
       "1": {
         question: "強みは?",
-        max_chars: 100,
+        maxChars: 100,
         answers: {
           "0": "元気",
         },
@@ -31,3 +31,5 @@ export default (
   };
   res.status(200).json(entrysheet);
 };
+
+export default handler;

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
 
-export default (
+const handler = (
   req: NextApiRequest,
   res: NextApiResponse<RichEntrysheetProps>
 ) => {
@@ -12,8 +12,10 @@ export default (
     event: "",
     deadline: "",
     questions: {
-      "0": { question: "hello wordld", max_chars: 100, answers: { "0": "" } },
+      "0": { question: "hello wordld", maxChars: 100, answers: { "0": "" } },
     },
   };
   res.status(200).json(entrysheet);
 };
+
+export default handler;

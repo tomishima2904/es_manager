@@ -18,7 +18,7 @@ const AddQandAButton = (props: {
     const newQuestionProps: QuestionsProps = {
       [newKey]: {
         question: "hello world",
-        max_chars: 100,
+        maxChars: 100,
         answers: { "0": "" },
       },
     };

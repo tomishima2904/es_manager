@@ -2,7 +2,7 @@ import QuestionForm from "./QuestionForm";
 import type { QandAProps } from "@/types/EntrysheetProps";
 
 const QandA = (props: { qAndAProps: QandAProps }) => {
-  const { question, max_chars, answers } = props.qAndAProps;
+  const { question, maxChars, answers } = props.qAndAProps;
 
   return (
     <form>

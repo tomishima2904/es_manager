@@ -16,7 +16,7 @@ export type NewEntrysheetProps = {
 
 export type QandAProps = {
   question: string;
-  max_chars: number;
+  maxChars: number;
   answers: { [aId: string]: string };
 };
 

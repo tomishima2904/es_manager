@@ -5,7 +5,7 @@ import type {
   NewEntrysheetProps,
 } from "@/types/EntrysheetProps";
 
-export default (
+const handler = (
   req: NextApiRequest,
   res: NextApiResponse<EntrysheetsProps | NewEntrysheetProps>
 ) => {
@@ -34,3 +34,5 @@ export default (
     res.status(200).json(entrysheets);
   }
 };
+
+export default handler;
