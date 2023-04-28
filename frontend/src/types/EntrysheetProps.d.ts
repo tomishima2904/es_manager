@@ -14,10 +14,14 @@ export type NewEntrysheetProps = {
   esId: string;
 };
 
-export type QuestionProps = {
+export type QandAProps = {
   question: string;
   max_chars: number;
   answers: { [aId: string]: string };
+};
+
+export type QuestionsProps = {
+  [qId: string]: QandAProps;
 };
 
 export type RichEntrysheetProps = {
@@ -26,5 +30,5 @@ export type RichEntrysheetProps = {
   job: string;
   event: string;
   deadline: string;
-  questions: { [qId: string]: QuestionProps };
+  questions: QuestionsProps;
 };

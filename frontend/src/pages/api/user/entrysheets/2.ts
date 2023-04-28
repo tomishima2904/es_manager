@@ -11,7 +11,9 @@ export default (
     job: "",
     event: "",
     deadline: "",
-    questions: {},
+    questions: {
+      "0": { question: "hello wordld", max_chars: 100, answers: { "0": "" } },
+    },
   };
   res.status(200).json(entrysheet);
 };
