@@ -1,4 +1,4 @@
-import CreateEntrysheetButton from "./CreateEentrysheetButton";
+import CreateEntrysheetButton from "./AddEentrysheetButton";
 import type { NextRouter } from "next/router";
 
 const Sidebar = (props: { router: NextRouter }): JSX.Element => {

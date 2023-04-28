@@ -31,7 +31,7 @@ export default function CreateEntrysheetButton(props: { router: NextRouter }) {
     <IconContext.Provider value={{ className: "w-6 h-6" }}>
       <button
         className="flex flex-shrink-0 justify-center items-center
-        rounded-lg border shadow-2xl drop-shadow-md
+        rounded-lg border shadow-2xl drop-shadow-md bg-white
         hover:bg-gray-100 transition duration-300 ease-in-out
         text-lg px-4 py-2 h-10"
         onClick={createNewEntrysheet}
