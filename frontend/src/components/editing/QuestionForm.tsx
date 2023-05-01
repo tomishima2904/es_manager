@@ -1,19 +1,8 @@
 import { useState } from "react";
 import validateInput from "@/utils/validateInputError";
+import EditButton from "./EditButton";
 
 const limitChars = 100;
-
-const EditButton = (props: { onClick: () => void }): JSX.Element => {
-  return (
-    <button
-      onClick={props.onClick}
-      type="button"
-      className="bg-white rounded-md"
-    >
-      Edit
-    </button>
-  );
-};
 
 // 編集中でなければテキストを表示
 const TextDisplay = (props: { text: string }): JSX.Element => {
@@ -65,7 +54,7 @@ const QuestionForm = (props: { question: string }): JSX.Element => {
       ) : (
         <TextDisplay text={text} />
       )}
-      <EditButton onClick={handleEditButtonClick} />
+      <EditButton isEditing={isEditing} onClick={handleEditButtonClick} />
     </div>
   );
 };
