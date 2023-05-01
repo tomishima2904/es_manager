@@ -14,10 +14,14 @@ export type NewEntrysheetProps = {
   esId: string;
 };
 
+export type AnswersProps = {
+  [aId: string]: string;
+};
+
 export type QandAProps = {
   question: string;
   maxChars: number;
-  answers: { [aId: string]: string };
+  answers: AnswersProps;
 };
 
 export type QuestionsProps = {
