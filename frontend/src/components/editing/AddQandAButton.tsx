@@ -26,7 +26,7 @@ const AddQandAButton = (props: {
   };
 
   return (
-    <div className="mx-auto">
+    <div className="mx-auto mt-4">
       <IconContext.Provider value={{ className: "w-6 h-6" }}>
         <button
           className="flex flex-shrink-0 justify-center items-center

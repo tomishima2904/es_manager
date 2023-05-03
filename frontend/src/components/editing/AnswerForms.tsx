@@ -30,20 +30,8 @@ const AnswerForms = (props: {
   answers: { [aId: string]: string };
 }): JSX.Element => {
   const { answers } = props;
-  //   const [_answers, setAnswers] = useState<AnswersProps | null>(null);
-
-  //   // レンダリング時にprops.answersが存在する場合は、初期化を実行する
-  //   useEffect(() => {
-  //     if (props.answers) {
-  //       setAnswers({ ...props.answers });
-  //     }
-  //   }, [props.answers]);
-
-  //   if (!_answers) {
-  //     return <div>Loading...</div>;
-  //   }
   return (
-    <div className="mt-2">
+    <div className="mt-1">
       {Object.keys(answers).map((aId) => (
         <AnswerForm key={aId} answer={answers[aId]} />
       ))}
