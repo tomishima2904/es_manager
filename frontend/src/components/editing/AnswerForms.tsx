@@ -35,8 +35,7 @@ const AnswerForms = (props: {
   maxChars: number;
   answers: { [aId: string]: string };
 }): JSX.Element => {
-  const { answers } = props;
-  const [_answers, setAnswers] = useState<AnswersProps | null>(null);
+  const [answers, setAnswers] = useState<AnswersProps | null>(null);
 
   // レンダリング時にprops.answersが存在する場合は、初期化を実行する
   useEffect(() => {
@@ -45,7 +44,7 @@ const AnswerForms = (props: {
     }
   }, [props.answers]);
 
-  if (!_answers) {
+  if (!answers) {
     return <div>Loading...</div>;
   }
 
@@ -55,10 +54,10 @@ const AnswerForms = (props: {
 
   return (
     <div className="mt-1 flex flex-col">
-      {Object.keys(_answers).map((aId) => (
-        <AnswerForm key={aId} answer={_answers[aId]} />
+      {Object.keys(answers).map((aId) => (
+        <AnswerForm key={aId} answer={answers[aId]} />
       ))}
-      <AddAnswerButton answers={_answers} setNewProps={handleAddAnswer} />
+      <AddAnswerButton answers={answers} setNewProps={handleAddAnswer} />
     </div>
   );
 };

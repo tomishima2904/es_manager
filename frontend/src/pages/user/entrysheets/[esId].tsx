@@ -27,7 +27,7 @@ const Entrysheet = ({ query }: GetServerSidePropsContext) => {
       setEntrysheet((prevEntrysheet) => ({ ...prevEntrysheet, ...result }));
     };
     getEntrysheets();
-  }, []);
+  }, [query.esId]);
 
   return <EditingEntrysheet entrysheet={entrysheet} />;
 };
