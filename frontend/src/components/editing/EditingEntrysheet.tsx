@@ -31,12 +31,12 @@ const EditingEntrysheet = (props: {
   };
 
   return (
-    <>
+    <div className="p-4 flex flex-col ">
       {Object.keys(qAndAs).map((qId) => (
         <QandA key={qId} qAndAProps={qAndAs[qId]} />
       ))}
       <AddQandAButton questions={qAndAs} handleAddQandAs={handleAddQandAs} />
-    </>
+    </div>
   );
 };
 

@@ -6,7 +6,7 @@ const QandA = (props: { qAndAProps: QandAProps }) => {
   const { question, maxChars, answers } = props.qAndAProps;
 
   return (
-    <form>
+    <form className="p-4 flex-grow">
       <QuestionForm question={question} />
       <AnswerForms answers={answers} maxChars={maxChars} />
     </form>

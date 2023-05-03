@@ -60,7 +60,7 @@ const AnswerForms = (props: {
     return <div>Loading...</div>;
   }
   return (
-    <div>
+    <div className="mt-2">
       {Object.keys(_answers).map((aId) => (
         <AnswerForm key={aId} answer={_answers[aId]} />
       ))}

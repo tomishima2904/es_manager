@@ -26,18 +26,20 @@ const AddQandAButton = (props: {
   };
 
   return (
-    <IconContext.Provider value={{ className: "w-6 h-6" }}>
-      <button
-        className="flex flex-shrink-0 justify-center items-center
+    <div className="mx-auto">
+      <IconContext.Provider value={{ className: "w-6 h-6" }}>
+        <button
+          className="flex flex-shrink-0 justify-center items-center
         rounded-lg border shadow-2xl drop-shadow-md bg-white
         hover:bg-gray-100 transition duration-300 ease-in-out
         text-lg px-4 py-2 h-10"
-        onClick={onAddQandAsBtnClick}
-      >
-        <GrAdd className="mr-2" />
-        <span>新規質問追加</span>
-      </button>
-    </IconContext.Provider>
+          onClick={onAddQandAsBtnClick}
+        >
+          <GrAdd className="mr-2" />
+          <span>新規質問追加</span>
+        </button>
+      </IconContext.Provider>
+    </div>
   );
 };
 
