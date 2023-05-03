@@ -1,27 +1,13 @@
 import { useState } from "react";
 import validateInput from "@/utils/validateInputError";
 import EditButton from "./EditButton";
+import FormWithError from "./FormWithError";
 
 const limitChars = 100;
 
 // 編集中でなければテキストを表示
 const TextDisplay = (props: { text: string }): JSX.Element => {
   return <p>{props.text}</p>;
-};
-
-// 編集中ならinputタグに置き換える
-const EditingDisplay = (props: {
-  text: string;
-  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  error: string;
-}): JSX.Element => {
-  const { text, handleChange, error } = props;
-  return (
-    <div className="flex items-center">
-      <textarea className="my-form" value={text} onChange={handleChange} />
-      {error && <p>{error}</p>}
-    </div>
-  );
 };
 
 const QuestionForm = (props: { question: string }): JSX.Element => {
@@ -41,7 +27,13 @@ const QuestionForm = (props: { question: string }): JSX.Element => {
   return (
     <div>
       {isEditing ? (
-        <EditingDisplay text={text} handleChange={handleChange} error={error} />
+        <div className="flex items-center">
+          <FormWithError
+            text={text}
+            handleChange={handleChange}
+            error={error}
+          />
+        </div>
       ) : (
         <TextDisplay text={text} />
       )}
