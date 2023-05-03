@@ -35,7 +35,7 @@ const EditingEntrysheet = (props: {
       {Object.keys(qAndAs).map((qId) => (
         <QandA key={qId} qAndAProps={qAndAs[qId]} />
       ))}
-      <AddQandAButton questions={qAndAs} handleAddQandAs={handleAddQandAs} />
+      <AddQandAButton questions={qAndAs} setNewProps={handleAddQandAs} />
     </div>
   );
 };

@@ -5,9 +5,9 @@ import { GrAdd } from "react-icons/gr";
 
 const AddQandAButton = (props: {
   questions: QuestionsProps;
-  handleAddQandAs: (newQuestions: QuestionsProps) => void;
+  setNewProps: (newQuestions: QuestionsProps) => void;
 }) => {
-  const { questions, handleAddQandAs } = props;
+  const { questions, setNewProps } = props;
 
   // keyの最大値に+1して新たなキーを作成して、新規質問を追加
   const onAddQandAsBtnClick = () => {
@@ -17,12 +17,12 @@ const AddQandAButton = (props: {
     const newKey: string = (maxKey + 1).toString();
     const newQuestionProps: QuestionsProps = {
       [newKey]: {
-        question: "hello world",
+        question: "",
         maxChars: 100,
         answers: { "0": "" },
       },
     };
-    handleAddQandAs(newQuestionProps);
+    setNewProps(newQuestionProps);
   };
 
   return (
