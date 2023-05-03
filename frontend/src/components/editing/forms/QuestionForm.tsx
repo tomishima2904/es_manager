@@ -1,6 +1,6 @@
 import { useState } from "react";
 import validateInput from "@/utils/validateInputError";
-import EditButton from "./EditButton";
+import EditButton from "../buttons/EditButton";
 import FormWithError from "./FormWithError";
 
 const limitChars = 100;

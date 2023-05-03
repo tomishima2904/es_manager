@@ -4,7 +4,7 @@ import type {
   QuestionsProps,
 } from "@/types/EntrysheetProps";
 import QandA from "./QandA";
-import AddQandAButton from "./AddQandAButton";
+import AddQandAButton from "./buttons/AddQandAButton";
 
 const EditingEntrysheet = (props: {
   entrysheet: RichEntrysheetProps;

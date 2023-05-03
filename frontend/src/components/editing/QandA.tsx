@@ -1,5 +1,5 @@
-import QuestionForm from "./QuestionForm";
-import AnswerForms from "./AnswerForms";
+import QuestionForm from "./forms/QuestionForm";
+import AnswerForms from "./forms/AnswerForms";
 import type { QandAProps } from "@/types/EntrysheetProps";
 
 const QandA = (props: { qAndAProps: QandAProps }) => {

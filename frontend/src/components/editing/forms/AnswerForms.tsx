@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import validateInput from "@/utils/validateInputError";
 import FormWithError from "./FormWithError";
-import AddAnswerButton from "./AddAnswerButton";
+import AddAnswerButton from "../buttons/AddAnswerButton";
 import type { AnswersProps } from "@/types/EntrysheetProps";
 
 const limitChars = 2000;
