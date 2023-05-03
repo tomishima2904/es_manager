@@ -7,20 +7,15 @@ const limitChars = 2000;
 // 編集中ならinputタグに置き換える
 const EditingDisplay = (props: {
   text: string;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   error: string;
 }): JSX.Element => {
   const { text, handleChange, error } = props;
   return (
-    <>
-      <input
-        type="text"
-        className="my-form"
-        value={text}
-        onChange={handleChange}
-      />
+    <div className="p-1">
+      <textarea className="my-form" value={text} onChange={handleChange} />
       {error && <p>{error}</p>}
-    </>
+    </div>
   );
 };
 
@@ -32,7 +27,7 @@ const AnswerForm = (props: { answer: string }): JSX.Element => {
   const [error, setError] = useState("");
 
   // フォームの変更を検知
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = e.target.value;
     setText(inputValue);
     validateInput(inputValue, limitChars, setError);
