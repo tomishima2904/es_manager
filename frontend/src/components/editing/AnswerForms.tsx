@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import validateInput from "@/utils/validateInputError";
 import FormWithError from "./FormWithError";
+import AddAnswerButton from "./AddAnswerButton";
 import type { AnswersProps } from "@/types/EntrysheetProps";
 
 const limitChars = 2000;
@@ -20,7 +21,12 @@ const AnswerForm = (props: { answer: string }): JSX.Element => {
   };
   return (
     <div className="pt-1">
-      <FormWithError text={text} handleChange={handleChange} error={error} />
+      <FormWithError
+        text={text}
+        handleChange={handleChange}
+        error={error}
+        placeholder={"解答を入力"}
+      />
     </div>
   );
 };
@@ -30,11 +36,29 @@ const AnswerForms = (props: {
   answers: { [aId: string]: string };
 }): JSX.Element => {
   const { answers } = props;
+  const [_answers, setAnswers] = useState<AnswersProps | null>(null);
+
+  // レンダリング時にprops.answersが存在する場合は、初期化を実行する
+  useEffect(() => {
+    if (props.answers) {
+      setAnswers({ ...props.answers });
+    }
+  }, [props.answers]);
+
+  if (!_answers) {
+    return <div>Loading...</div>;
+  }
+
+  const handleAddAnswer = (newAnswerProps: AnswersProps) => {
+    setAnswers((prevAnswers) => ({ ...prevAnswers, ...newAnswerProps }));
+  };
+
   return (
-    <div className="mt-1">
-      {Object.keys(answers).map((aId) => (
-        <AnswerForm key={aId} answer={answers[aId]} />
+    <div className="mt-1 flex flex-col">
+      {Object.keys(_answers).map((aId) => (
+        <AnswerForm key={aId} answer={_answers[aId]} />
       ))}
+      <AddAnswerButton answers={_answers} setNewProps={handleAddAnswer} />
     </div>
   );
 };
