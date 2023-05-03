@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import CompanyForm from "../forms/CompanyForm";
+import MetaForm from "../forms/MetaForm";
 
 const Header = (props: {
   company: string;
@@ -21,8 +22,9 @@ const Header = (props: {
     return <div>Loading...</div>;
   }
   return (
-    <header className="border-b border-gray-300">
+    <header className="flex flex-col border-b border-gray-300">
       <CompanyForm company={company} />
+      <MetaForm job={job} event={event} />
     </header>
   );
 };
