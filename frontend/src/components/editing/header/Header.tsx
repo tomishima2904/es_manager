@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import CompanyForm from "../forms/CompanyForm";
 
 const Header = (props: {
   company: string;
@@ -10,18 +11,20 @@ const Header = (props: {
   const [event, setEvent] = useState<string | null>(null);
   // レンダリング時にprops.entrysheetが存在する場合は、初期化を実行する
   useEffect(() => {
-    if (props.company && props.job && props.event) {
-      setCompany(props.company);
-      setJob(props.job);
-      setEvent(props.event);
-    }
+    if (props.company) setCompany(props.company);
+    if (props.job) setJob(props.job);
+    if (props.event) setEvent(props.event);
   }, [props]);
 
-  // 適当にeventがnullのとき (eventじゃなくてもいい)
-  if (!event) {
+  // companyがnullの場合
+  if (!company) {
     return <div>Loading...</div>;
   }
-  return <header className="border-b border-gray-300">Hello world</header>;
+  return (
+    <header className="border-b border-gray-300">
+      <CompanyForm company={company} />
+    </header>
+  );
 };
 
 export default Header;
