@@ -3,6 +3,7 @@ import type {
   RichEntrysheetProps,
   QuestionsProps,
 } from "@/types/EntrysheetProps";
+import Header from "./header/Header";
 import QandA from "./QandA";
 import AddQandAButton from "./buttons/AddQandAButton";
 
@@ -32,6 +33,7 @@ const EditingEntrysheet = (props: {
 
   return (
     <div className="p-4 flex flex-col ">
+      <Header company={company} job={job} event={event} />
       {Object.keys(qAndAs).map((qId) => (
         <QandA key={qId} qAndAProps={qAndAs[qId]} />
       ))}
