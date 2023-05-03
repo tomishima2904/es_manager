@@ -7,12 +7,12 @@ const handler = (
 ) => {
   const entrysheet: RichEntrysheetProps = {
     esId: "2",
-    company: "",
+    company: "Untitled",
     job: "",
     event: "",
     deadline: "",
     questions: {
-      "0": { question: "hello wordld", maxChars: 100, answers: { "0": "" } },
+      "0": { question: "", maxChars: 100, answers: { "0": "" } },
     },
   };
   res.status(200).json(entrysheet);
