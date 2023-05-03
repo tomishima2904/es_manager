@@ -32,6 +32,7 @@ const QuestionForm = (props: { question: string }): JSX.Element => {
             text={text}
             handleChange={handleChange}
             error={error}
+            placeholder="例. あなたの強みを教えてください。"
           />
         </div>
       ) : (
