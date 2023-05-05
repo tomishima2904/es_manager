@@ -1,13 +1,14 @@
 import { useState } from "react";
 import validateInput from "@/utils/validateInputError";
-import EditButton from "../buttons/EditButton";
-import FormWithError from "./FormWithError";
 
 const QuestionForm = (props: { question: string }): JSX.Element => {
   const [text, setText] = useState<string>(props.question);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [tempText, setTempText] = useState<string>("");
-  const limitChars = 100; // DBで格納できる最大の文字長
+
+  // DBに格納できる文字長であるか判別するために使用
+  const [error, setError] = useState("");
+  const limitChars = 200;
 
   const startEditing = () => {
     setTempText(text);
@@ -16,6 +17,7 @@ const QuestionForm = (props: { question: string }): JSX.Element => {
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTempText(e.target.value);
+    validateInput(e.target.value, limitChars, setError);
   };
 
   // フォーカスが外れたら編集完了
@@ -40,6 +42,11 @@ const QuestionForm = (props: { question: string }): JSX.Element => {
       ) : (
         <div className="" onDoubleClick={startEditing}>
           {text}
+        </div>
+      )}
+      {error && (
+        <div className="text-red-500">
+          ↑質問は{limitChars}文字以下にしてください
         </div>
       )}
     </>
