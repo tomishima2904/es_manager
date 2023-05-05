@@ -5,13 +5,13 @@ const DoubleClickForm = (props: {
   classNames: string[];
 }): JSX.Element => {
   const [text, setText] = useState<string>(props.text);
-  const [editing, setEditing] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [tempText, setTempText] = useState<string>("");
   const [className1, className2] = props.classNames;
 
   const startEditing = () => {
     setTempText(text);
-    setEditing(true);
+    setIsEditing(true);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,12 +21,12 @@ const DoubleClickForm = (props: {
   // フォーカスが外れたら編集完了
   const handleBlur = () => {
     setText(tempText);
-    setEditing(false);
+    setIsEditing(false);
   };
 
   return (
     <>
-      {editing ? (
+      {isEditing || text == "" ? (
         <input
           type="text"
           className={className1}
