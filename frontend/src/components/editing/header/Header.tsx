@@ -8,8 +8,8 @@ const Header = (props: {
   event: string;
 }): JSX.Element => {
   const [company, setCompany] = useState<string | null>(null);
-  const [job, setJob] = useState<string | null>(null);
-  const [event, setEvent] = useState<string | null>(null);
+  const [job, setJob] = useState<string>("");
+  const [event, setEvent] = useState<string>("");
   // レンダリング時にprops.entrysheetが存在する場合は、初期化を実行する
   useEffect(() => {
     if (props.company) setCompany(props.company);
