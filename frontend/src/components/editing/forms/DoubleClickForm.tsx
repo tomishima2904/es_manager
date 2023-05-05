@@ -26,7 +26,7 @@ const DoubleClickForm = (props: {
 
   return (
     <>
-      {isEditing || text == "" ? (
+      {isEditing || text.trim() === "" ? (
         <input
           type="text"
           className={className1}
