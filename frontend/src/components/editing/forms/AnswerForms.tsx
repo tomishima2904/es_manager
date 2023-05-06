@@ -8,22 +8,30 @@ const limitChars = 2000;
 
 // TODO: QuestionFormと似たようなコンポーネントが多いのでリファクタリングする
 
-const AnswerForm = (props: { answer: string }): JSX.Element => {
-  const { answer } = props;
+const AnswerForm = (props: {
+  answer: string;
+  maxChars: number;
+}): JSX.Element => {
+  const { answer, maxChars } = props;
   const [text, setText] = useState<string>(answer);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>("");
+  const [isOver, setIsOver] = useState<boolean>(false);
 
   // フォームの変更を検知
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = e.target.value;
     setText(inputValue);
     validateInput(inputValue, limitChars, setError);
+    // 規定の文字数を超えたらisOverをtrueにしてフォームが赤くなるようにする
+    inputValue.length > maxChars ? setIsOver(true) : setIsOver(false);
   };
+
   return (
     <div className="pt-1">
       <FormWithError
         text={text}
         handleChange={handleChange}
+        isOver={isOver}
         error={error}
         placeholder={"解答を入力"}
       />
@@ -31,6 +39,7 @@ const AnswerForm = (props: { answer: string }): JSX.Element => {
   );
 };
 
+// TODO: SetCharsFormの変更も検知してフォームのスタイルを変更
 const AnswerForms = (props: {
   maxChars: number;
   answers: { [aId: string]: string };
@@ -55,7 +64,7 @@ const AnswerForms = (props: {
   return (
     <div className="mt-1 flex flex-col">
       {Object.keys(answers).map((aId) => (
-        <AnswerForm key={aId} answer={answers[aId]} />
+        <AnswerForm key={aId} answer={answers[aId]} maxChars={props.maxChars} />
       ))}
       <AddAnswerButton answers={answers} setNewProps={handleAddAnswer} />
     </div>
