@@ -17,13 +17,18 @@ const AnswerForm = (props: {
   const [error, setError] = useState<string>("");
   const [isOver, setIsOver] = useState<boolean>(false);
 
+  // SetCharsFormでの文字数の変更を検知して、文字数が超過してるか判断
+  useEffect(() => {
+    setIsOver(text.length > maxChars);
+  }, [text, maxChars]);
+
   // フォームの変更を検知
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const inputValue = e.target.value;
     setText(inputValue);
     validateInput(inputValue, limitChars, setError);
     // 規定の文字数を超えたらisOverをtrueにしてフォームが赤くなるようにする
-    inputValue.length > maxChars ? setIsOver(true) : setIsOver(false);
+    setIsOver(inputValue.length > maxChars);
   };
 
   return (
@@ -39,26 +44,22 @@ const AnswerForm = (props: {
   );
 };
 
-// TODO: SetCharsFormの変更も検知してフォームのスタイルを変更
 const AnswerForms = (props: {
-  maxChars: number;
   answers: { [aId: string]: string };
+  maxChars: number;
 }): JSX.Element => {
-  const [answers, setAnswers] = useState<AnswersProps | null>(null);
+  const { answers, maxChars } = props;
+  const [answerData, setAnswerData] = useState<AnswersProps>({});
 
-  // レンダリング時にprops.answersが存在する場合は、初期化を実行する
   useEffect(() => {
-    if (props.answers) {
-      setAnswers({ ...props.answers });
-    }
-  }, [props.answers]);
-
-  if (!answers) {
-    return <div>Loading...</div>;
-  }
+    setAnswerData({ ...answers });
+  }, [answers]);
 
   const handleAddAnswer = (newAnswerProps: AnswersProps) => {
-    setAnswers((prevAnswers) => ({ ...prevAnswers, ...newAnswerProps }));
+    setAnswerData((prevAnswerData) => ({
+      ...prevAnswerData,
+      ...newAnswerProps,
+    }));
   };
 
   return (
