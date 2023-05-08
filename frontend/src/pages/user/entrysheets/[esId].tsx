@@ -21,12 +21,18 @@ const Entrysheet = ({ query }: GetServerSidePropsContext) => {
     questions: {},
   });
   useEffect(() => {
+    let isMounted = true;
     const getEntrysheets = async () => {
       const ENDPOINT: string = "/api/user/entrysheets/" + query.esId;
       const result = await axios.get(ENDPOINT).then((res) => res.data);
-      setEntrysheet((prevEntrysheet) => ({ ...prevEntrysheet, ...result }));
+      if (isMounted) {
+        setEntrysheet((prevEntrysheet) => ({ ...prevEntrysheet, ...result }));
+      }
     };
     getEntrysheets();
+    return () => {
+      isMounted = false;
+    };
   }, [query.esId]);
 
   return <EditingEntrysheet entrysheet={entrysheet} />;
