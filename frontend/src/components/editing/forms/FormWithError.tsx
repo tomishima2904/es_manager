@@ -14,7 +14,7 @@ const FormWithError = (props: {
         onChange={handleChange}
         placeholder={placeholder}
       />
-      {error && <p>{error}</p>}
+      {error && <p className="text-red-500 p-1">{error}</p>}
     </>
   );
 };
