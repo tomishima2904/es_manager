@@ -24,15 +24,8 @@ const EntrysheetItem = (props: {
   const { entrysheet } = props;
   // 日時を yyyy/mm/dd hh:mm の文字列に変換
   const deadline = new Date(entrysheet.deadline);
-  const formattedDate = `${deadline.getFullYear()}/${(deadline.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}/${deadline
-    .getDate()
-    .toString()
-    .padStart(2, "0")} ${deadline
-    .getHours()
-    .toString()
-    .padStart(2, "0")}:${deadline.getMinutes().toString().padStart(2, "0")}`;
+  const formattedDate = dateFormatter(deadline);
+  const endpoint = `/user/entrysheets/${esId}`;
 
   return (
     <li
