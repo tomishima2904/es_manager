@@ -37,11 +37,10 @@ const DeadlineForm = (): JSX.Element => {
   );
 };
 
-// job と event は null でも良い
 const MetaForm = (props: { job: string; event: string }): JSX.Element => {
   const { job, event } = props;
   return (
-    <div className="flex justify-start items-center p-2">
+    <div className="flex justify-start items-center pb-2">
       <JobForm job={job} />
       <EventForm event={event} />
       <DeadlineForm />
