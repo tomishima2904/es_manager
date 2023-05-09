@@ -5,7 +5,7 @@ import type {
   NewEntrysheetProps,
 } from "@/types/EntrysheetProps";
 
-export default (
+const handler = (
   req: NextApiRequest,
   res: NextApiResponse<EntrysheetsProps | NewEntrysheetProps>
 ) => {
@@ -27,10 +27,12 @@ export default (
       event: "本選考",
       deadline: "2023-04-21T18:00:00",
     };
-    const entrysheets: { [key: string]: LightEntrysheetProps } = {
+    const entrysheets: { [esId: string]: LightEntrysheetProps } = {
       "0": entrysheet1,
       "1": entrysheet2,
     };
     res.status(200).json(entrysheets);
   }
 };
+
+export default handler;

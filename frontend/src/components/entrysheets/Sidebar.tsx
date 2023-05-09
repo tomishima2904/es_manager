@@ -1,4 +1,4 @@
-import CreateButton from "./CreateButton";
+import CreateEntrysheetButton from "./AddEentrysheetButton";
 import type { NextRouter } from "next/router";
 
 const Sidebar = (props: { router: NextRouter }): JSX.Element => {
@@ -8,7 +8,7 @@ const Sidebar = (props: { router: NextRouter }): JSX.Element => {
       className="w-1/6 bg-white flex-none rounded-lg p-4 mr-4
       flex justify-center "
     >
-      <CreateButton router={router} />
+      <CreateEntrysheetButton router={router} />
     </aside>
   );
 };

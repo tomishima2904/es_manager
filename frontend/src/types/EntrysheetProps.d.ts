@@ -7,9 +7,32 @@ export type LightEntrysheetProps = {
 };
 
 export type EntrysheetsProps = {
-  [key: string]: LightEntrysheetProps;
+  [esId: string]: LightEntrysheetProps;
 };
 
 export type NewEntrysheetProps = {
   esId: string;
+};
+
+export type AnswersProps = {
+  [aId: string]: string;
+};
+
+export type QandAProps = {
+  question: string;
+  maxChars: number;
+  answers: AnswersProps;
+};
+
+export type QuestionsProps = {
+  [qId: string]: QandAProps;
+};
+
+export type RichEntrysheetProps = {
+  esId: string;
+  company: string;
+  job: string;
+  event: string;
+  deadline: string;
+  questions: QuestionsProps;
 };

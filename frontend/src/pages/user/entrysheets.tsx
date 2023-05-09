@@ -6,15 +6,18 @@ import Sidebar from "@/components/entrysheets/Sidebar";
 
 export default function Entrysheets() {
   const router = useRouter();
-  // TODO: axiosによるfetch操作をカスタムフック化したい
   const [entrysheets, setEntrysheets] = useState({});
   useEffect(() => {
+    let isMounted = true;
     const getEntrysheets = async () => {
       const ENDPOINT: string = "/api/user/entrysheets";
       const result = await axios.get(ENDPOINT).then((res) => res.data);
-      setEntrysheets(result);
+      if (isMounted) setEntrysheets(result);
     };
     getEntrysheets();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
