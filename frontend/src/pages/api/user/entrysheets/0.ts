@@ -6,7 +6,7 @@ const handler = (
   res: NextApiResponse<RichEntrysheetProps>
 ) => {
   const entrysheet: RichEntrysheetProps = {
-    esId: "1",
+    esId: "0",
     company: "A株式会社",
     job: "総合職",
     event: "夏インターン",
