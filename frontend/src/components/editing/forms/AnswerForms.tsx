@@ -4,10 +4,6 @@ import FormWithError from "./FormWithError";
 import AddAnswerButton from "../buttons/AddAnswerButton";
 import type { AnswersProps } from "@/types/EntrysheetProps";
 
-const limitChars = 2000;
-
-// TODO: QuestionFormと似たようなコンポーネントが多いのでリファクタリングする
-
 const AnswerForm = (props: {
   answer: string;
   maxChars: number;
@@ -16,6 +12,9 @@ const AnswerForm = (props: {
   const [text, setText] = useState<string>(answer);
   const [error, setError] = useState<string>("");
   const [isOver, setIsOver] = useState<boolean>(false);
+
+  // DBに格納できる限界の文字列の長さ
+  const limitChars = 2000;
 
   // SetCharsFormでの文字数の変更を検知して、文字数が超過してるか判断
   useEffect(() => {
