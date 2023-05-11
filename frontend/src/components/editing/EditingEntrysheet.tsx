@@ -3,7 +3,7 @@ import type {
   RichEntrysheetProps,
   QuestionsProps,
 } from "@/types/EntrysheetProps";
-import Header from "./header/Header";
+import Header from "./Header";
 import QandA from "./QandA";
 import AddQandAButton from "./buttons/AddQandAButton";
 

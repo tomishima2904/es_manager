@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import CompanyForm from "../forms/CompanyForm";
-import MetaForm from "../forms/MetaForm";
+import CompanyForm from "./forms/CompanyForm";
+import MetaForm from "./forms/MetaForm";
 
 const Header = (props: {
   company: string;
