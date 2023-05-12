@@ -11,12 +11,12 @@ public class EsEntity {
 
     @Id // 主キーの設定
     @GeneratedValue(strategy = GenerationType.IDENTITY) // identity列を用いて主キーを生成
-    @Column(name = "es_id")
-    private int esId;
+    @Column(name = "esId")
+    private String esId;
 
     @NotEnpty // キーがnullでないか、あるいは空文字でないかの検証を行う
-    @Column(name = "user_id")
-    private int userId;
+    @Column(name = "userId")
+    private String userId;
 
     @NotEnpty
     @Column(name = "company", length = 40)
@@ -46,8 +46,8 @@ public class EsEntity {
         return esID;
     }
 
-    public void setEsID(int esID) {
-        this.esID = esID;
+    public void setEsID(int esId) {
+        this.esId = esId;
     }
 
     public int getUserId() {

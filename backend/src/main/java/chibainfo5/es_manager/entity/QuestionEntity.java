@@ -11,16 +11,16 @@ public class QuestionEntity {
 
     @Id // 主キーの設定
     @GeneratedValue(strategy = GenerationType.IDENTITY) // identity列を用いて主キーを生成
-    @Column(name = "question_id")
-    private Integer questionId;
+    @Column(name = "questionId")
+    private String questionId;
 
     @NotEnpty // キーがnullでないか、あるいは空文字でないかの検証を行う
-    @Column(name = "es_id")
-    private Integer esId;
+    @Column(name = "esId")
+    private String esId;
 
     @NotEnpty // キーがnullでないか、あるいは空文字でないかの検証を行う
-    @Column(name = "user_id")
-    private Integer userId;
+    @Column(name = "userId")
+    private String userId;
 
     @Column(name = "question", length = 200)
     private String question;
