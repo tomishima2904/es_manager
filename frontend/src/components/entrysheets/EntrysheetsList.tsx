@@ -2,6 +2,8 @@ import {
   LightEntrysheetProps,
   EntrysheetsProps,
 } from "@/types/EntrysheetProps";
+import dateFormatter from "@/utils/dateFormatter";
+import Link from "next/link";
 
 // ヘッダー行
 const ListHeader = () => {
@@ -19,31 +21,27 @@ const ListHeader = () => {
 
 // EntrySheetsでリスト表示する際のentrysheet1行
 const EntrysheetItem = (props: {
+  esId: string;
   entrysheet: LightEntrysheetProps;
 }): JSX.Element => {
-  const { entrysheet } = props;
+  const { esId, entrysheet } = props;
   // 日時を yyyy/mm/dd hh:mm の文字列に変換
   const deadline = new Date(entrysheet.deadline);
-  const formattedDate = `${deadline.getFullYear()}/${(deadline.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}/${deadline
-    .getDate()
-    .toString()
-    .padStart(2, "0")} ${deadline
-    .getHours()
-    .toString()
-    .padStart(2, "0")}:${deadline.getMinutes().toString().padStart(2, "0")}`;
+  const formattedDate = dateFormatter(deadline);
+  const endpoint = `/user/entrysheets/${esId}`;
 
   return (
-    <li
-      className="flex items-center px-4 py-2 border-b border-gray-300 bg-white
+    <Link href={endpoint}>
+      <li
+        className="flex items-center px-4 py-2 border-b border-gray-300 bg-white
     transition duration-300 ease-in-out hover:bg-gray-100"
-    >
-      <div className="flex-grow flex-shrink-0">{entrysheet.company}</div>
-      <div className="w-1/4 flex-shrink-0">{entrysheet.job}</div>
-      <div className="w-1/4 flex-shrink-0">{entrysheet.event}</div>
-      <div className="w-1/4 flex-shrink-0">{formattedDate}</div>
-    </li>
+      >
+        <div className="flex-grow flex-shrink-0">{entrysheet.company}</div>
+        <div className="w-1/4 flex-shrink-0">{entrysheet.job}</div>
+        <div className="w-1/4 flex-shrink-0">{entrysheet.event}</div>
+        <div className="w-1/4 flex-shrink-0">{formattedDate}</div>
+      </li>
+    </Link>
   );
 };
 
@@ -58,7 +56,11 @@ const EntrysheetsList = (props: {
       <ListHeader />
       <ul className="list-none">
         {Object.keys(entrysheets).map((esId) => (
-          <EntrysheetItem key={esId} entrysheet={entrysheets[esId]} />
+          <EntrysheetItem
+            key={esId}
+            esId={esId}
+            entrysheet={entrysheets[esId]}
+          />
         ))}
       </ul>
     </main>

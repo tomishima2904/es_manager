@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import CompanyForm from "../forms/CompanyForm";
-import MetaForm from "../forms/MetaForm";
+import CompanyForm from "./forms/CompanyForm";
+import MetaForm from "./forms/MetaForm";
 
 const Header = (props: {
   company: string;
   job: string;
   event: string;
 }): JSX.Element => {
-  const [company, setCompany] = useState<string | null>(null);
+  const [company, setCompany] = useState<string>("");
   const [job, setJob] = useState<string>("");
   const [event, setEvent] = useState<string>("");
   // レンダリング時にprops.entrysheetが存在する場合は、初期化を実行する
@@ -22,7 +22,7 @@ const Header = (props: {
     return <div>Loading...</div>;
   }
   return (
-    <header className="flex flex-col border-b border-gray-300">
+    <header className="flex flex-col border-b border-gray-300 pl-4">
       <CompanyForm company={company} />
       <MetaForm job={job} event={event} />
     </header>

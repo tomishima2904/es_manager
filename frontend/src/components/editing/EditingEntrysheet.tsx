@@ -3,7 +3,7 @@ import type {
   RichEntrysheetProps,
   QuestionsProps,
 } from "@/types/EntrysheetProps";
-import Header from "./header/Header";
+import Header from "./Header";
 import QandA from "./QandA";
 import AddQandAButton from "./buttons/AddQandAButton";
 
@@ -11,16 +11,12 @@ const EditingEntrysheet = (props: {
   entrysheet: RichEntrysheetProps;
 }): JSX.Element => {
   const { esId, company, job, event, deadline, questions } = props.entrysheet;
-  // コンポーネントが最初にレンダリングされたときに、props.entrysheetの値が設定されない
-  // そこで遅延初期化を行うため、nullを入れておく
-  const [qAndAs, setQandAs] = useState<QuestionsProps | null>(null);
+  const [qAndAs, setQandAs] = useState<QuestionsProps>({});
 
-  // レンダリング時にprops.entrysheetが存在する場合は、初期化を実行する
+  // questionsの値によってレンダリングを再実行
   useEffect(() => {
-    if (props.entrysheet) {
-      setQandAs({ ...props.entrysheet.questions });
-    }
-  }, [props.entrysheet]);
+    setQandAs({ ...questions });
+  }, [questions]);
 
   if (!qAndAs) {
     return <div>Loading...</div>;
