@@ -41,7 +41,12 @@ const EditingEntrysheet = (props: {
     <div className="p-4 flex flex-col ">
       <Header company={company} job={job} event={event} />
       {Object.keys(entrysheet.questions).map((qId) => (
-        <QandA key={qId} qAndAProps={entrysheet.questions[qId]} />
+        <QandA
+          key={qId}
+          qId={qId}
+          qAndAProps={entrysheet.questions[qId]}
+          setEntrysheet={setEntrysheet}
+        />
       ))}
       <AddQandAButton
         questions={entrysheet.questions}
