@@ -6,6 +6,7 @@ import type {
 import Header from "./Header";
 import QandA from "./QandA";
 import AddQandAButton from "./buttons/AddQandAButton";
+import SaveEntrysheetButton from "./buttons/SaveEntrysheetButton";
 
 const EditingEntrysheet = (props: {
   entrysheet: RichEntrysheetProps;
@@ -63,6 +64,7 @@ const EditingEntrysheet = (props: {
         questions={entrysheet.questions}
         setNewProps={handleAddQandAs}
       />
+      <SaveEntrysheetButton entrysheet={entrysheet} />
     </div>
   );
 };
