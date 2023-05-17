@@ -26,7 +26,7 @@ const Header = (props: {
   return (
     <header className="flex flex-col border-b border-gray-300 pl-4">
       <CompanyForm company={company} setEntrysheet={props.setEntrysheet} />
-      <MetaForm job={job} event={event} />
+      <MetaForm job={job} event={event} setEntrysheet={props.setEntrysheet} />
     </header>
   );
 };

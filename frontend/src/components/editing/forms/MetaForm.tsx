@@ -1,4 +1,5 @@
 import DoubleClickForm from "./DoubleClickForm";
+import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
 
 const classNames: string[] = [
   "px-2 py-1 rounded-lg border border-gray-300 bg-transparent mt-1",
@@ -8,41 +9,81 @@ const wrapper: string = "mr-8 pr-8 flex justify-around items-center";
 const borderWrapper: string = wrapper + " border-r border-gray-300";
 const spanClassName: string = "mr-3 font-bold ";
 
-const JobForm = (props: { job: string }): JSX.Element => {
-  const { job } = props;
+const JobForm = (props: {
+  job: string;
+  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+}): JSX.Element => {
+  const { job, setEntrysheet } = props;
+
+  const handleJobChange = (text: string): void => {
+    setEntrysheet((prevEntrysheet: RichEntrysheetProps) => ({
+      ...prevEntrysheet,
+      job: text,
+    }));
+  };
+
   return (
     <div className={borderWrapper}>
       <span className={spanClassName}>職種:</span>
-      <DoubleClickForm text={job} classNames={classNames} />
+      <DoubleClickForm
+        text={job}
+        classNames={classNames}
+        onChange={handleJobChange}
+      />
     </div>
   );
 };
 
-const EventForm = (props: { event: string }): JSX.Element => {
-  const { event } = props;
+const EventForm = (props: {
+  event: string;
+  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+}): JSX.Element => {
+  const { event, setEntrysheet } = props;
+
+  const handleEventChange = (text: string): void => {
+    setEntrysheet((prevEntrysheet: RichEntrysheetProps) => ({
+      ...prevEntrysheet,
+      event: text,
+    }));
+  };
+
   return (
     <div className={borderWrapper}>
       <span className={spanClassName}>イベント:</span>
-      <DoubleClickForm text={event} classNames={classNames} />
+      <DoubleClickForm
+        text={event}
+        classNames={classNames}
+        onChange={handleEventChange}
+      />
     </div>
   );
 };
 
+// TODO: 仮のフォームなので完成させる
 const DeadlineForm = (): JSX.Element => {
+  const handleDeadlineChange = (text: string): void => {};
   return (
     <div className={wrapper}>
       <span className={spanClassName}>締切:</span>
-      <DoubleClickForm text={"ほげ"} classNames={classNames} />
+      <DoubleClickForm
+        text={"ほげ"}
+        classNames={classNames}
+        onChange={handleDeadlineChange}
+      />
     </div>
   );
 };
 
-const MetaForm = (props: { job: string; event: string }): JSX.Element => {
-  const { job, event } = props;
+const MetaForm = (props: {
+  job: string;
+  event: string;
+  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+}): JSX.Element => {
+  const { job, event, setEntrysheet } = props;
   return (
     <div className="flex justify-start items-center pb-2">
-      <JobForm job={job} />
-      <EventForm event={event} />
+      <JobForm job={job} setEntrysheet={setEntrysheet} />
+      <EventForm event={event} setEntrysheet={setEntrysheet} />
       <DeadlineForm />
     </div>
   );
