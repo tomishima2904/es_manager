@@ -1,10 +1,15 @@
 const SetCharsForm = (props: {
   maxChars: number;
   setMaxChars: (value: number) => void;
+  handleMaxCharsChange: (chars: number) => void;
 }): JSX.Element => {
-  const { maxChars } = props;
+  const { maxChars, setMaxChars, handleMaxCharsChange } = props;
+
+  // TODO: NaN対策
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.setMaxChars(parseInt(e.target.value));
+    const chars = parseInt(e.target.value);
+    setMaxChars(chars);
+    handleMaxCharsChange(chars);
   };
   return (
     <input

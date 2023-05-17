@@ -16,9 +16,11 @@ const QandA = (props: {
   const { qId, qAndAProps, setEntrysheet } = props;
   const question: string = qAndAProps.question;
   const answers: AnswersProps = qAndAProps.answers;
+
+  // answersコンポーネントに最大字数を共有するためのuseState
   const [maxChars, setMaxChars] = useState<number>(qAndAProps.maxChars);
 
-  // questionsの記入が終わったら書き換えを反映
+  // EditingEntrysheetのentrysheetに変更を反映させる
   const handleQuestionChange = (text: string): void => {
     setEntrysheet((prevEntrySheet: RichEntrysheetProps) => ({
       ...prevEntrySheet,
@@ -32,6 +34,20 @@ const QandA = (props: {
     }));
   };
 
+  // EditingEntrysheetのentrysheetに変更を反映させる
+  const handleMaxCharsChange = (chars: number): void => {
+    setEntrysheet((prevEntrySheet: RichEntrysheetProps) => ({
+      ...prevEntrySheet,
+      questions: {
+        ...prevEntrySheet.questions,
+        [qId]: {
+          ...prevEntrySheet.questions[qId],
+          maxChars: chars,
+        },
+      },
+    }));
+  };
+
   return (
     <form className="p-4 flex-grow justify-between border-b border-gray-300">
       <div className="flex w-full">
@@ -39,7 +55,11 @@ const QandA = (props: {
           <QuestionForm question={question} onChange={handleQuestionChange} />
         </div>
         <div className="ml-2 flex items-center flex-shrink-0 flex-grow-0 justify-self-end">
-          <SetCharsForm maxChars={maxChars} setMaxChars={setMaxChars} />
+          <SetCharsForm
+            maxChars={maxChars}
+            setMaxChars={setMaxChars}
+            handleMaxCharsChange={handleMaxCharsChange}
+          />
           <div className="ml-0.5">字以内</div>
         </div>
       </div>
