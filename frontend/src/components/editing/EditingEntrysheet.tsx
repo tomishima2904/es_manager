@@ -45,7 +45,12 @@ const EditingEntrysheet = (props: {
 
   return (
     <div className="p-4 flex flex-col ">
-      <Header company={company} job={job} event={event} />
+      <Header
+        company={company}
+        job={job}
+        event={event}
+        setEntrysheet={setEntrysheet}
+      />
       {Object.keys(entrysheet.questions).map((qId) => (
         <QandA
           key={qId}
