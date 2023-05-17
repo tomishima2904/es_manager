@@ -21,13 +21,16 @@ const EditingEntrysheet = (props: {
     questions: {},
   });
 
-  // questionsの値によってentrysheetを更新する
   useEffect(() => {
-    setEntrysheet((prevEntrySheet) => ({
-      ...prevEntrySheet,
+    setEntrysheet({
+      esId: esId,
+      company: company,
+      job: job,
+      event: event,
+      deadline: deadline,
       questions: { ...questions },
-    }));
-  }, [questions]);
+    });
+  }, [esId, company, job, event, deadline, questions]);
 
   if (!entrysheet) {
     return <div>Loading...</div>;
