@@ -34,7 +34,13 @@ const EditingEntrysheet = (props: {
 
   // 質問追加時にステートの状態を変更する関数
   const handleAddQandAs = (newQuestionProps: QuestionsProps) => {
-    setEntrysheet((prevQandAs) => ({ ...prevQandAs, ...newQuestionProps }));
+    setEntrysheet((prevEntrysheet) => ({
+      ...prevEntrysheet,
+      questions: {
+        ...prevEntrysheet.questions,
+        ...newQuestionProps,
+      },
+    }));
   };
 
   return (
