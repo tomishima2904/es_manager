@@ -63,7 +63,12 @@ const QandA = (props: {
           <div className="ml-0.5">字以内</div>
         </div>
       </div>
-      <AnswerForms answers={answers} maxChars={maxChars} />
+      <AnswerForms
+        qId={qId}
+        answers={answers}
+        maxChars={maxChars}
+        setEntrysheet={setEntrysheet}
+      />
     </form>
   );
 };
