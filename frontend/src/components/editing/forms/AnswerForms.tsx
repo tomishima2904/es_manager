@@ -74,35 +74,22 @@ const AnswerForms = (props: {
   setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
 }): JSX.Element => {
   const { qId, answers, maxChars, setEntrysheet } = props;
-  const [answerData, setAnswerData] = useState<AnswersProps>({});
 
-  useEffect(() => {
-    setAnswerData({ ...answers });
-  }, [answers]);
-
-  // 質問フォームの追加を行う
-  // HACK: レンダリングに関するwarningが出る
+  // 解答フォームの追加を行う
   const handleAddAnswer = (newAnswerProps: AnswersProps) => {
-    setAnswerData((prevAnswerData) => {
-      const updatedAnswerData = {
-        ...prevAnswerData,
-        ...newAnswerProps,
-      };
-
-      setEntrysheet((prevEntrySheet: RichEntrysheetProps) => ({
-        ...prevEntrySheet,
-        questions: {
-          ...prevEntrySheet.questions,
-          [qId]: {
-            ...prevEntrySheet.questions[qId],
-            answers: {
-              ...updatedAnswerData,
-            },
+    setEntrysheet((prevEntrySheet: RichEntrysheetProps) => ({
+      ...prevEntrySheet,
+      questions: {
+        ...prevEntrySheet.questions,
+        [qId]: {
+          ...prevEntrySheet.questions[qId],
+          answers: {
+            ...prevEntrySheet.questions[qId].answers,
+            ...newAnswerProps,
           },
         },
-      }));
-      return updatedAnswerData; // 新しい状態を返す
-    });
+      },
+    }));
   };
 
   return (
@@ -113,7 +100,7 @@ const AnswerForms = (props: {
           qId={qId}
           aId={aId}
           answer={answers[aId]}
-          maxChars={props.maxChars}
+          maxChars={maxChars}
           setEntrysheet={setEntrysheet}
         />
       ))}
