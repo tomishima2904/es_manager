@@ -4,8 +4,8 @@ import type {
   QuestionsProps,
 } from "@/types/EntrysheetProps";
 import Header from "./Header";
-import QandA from "./QandA";
-import AddQandAButton from "./buttons/AddQandAButton";
+import QuestionArea from "./QuestionArea";
+import AddQuestionButton from "./buttons/AddQestionButton";
 import SaveEntrysheetButton from "./buttons/SaveEntrysheetButton";
 
 const EditingEntrysheet = (props: {
@@ -20,6 +20,9 @@ const EditingEntrysheet = (props: {
     deadline: deadline,
     questions: {},
   });
+  const [numQuestions, setNumQuestions] = useState<number>(
+    Object.keys(questions).length
+  );
 
   useEffect(() => {
     setEntrysheet({
@@ -30,6 +33,7 @@ const EditingEntrysheet = (props: {
       deadline: deadline,
       questions: { ...questions },
     });
+    setNumQuestions(Object.keys(questions).length);
   }, [esId, company, job, event, deadline, questions]);
 
   if (!entrysheet) {
@@ -45,6 +49,7 @@ const EditingEntrysheet = (props: {
         ...newQuestionProps,
       },
     }));
+    setNumQuestions((prev) => prev + 1);
   };
 
   return (
@@ -56,14 +61,16 @@ const EditingEntrysheet = (props: {
         setEntrysheet={setEntrysheet}
       />
       {Object.keys(entrysheet.questions).map((qId) => (
-        <QandA
+        <QuestionArea
           key={qId}
           qId={qId}
           qAndAProps={entrysheet.questions[qId]}
           setEntrysheet={setEntrysheet}
+          numQuestions={numQuestions}
+          setNumQuestions={setNumQuestions}
         />
       ))}
-      <AddQandAButton
+      <AddQuestionButton
         questions={entrysheet.questions}
         setNewProps={handleAddQandAs}
       />

@@ -3,7 +3,7 @@ import React from "react";
 import { IconContext } from "react-icons";
 import { GrAdd } from "react-icons/gr";
 
-const AddQandAButton = (props: {
+const AddQuestionButton = (props: {
   questions: QuestionsProps;
   setNewProps: (newQuestions: QuestionsProps) => void;
 }) => {
@@ -43,4 +43,4 @@ const AddQandAButton = (props: {
   );
 };
 
-export default AddQandAButton;
+export default AddQuestionButton;
