@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import CompanyForm from "./forms/CompanyForm";
 import MetaForm from "./forms/MetaForm";
+import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
 
 const Header = (props: {
   company: string;
   job: string;
   event: string;
+  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
 }): JSX.Element => {
   const [company, setCompany] = useState<string>("");
   const [job, setJob] = useState<string>("");
@@ -23,8 +25,8 @@ const Header = (props: {
   }
   return (
     <header className="flex flex-col border-b border-gray-300 pl-4">
-      <CompanyForm company={company} />
-      <MetaForm job={job} event={event} />
+      <CompanyForm company={company} setEntrysheet={props.setEntrysheet} />
+      <MetaForm job={job} event={event} setEntrysheet={props.setEntrysheet} />
     </header>
   );
 };

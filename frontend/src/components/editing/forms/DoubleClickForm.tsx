@@ -3,6 +3,7 @@ import { useState } from "react";
 const DoubleClickForm = (props: {
   text: string;
   classNames: string[];
+  onChange: (text: string) => void;
 }): JSX.Element => {
   const [text, setText] = useState<string>(props.text);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -22,6 +23,7 @@ const DoubleClickForm = (props: {
   const handleBlur = () => {
     setText(tempText);
     setIsEditing(false);
+    props.onChange(tempText); // entrysheetにtextを反映させる
   };
 
   return (

@@ -1,10 +1,14 @@
 import { useState } from "react";
 import validateInput from "@/utils/validateInputError";
 
-const QuestionForm = (props: { question: string }): JSX.Element => {
+const QuestionForm = (props: {
+  question: string;
+  onChange: (text: string) => void;
+}): JSX.Element => {
   const [text, setText] = useState<string>(props.question);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [tempText, setTempText] = useState<string>("");
+  const handleQuestionChange = props.onChange;
 
   // DBに格納できる文字長であるか判別するために使用
   const [error, setError] = useState("");
@@ -23,6 +27,7 @@ const QuestionForm = (props: { question: string }): JSX.Element => {
   // フォーカスが外れたら編集完了
   const handleBlur = () => {
     setText(tempText);
+    handleQuestionChange(tempText);
     setIsEditing(false);
   };
 

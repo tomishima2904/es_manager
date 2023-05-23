@@ -6,34 +6,68 @@ import type {
 import Header from "./Header";
 import QandA from "./QandA";
 import AddQandAButton from "./buttons/AddQandAButton";
+import SaveEntrysheetButton from "./buttons/SaveEntrysheetButton";
 
 const EditingEntrysheet = (props: {
   entrysheet: RichEntrysheetProps;
 }): JSX.Element => {
   const { esId, company, job, event, deadline, questions } = props.entrysheet;
-  const [qAndAs, setQandAs] = useState<QuestionsProps>({});
+  const [entrysheet, setEntrysheet] = useState<RichEntrysheetProps>({
+    esId: esId,
+    company: company,
+    job: job,
+    event: event,
+    deadline: deadline,
+    questions: {},
+  });
 
-  // questionsの値によってレンダリングを再実行
   useEffect(() => {
-    setQandAs({ ...questions });
-  }, [questions]);
+    setEntrysheet({
+      esId: esId,
+      company: company,
+      job: job,
+      event: event,
+      deadline: deadline,
+      questions: { ...questions },
+    });
+  }, [esId, company, job, event, deadline, questions]);
 
-  if (!qAndAs) {
+  if (!entrysheet) {
     return <div>Loading...</div>;
   }
 
   // 質問追加時にステートの状態を変更する関数
   const handleAddQandAs = (newQuestionProps: QuestionsProps) => {
-    setQandAs((prevQandAs) => ({ ...prevQandAs, ...newQuestionProps }));
+    setEntrysheet((prevEntrysheet) => ({
+      ...prevEntrysheet,
+      questions: {
+        ...prevEntrysheet.questions,
+        ...newQuestionProps,
+      },
+    }));
   };
 
   return (
     <div className="p-4 flex flex-col ">
-      <Header company={company} job={job} event={event} />
-      {Object.keys(qAndAs).map((qId) => (
-        <QandA key={qId} qAndAProps={qAndAs[qId]} />
+      <Header
+        company={company}
+        job={job}
+        event={event}
+        setEntrysheet={setEntrysheet}
+      />
+      {Object.keys(entrysheet.questions).map((qId) => (
+        <QandA
+          key={qId}
+          qId={qId}
+          qAndAProps={entrysheet.questions[qId]}
+          setEntrysheet={setEntrysheet}
+        />
       ))}
-      <AddQandAButton questions={qAndAs} setNewProps={handleAddQandAs} />
+      <AddQandAButton
+        questions={entrysheet.questions}
+        setNewProps={handleAddQandAs}
+      />
+      <SaveEntrysheetButton entrysheet={entrysheet} />
     </div>
   );
 };
