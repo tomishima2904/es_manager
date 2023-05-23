@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import validateInput from "@/utils/validateInputError";
 import FormWithError from "./FormWithError";
 import AddAnswerButton from "../buttons/AddAnswerButton";
+import RemoveAnswerButton from "../buttons/RemoveAnswerButton";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
 
 const AnswerForm = (props: {
@@ -52,7 +53,7 @@ const AnswerForm = (props: {
   };
 
   return (
-    <div className="pt-1">
+    <div className="pt-1 flex-1 ">
       <FormWithError
         text={text}
         handleChange={handleChange}
@@ -70,10 +71,35 @@ const AnswerArea = (props: {
   answer: string;
   maxChars: number;
   setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+  numAnswers: number;
+  setNumAnswers: React.Dispatch<React.SetStateAction<number>>;
 }): JSX.Element => {
-  const { qId, aId, answer, maxChars, setEntrysheet } = props;
+  const {
+    qId,
+    aId,
+    answer,
+    maxChars,
+    setEntrysheet,
+    numAnswers,
+    setNumAnswers,
+  } = props;
+
+  const handleRemoveAnswer = (): void => {
+    setEntrysheet((prevEntrysheet) => {
+      const updatedQuestions = { ...prevEntrysheet.questions };
+      const updatedAnswers = { ...updatedQuestions[qId].answers };
+      delete updatedAnswers[aId];
+      updatedQuestions[qId] = {
+        ...updatedQuestions[qId],
+        answers: updatedAnswers,
+      };
+      return { ...prevEntrysheet, questions: updatedQuestions };
+    });
+    setNumAnswers((prev) => prev - 1);
+  };
+
   return (
-    <div>
+    <div className="flex items-center">
       <AnswerForm
         key={aId}
         qId={qId}
@@ -82,6 +108,9 @@ const AnswerArea = (props: {
         maxChars={maxChars}
         setEntrysheet={setEntrysheet}
       />
+      {numAnswers > 1 && (
+        <RemoveAnswerButton handleRemoveAnswer={handleRemoveAnswer} />
+      )}
     </div>
   );
 };
