@@ -9,7 +9,7 @@ import type {
 } from "@/types/EntrysheetProps";
 import { useState } from "react";
 
-const QandA = (props: {
+const QuestionArea = (props: {
   qId: string;
   qAndAProps: QandAProps;
   setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
@@ -94,4 +94,4 @@ const QandA = (props: {
   );
 };
 
-export default QandA;
+export default QuestionArea;

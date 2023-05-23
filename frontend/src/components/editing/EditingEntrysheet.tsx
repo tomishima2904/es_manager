@@ -4,8 +4,8 @@ import type {
   QuestionsProps,
 } from "@/types/EntrysheetProps";
 import Header from "./Header";
-import QandA from "./QandAArea";
-import AddQandAButton from "./buttons/AddQandAButton";
+import QuestionArea from "./QuestionArea";
+import AddQuestionButton from "./buttons/AddQestionButton";
 import SaveEntrysheetButton from "./buttons/SaveEntrysheetButton";
 
 const EditingEntrysheet = (props: {
@@ -61,7 +61,7 @@ const EditingEntrysheet = (props: {
         setEntrysheet={setEntrysheet}
       />
       {Object.keys(entrysheet.questions).map((qId) => (
-        <QandA
+        <QuestionArea
           key={qId}
           qId={qId}
           qAndAProps={entrysheet.questions[qId]}
@@ -70,7 +70,7 @@ const EditingEntrysheet = (props: {
           setNumQuestions={setNumQuestions}
         />
       ))}
-      <AddQandAButton
+      <AddQuestionButton
         questions={entrysheet.questions}
         setNewProps={handleAddQandAs}
       />
