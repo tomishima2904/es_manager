@@ -1,19 +1,19 @@
 import { IconContext } from "react-icons";
 import { GrTrash } from "react-icons/gr";
 
-const RemoveAnswerButton = (props: {
-  handleRemoveAnswer: () => void;
+const RemoveFormButton = (props: {
+  handleRemoveForm: () => void;
 }): JSX.Element => {
-  const { handleRemoveAnswer } = props;
+  const { handleRemoveForm } = props;
 
-  const onRemoveAnswerBtnClick = () => {
-    handleRemoveAnswer();
+  const onRemoveFormBtnClick = () => {
+    handleRemoveForm();
   };
 
   return (
     <div className="mx-auto flex-none ml-2 ">
       <IconContext.Provider value={{ className: "w-4 h-4" }}>
-        <button onClick={onRemoveAnswerBtnClick} type="button">
+        <button onClick={onRemoveFormBtnClick} type="button">
           <GrTrash />
         </button>
       </IconContext.Provider>
@@ -21,4 +21,4 @@ const RemoveAnswerButton = (props: {
   );
 };
 
-export default RemoveAnswerButton;
+export default RemoveFormButton;

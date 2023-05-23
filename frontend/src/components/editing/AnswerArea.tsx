@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import validateInput from "@/utils/validateInputError";
 import FormWithError from "./forms/FormWithError";
 import AddAnswerButton from "./buttons/AddAnswerButton";
-import RemoveAnswerButton from "./buttons/RemoveAnswerButton";
+import RemoveFormButton from "./buttons/RemoveFormButton";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
 
 const AnswerForm = (props: {
@@ -109,7 +109,7 @@ const AnswerArea = (props: {
         setEntrysheet={setEntrysheet}
       />
       {numAnswers > 1 && (
-        <RemoveAnswerButton handleRemoveAnswer={handleRemoveAnswer} />
+        <RemoveFormButton handleRemoveForm={handleRemoveAnswer} />
       )}
     </div>
   );
