@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import validateInput from "@/utils/validateInputError";
-import FormWithError from "./FormWithError";
-import AddAnswerButton from "../buttons/AddAnswerButton";
-import RemoveAnswerButton from "../buttons/RemoveAnswerButton";
+import FormWithError from "./forms/FormWithError";
+import AddAnswerButton from "./buttons/AddAnswerButton";
+import RemoveAnswerButton from "./buttons/RemoveAnswerButton";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
 
 const AnswerForm = (props: {

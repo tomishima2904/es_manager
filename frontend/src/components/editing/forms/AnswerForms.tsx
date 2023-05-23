@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import validateInput from "@/utils/validateInputError";
 import FormWithError from "./FormWithError";
 import AddAnswerButton from "../buttons/AddAnswerButton";
-import AnswerArea from "./AnswerArea";
+import AnswerArea from "../AnswerArea";
 import type {
   AnswersProps,
   RichEntrysheetProps,

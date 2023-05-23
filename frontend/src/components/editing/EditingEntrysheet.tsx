@@ -4,7 +4,7 @@ import type {
   QuestionsProps,
 } from "@/types/EntrysheetProps";
 import Header from "./Header";
-import QandA from "./QandA";
+import QandA from "./QandAArea";
 import AddQandAButton from "./buttons/AddQandAButton";
 import SaveEntrysheetButton from "./buttons/SaveEntrysheetButton";
 
