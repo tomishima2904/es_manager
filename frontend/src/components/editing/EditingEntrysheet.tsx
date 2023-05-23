@@ -20,6 +20,9 @@ const EditingEntrysheet = (props: {
     deadline: deadline,
     questions: {},
   });
+  const [numQuestions, setNumQuestions] = useState<number>(
+    Object.keys(questions).length
+  );
 
   useEffect(() => {
     setEntrysheet({
@@ -30,6 +33,7 @@ const EditingEntrysheet = (props: {
       deadline: deadline,
       questions: { ...questions },
     });
+    setNumQuestions(Object.keys(questions).length);
   }, [esId, company, job, event, deadline, questions]);
 
   if (!entrysheet) {
@@ -45,6 +49,7 @@ const EditingEntrysheet = (props: {
         ...newQuestionProps,
       },
     }));
+    setNumQuestions((prev) => prev + 1);
   };
 
   return (
@@ -61,6 +66,8 @@ const EditingEntrysheet = (props: {
           qId={qId}
           qAndAProps={entrysheet.questions[qId]}
           setEntrysheet={setEntrysheet}
+          numQuestions={numQuestions}
+          setNumQuestions={setNumQuestions}
         />
       ))}
       <AddQandAButton
