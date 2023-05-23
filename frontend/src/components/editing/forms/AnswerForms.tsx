@@ -16,6 +16,11 @@ const AnswerForms = (props: {
 }): JSX.Element => {
   const { qId, answers, maxChars, setEntrysheet } = props;
 
+  // 解答フォームの数
+  const [numAnswers, setNumAnswers] = useState<number>(
+    Object.keys(answers).length
+  );
+
   // 解答フォームの追加を行う
   const handleAddAnswer = (newAnswerProps: AnswersProps) => {
     setEntrysheet((prevEntrySheet: RichEntrysheetProps) => ({
@@ -31,6 +36,7 @@ const AnswerForms = (props: {
         },
       },
     }));
+    setNumAnswers((prev) => prev + 1);
   };
 
   return (
@@ -43,6 +49,8 @@ const AnswerForms = (props: {
           answer={answers[aId]}
           maxChars={maxChars}
           setEntrysheet={setEntrysheet}
+          numAnswers={numAnswers}
+          setNumAnswers={setNumAnswers}
         />
       ))}
       <AddAnswerButton answers={answers} setNewProps={handleAddAnswer} />
