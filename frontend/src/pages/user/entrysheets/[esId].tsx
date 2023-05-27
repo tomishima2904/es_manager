@@ -1,5 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { useState, useEffect } from "react";
+import useSWR from "swr";
+import fetcher from "@/utils/fetcher";
 import axios from "axios";
 import EditingEntrysheet from "@/components/editing/EditingEntrysheet";
 import { RichEntrysheetProps } from "@/types/EntrysheetProps";
@@ -12,28 +14,13 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
 }
 
 const Entrysheet = ({ query }: GetServerSidePropsContext) => {
-  const [entrysheet, setEntrysheet] = useState<RichEntrysheetProps>({
-    esId: "",
-    company: "",
-    job: "",
-    event: "",
-    deadline: "",
-    questions: {},
-  });
-  useEffect(() => {
-    let isMounted = true;
-    const getEntrysheets = async () => {
-      const ENDPOINT: string = "/api/user/entrysheets/" + query.esId;
-      const result = await axios.get(ENDPOINT).then((res) => res.data);
-      if (isMounted) {
-        setEntrysheet((prevEntrysheet) => ({ ...prevEntrysheet, ...result }));
-      }
-    };
-    getEntrysheets();
-    return () => {
-      isMounted = false;
-    };
-  }, [query.esId]);
+  const url: string = "/api/user/entrysheets/" + query.esId;
+  const { data: entrysheet, error } = useSWR(url, fetcher);
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+  if (!entrysheet) return <div>Loading...</div>;
 
   return <EditingEntrysheet entrysheet={entrysheet} />;
 };
