@@ -2,7 +2,7 @@ import DoubleClickForm from "./DoubleClickForm";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
 
 const classNames: string[] = [
-  "px-2 py-1 rounded-lg border border-gray-300 bg-transparent mt-1",
+  "px-2 py-1 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white mt-1",
   "",
 ];
 const wrapper: string = "mr-8 pr-8 flex justify-around items-center";
@@ -27,6 +27,7 @@ const JobForm = (props: {
       <span className={spanClassName}>職種:</span>
       <DoubleClickForm
         text={job}
+        placeholder="例. 総合職"
         classNames={classNames}
         onChange={handleJobChange}
       />
@@ -52,6 +53,7 @@ const EventForm = (props: {
       <span className={spanClassName}>イベント:</span>
       <DoubleClickForm
         text={event}
+        placeholder="例. 夏インターン"
         classNames={classNames}
         onChange={handleEventChange}
       />
@@ -67,6 +69,7 @@ const DeadlineForm = (): JSX.Element => {
       <span className={spanClassName}>締切:</span>
       <DoubleClickForm
         text={"ほげ"}
+        placeholder=""
         classNames={classNames}
         onChange={handleDeadlineChange}
       />

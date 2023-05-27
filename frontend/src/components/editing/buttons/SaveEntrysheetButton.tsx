@@ -1,5 +1,7 @@
 import axios from "axios";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
+import { IconContext } from "react-icons";
+import { AiOutlineSave } from "react-icons/ai";
 
 const SaveEntrysheetButton = (props: {
   entrysheet: RichEntrysheetProps;
@@ -21,12 +23,11 @@ const SaveEntrysheetButton = (props: {
   };
 
   return (
-    <button
-      onClick={handleClick}
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-    >
-      Save
-    </button>
+    <IconContext.Provider value={{ className: "w-4 h-4" }}>
+      <button onClick={handleClick}>
+        <AiOutlineSave className="mr-2" />
+      </button>
+    </IconContext.Provider>
   );
 };
 

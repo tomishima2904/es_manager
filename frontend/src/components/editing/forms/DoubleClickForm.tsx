@@ -3,6 +3,7 @@ import { useState } from "react";
 const DoubleClickForm = (props: {
   text: string;
   classNames: string[];
+  placeholder: string;
   onChange: (text: string) => void;
 }): JSX.Element => {
   const [text, setText] = useState<string>(props.text);
@@ -32,6 +33,7 @@ const DoubleClickForm = (props: {
         <input
           type="text"
           className={className1}
+          placeholder={props.placeholder}
           value={tempText}
           onChange={handleChange}
           onBlur={handleBlur}
