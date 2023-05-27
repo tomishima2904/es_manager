@@ -58,6 +58,7 @@ const EditingEntrysheet = (props: {
         company={company}
         job={job}
         event={event}
+        entrysheet={entrysheet}
         setEntrysheet={setEntrysheet}
       />
       {Object.keys(entrysheet.questions).map((qId) => (
@@ -74,7 +75,6 @@ const EditingEntrysheet = (props: {
         questions={entrysheet.questions}
         setNewProps={handleAddQandAs}
       />
-      <SaveEntrysheetButton entrysheet={entrysheet} />
     </div>
   );
 };
