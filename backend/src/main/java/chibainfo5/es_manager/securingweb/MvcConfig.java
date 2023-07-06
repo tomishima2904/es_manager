@@ -1,4 +1,4 @@
-package com.example.securingweb;
+package chibainfo5.es_manager.securingweb;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
