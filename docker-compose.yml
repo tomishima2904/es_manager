@@ -25,7 +25,7 @@ services:
     depends_on:
       - db
     # `compose up`の際に行うコマンド (buildしてjarファイルの実行)
-    command: sh -c "gradle build && java -jar -Dserver.port=8001 build/libs/*SNAPSHOT.jar"
+    command: sh -c "gradle bootRun --args='--server.port=8001'"
 
   #コンテナ3 Next.js
   front:
