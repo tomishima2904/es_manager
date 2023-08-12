@@ -1,13 +1,14 @@
 package chibainfo5.es_manager.controllers;
 
 import chibainfo5.es_manager.domain.EntrysheetsEntity;
+import chibainfo5.es_manager.domain.EntrysheetsResponse;
 import chibainfo5.es_manager.repositories.EntrysheetsRepository;
 
 // For WebFlux
 import reactor.core.publisher.Mono;
 import javax.annotation.PostConstruct;
 
-// For Entity
+// For Controller
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,12 +44,16 @@ public class HelloController {
         return Mono.just("Hello Spring!");
     }
 
-    // ユーザー毎のエントリーシートリストのページ
-    // 任意のユーザーIDのエントリーシート情報を取得する
-    // TODO: 表示URLを `/me`のようにダミーにする
+    // ユーザー毎のエントリーシートリストのページ. 任意のユーザーIDのエントリーシート情報を取得する.
     @GetMapping("/{userId}")
-    public Mono<List<EntrysheetsEntity>> getUserEntrysheets(@PathVariable Long userId) {
+    public Mono<EntrysheetsResponse> getUserEntrysheets(@PathVariable Long userId) {
+
+        // 条件に合うuserIdのデータをデータベースから取得
         List<EntrysheetsEntity> entrysheets = entrysheetsRepository.findByUserId(userId);
-        return Mono.just(entrysheets);
+
+        // 配列をそのまま返すとJSONインジェクションの可能性があるためJSONでレスポンスデータを包む
+        EntrysheetsResponse response = new EntrysheetsResponse(entrysheets);
+
+        return Mono.just(response);
     }
 }
