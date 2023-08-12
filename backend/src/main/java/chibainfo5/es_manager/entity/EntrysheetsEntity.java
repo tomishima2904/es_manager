@@ -16,7 +16,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import lombok.Data;
 
-// import chibainfo5.es_manager.entity.EntrysheetsKey;
+import chibainfo5.es_manager.entity.EntrysheetsKey;
 
 
 @Entity
@@ -44,7 +44,7 @@ public class EntrysheetsEntity {
     private Long userId;
 
     @Id // 主キーの設定
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // identity列を用いて主キーを生成
+    @NotNull
     @Column(name = "es_id")
     private Long esId;
 
