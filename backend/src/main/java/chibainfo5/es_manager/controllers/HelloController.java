@@ -1,6 +1,6 @@
 package chibainfo5.es_manager.controllers;
 
-import chibainfo5.es_manager.entity.EntrysheetsEntity;
+import chibainfo5.es_manager.domain.EntrysheetsEntity;
 import chibainfo5.es_manager.repositories.EntrysheetsRepository;
 
 // For WebFlux

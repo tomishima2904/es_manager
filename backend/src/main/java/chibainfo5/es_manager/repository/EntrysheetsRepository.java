@@ -3,8 +3,8 @@ package chibainfo5.es_manager.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import chibainfo5.es_manager.entity.EntrysheetsEntity;
-import chibainfo5.es_manager.entity.EntrysheetsKey;
+import chibainfo5.es_manager.domain.EntrysheetsEntity;
+import chibainfo5.es_manager.domain.EntrysheetsKey;
 
 import java.util.List;
 

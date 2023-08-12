@@ -1,4 +1,4 @@
-package chibainfo5.es_manager.entity;
+package chibainfo5.es_manager.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import lombok.Data;
 
-import chibainfo5.es_manager.entity.EntrysheetsKey;
+import chibainfo5.es_manager.domain.EntrysheetsKey;
 
 
 @Entity

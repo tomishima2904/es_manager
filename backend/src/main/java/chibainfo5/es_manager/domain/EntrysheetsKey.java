@@ -1,4 +1,4 @@
-package chibainfo5.es_manager.entity;
+package chibainfo5.es_manager.domain;
 
 import java.io.Serializable;
 import lombok.Data;
