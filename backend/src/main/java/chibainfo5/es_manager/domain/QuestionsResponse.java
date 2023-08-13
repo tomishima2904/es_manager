@@ -6,7 +6,6 @@ import chibainfo5.es_manager.domain.QuestionsEntity;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import org.json.JSONObject;
 
 
 public class QuestionsResponse {
