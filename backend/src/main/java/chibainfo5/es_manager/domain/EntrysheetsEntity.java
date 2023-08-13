@@ -71,8 +71,8 @@ public class EntrysheetsEntity {
     private boolean isReleased;
 
     // Getter and Setter methods
-    public Long getEsID() {return esId;}
-    public void setEsID(Long esId) {this.esId = esId;}
+    public Long getEsId() {return esId;}
+    public void setEsId(Long esId) {this.esId = esId;}
 
     public Long getUserId() {return userId;}
     public void setUserId(Long userId) {this.userId = userId;}
@@ -92,7 +92,7 @@ public class EntrysheetsEntity {
     // public LocalDateTime getUpdate() {return update;}
     // public void setUpdate(LocalDateTime update) {this.update = update;}
 
-    public boolean getRelease() {return isReleased;}
-    public void setRelease(Boolean isReleased) {this.isReleased = isReleased;}
+    public boolean getIsReleased() {return isReleased;}
+    public void setIsReleased(Boolean isReleased) {this.isReleased = isReleased;}
 
 }
