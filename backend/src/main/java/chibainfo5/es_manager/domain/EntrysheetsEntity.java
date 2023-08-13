@@ -71,68 +71,28 @@ public class EntrysheetsEntity {
     private boolean isReleased;
 
     // Getter and Setter methods
-    public Long getEsID() {
-        return esId;
-    }
+    public Long getEsID() {return esId;}
+    public void setEsID(Long esId) {this.esId = esId;}
 
-    public void setEsID(Long esId) {
-        this.esId = esId;
-    }
+    public Long getUserId() {return userId;}
+    public void setUserId(Long userId) {this.userId = userId;}
 
-    public Long getUserId() {
-        return userId;
-    }
+    public String getCompany() {return company;}
+    public void setCompany(String company) {this.company = company;}
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+    public String getJob() {return job;}
+    public void setJob(String job) {this.job = job;}
 
-    public String getCompany() {
-        return company;
-    }
+    public LocalDateTime getDeadline() {return deadline;}
+    public void setDeadline(LocalDateTime deadline) {this.deadline = deadline;}
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
+    public String getEvent() {return event;}
+    public void setEvent(String event) {this.event = event;}
 
-    public String getJob() {
-        return job;
-    }
+    // public LocalDateTime getUpdate() {return update;}
+    // public void setUpdate(LocalDateTime update) {this.update = update;}
 
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public LocalDateTime getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
-    }
-
-    public String getEvent() {
-        return event;
-    }
-
-    public void setEvent(String event) {
-        this.event = event;
-    }
-
-    // public LocalDateTime getUpdate() {
-    //     return update;
-    // }
-
-    // public void setUpdate(LocalDateTime update) {
-    //     this.update = update;
-    // }
-
-    public boolean getRelease() {
-        return isReleased;
-    }
-
-    public void setRelease(Boolean isReleased) {
-        this.isReleased = isReleased;
-    }
+    public boolean getRelease() {return isReleased;}
+    public void setRelease(Boolean isReleased) {this.isReleased = isReleased;}
 
 }
