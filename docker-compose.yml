@@ -11,6 +11,7 @@ services:
   app:
     container_name: springboot
     image: gradle:7.6.1-jdk-alpine
+    env_file: ./.env
     # デフォルトはTomcatサーバーが8080に指定
     ports:
       - 8001:8001
