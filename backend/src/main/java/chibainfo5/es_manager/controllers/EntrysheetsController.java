@@ -37,7 +37,7 @@ public class EntrysheetsController {
     }
 
     // ユーザー毎のエントリーシートリストのページ. 任意のユーザーIDのエントリーシート情報を取得する.
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId}/entrysheets")
     public Mono<EntrysheetsResponse> getUserEntrysheets(@PathVariable Long userId) {
 
         // 条件に合うuserIdのデータをデータベースから取得
