@@ -27,12 +27,13 @@ public class QuestionsEntity {
     public QuestionsEntity(){}
 
     public QuestionsEntity(Long userId, Long esId,
-                            Integer qId, String question,
+                            Integer qId, String question, Integer maxChars,
                             Integer aId, String answer){
         this.userId = userId;
         this.esId = esId;
         this.qId = qId;
         this.question = question;
+        this.maxChars = maxChars;
         this.aId = aId;
         this.answer = answer;
     }
@@ -56,6 +57,9 @@ public class QuestionsEntity {
     @Column(name = "question", length = 200, nullable = true)
     private String question;
 
+    @Column(name = "maxChars", columnDefinition = "INT DEFAULT 0")
+    private Integer maxChars;
+
     @Id  // 主キー
     @NotNull
     @Column(name = "a_id")
@@ -76,6 +80,9 @@ public class QuestionsEntity {
 
     public String getQuestion() {return question;}
     public void setQuestion(String question) {this.question = question;}
+
+    public Integer getMaxChars() {return maxChars;}
+    public void setMaxChars(Integer maxChars) {this.maxChars = maxChars;}
 
     public Integer getAId() {return aId;}
     public void setAid(Integer aId) {this.aId = aId;}
