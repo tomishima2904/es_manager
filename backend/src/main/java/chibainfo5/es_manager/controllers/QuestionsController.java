@@ -49,8 +49,7 @@ public class QuestionsController {
         EntrysheetsEntity entrysheet = entrysheetsRepository.findByUserIdAndEsId(userId, esId);
         List<QuestionsEntity> questions = questionsRepository.findByUserIdAndEsId(userId, esId);
 
-        QuestionsResponse response = new QuestionsResponse();
-        response.setQuestions(QuestionsResponse.convertToQuestionMap(questions));
+        QuestionsResponse response = QuestionsResponse.convertToQuestionsResponse(entrysheet, questions);
 
         return Mono.just(response);
     }

@@ -10,19 +10,22 @@ import org.json.JSONObject;
 
 
 public class QuestionsResponse {
-    // private EntrysheetsEntity entrysheet;
+    private EntrysheetsEntity entrysheet;
     private Map<String, Question> questions;
 
-    public Map<String, Question> getQuestions() {
-        return questions;
-    }
+    public EntrysheetsEntity getEntrysheet() {return entrysheet;}
+    public void setEntrysheet(EntrysheetsEntity entrysheet) {this.entrysheet = entrysheet;}
 
-    public void setQuestions(Map<String, Question> questions) {
-        this.questions = questions;
-    }
+    public Map<String, Question> getQuestions() {return questions;}
+    public void setQuestions(Map<String, Question> questions) {this.questions = questions;}
 
     // DBから取得したList<QuestionsEntity>をオブジェクト形式に変換
-    public static Map<String, Question> convertToQuestionMap(List<QuestionsEntity> entities) {
+    public static QuestionsResponse convertToQuestionsResponse(
+        EntrysheetsEntity entrysheet,
+        List<QuestionsEntity> entities
+    ) {
+        QuestionsResponse response = new QuestionsResponse();
+        response.setEntrysheet(entrysheet);
 
         // questionMap = {"questions": Map<String, Question>}
         Map<String, Question> questionMap = new HashMap<>();
@@ -46,7 +49,8 @@ public class QuestionsResponse {
             questionMap.put(qId, question);
         }
 
-        return questionMap;
+        response.setQuestions(questionMap);
+        return response;
     }
 
     // Question型を定義してQuestionオブジェクトを扱いやすくする

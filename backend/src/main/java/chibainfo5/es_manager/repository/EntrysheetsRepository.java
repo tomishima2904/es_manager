@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface EntrysheetsRepository extends JpaRepository<EntrysheetsEntity, EntrysheetsKey> {
     public List<EntrysheetsEntity> findByUserId(Long userId);
+    public EntrysheetsEntity findByUserIdAndEsId(Long userId, Long esId);
 }
