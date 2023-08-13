@@ -6,14 +6,39 @@ import chibainfo5.es_manager.domain.QuestionsEntity;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import java.time.LocalDateTime;
 
 
 public class QuestionsResponse {
-    private EntrysheetsEntity entrysheet;
+    private Long userId;
+    private Long esId;
+    private String company;
+    private String job;
+    private String event;
+    private LocalDateTime deadline;
+    private boolean isReleased;
     private Map<String, Question> questions;
 
-    public EntrysheetsEntity getEntrysheet() {return entrysheet;}
-    public void setEntrysheet(EntrysheetsEntity entrysheet) {this.entrysheet = entrysheet;}
+    public Long getEsId() {return esId;}
+    public void setEsId(Long esId) {this.esId = esId;}
+
+    public Long getUserId() {return userId;}
+    public void setUserId(Long userId) {this.userId = userId;}
+
+    public String getCompany() {return company;}
+    public void setCompany(String company) {this.company = company;}
+
+    public String getJob() {return job;}
+    public void setJob(String job) {this.job = job;}
+
+    public LocalDateTime getDeadline() {return deadline;}
+    public void setDeadline(LocalDateTime deadline) {this.deadline = deadline;}
+
+    public String getEvent() {return event;}
+    public void setEvent(String event) {this.event = event;}
+
+    public boolean getIsReleased() {return isReleased;}
+    public void setIsReleased(Boolean isReleased) {this.isReleased = isReleased;}
 
     public Map<String, Question> getQuestions() {return questions;}
     public void setQuestions(Map<String, Question> questions) {this.questions = questions;}
@@ -24,7 +49,13 @@ public class QuestionsResponse {
         List<QuestionsEntity> entities
     ) {
         QuestionsResponse response = new QuestionsResponse();
-        response.setEntrysheet(entrysheet);
+        response.setUserId(entrysheet.getUserId());
+        response.setEsId(entrysheet.getEsId());
+        response.setCompany(entrysheet.getCompany());
+        response.setJob(entrysheet.getJob());
+        response.setEvent(entrysheet.getEvent());
+        response.setDeadline(entrysheet.getDeadline());
+        response.setIsReleased(entrysheet.getIsReleased());
 
         // questionMap = {"questions": Map<String, Question>}
         Map<String, Question> questionMap = new HashMap<>();
