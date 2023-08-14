@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import chibainfo5.es_manager.domain.EntrysheetsEntity;
 import chibainfo5.es_manager.domain.EntrysheetsResponse;
@@ -61,7 +63,7 @@ public class EntrysheetsController {
     // 新規ES作成. 下記コマンドで実行を確認できる
     // curl -X POST http://localhost:8001/{userId}/entrysheets
     @PostMapping("/{userId}/entrysheets")
-    public EntrysheetsEntity createNewEntrysheet(@PathVariable Long userId) {
+    public Mono<ResponseEntity<String>> createNewEntrysheet(@PathVariable Long userId) {
         // 新規ES作成時の初期値
         String company = "会社XX";  // 空欄はダメなので
         String job = "";
@@ -69,8 +71,15 @@ public class EntrysheetsController {
         LocalDateTime deadline = null;
         Boolean isReleased = false;
 
-        return entrysheetsService.createNewEntrysheetWithIncrementedEsId(
+        // 新規ES作成して保存
+        Long newEsId = entrysheetsService.createNewEntrysheetWithIncrementedEsId(
             userId, company, job, event, deadline, isReleased);
+
+        // 新規で作成したESの編集画面のエンドポイントへリダイレクト
+        String redirectUrl = String.format("/%d/entrysheets/%d", userId, newEsId);
+        return Mono.just(ResponseEntity.status(HttpStatus.SEE_OTHER)
+            .header("Location", redirectUrl)
+            .body("Redirecting to " + redirectUrl));
     }
 
 }

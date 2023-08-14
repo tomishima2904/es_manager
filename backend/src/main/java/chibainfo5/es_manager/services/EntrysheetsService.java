@@ -16,7 +16,7 @@ public class EntrysheetsService {
     private EntrysheetsRepository entrysheetsRepository;
 
     // `POST http://localhost:8001/{userId}/entrysheets`で新規ESを作成するメソッド
-    public EntrysheetsEntity createNewEntrysheetWithIncrementedEsId(
+    public Long createNewEntrysheetWithIncrementedEsId(
             Long userId, String company, String job, String event,
             LocalDateTime deadline, Boolean isReleased) {
 
@@ -27,7 +27,10 @@ public class EntrysheetsService {
         }
         Long newEsId = maxEsId + 1;
 
+        // 初期値を与えてインスタンスを作成し、そのレコードをDBに保存
         EntrysheetsEntity newEntry = new EntrysheetsEntity(userId, newEsId, company, job, event, deadline, isReleased);
-        return entrysheetsRepository.save(newEntry);
+        entrysheetsRepository.save(newEntry);
+
+        return newEsId;
     }
 }
