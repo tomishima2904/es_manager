@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 public class QuestionsResponse {
@@ -81,6 +82,55 @@ public class QuestionsResponse {
 
         response.setQuestions(questionMap);
         return response;
+    }
+
+    // リクエストボディのオブジェクトをDBに保存できる形式に変換
+    public static EntrysheetsEntity convertToEntrysheetEntity(
+        QuestionsResponse questionsResponse
+    ){
+        Long userId = questionsResponse.getUserId();
+        Long esId = questionsResponse.getEsId();
+        String company = questionsResponse.getCompany();
+        String job = questionsResponse.getJob();
+        String event = questionsResponse.getEvent();
+        LocalDateTime deadline = questionsResponse.getDeadline();
+        boolean isReleased = questionsResponse.getIsReleased();
+
+        EntrysheetsEntity entrysheetEntity = new EntrysheetsEntity(
+            userId, esId, company, job, event, deadline, isReleased
+        );
+        return entrysheetEntity;
+    }
+
+    // リクエストボディのオブジェクトをDBに保存できる形式に変換
+    public static List<QuestionsEntity> convertToQuestionsList(
+        QuestionsResponse questionsResponse
+    ){
+        List<QuestionsEntity> questionsList = new ArrayList<>();
+
+        // Quesiton情報 (`question`や`maxChars`)を取得・保持
+        for (Map.Entry<String, QuestionsResponse.Question> questionEntry : questionsResponse.getQuestions().entrySet()) {
+            QuestionsResponse.Question question = questionEntry.getValue();
+
+            // questionが空でない場合に行う
+            // TODO: 空になることがないようにしたい
+            if (question != null) {
+                // Answer情報 (`aId`や`answer`)を取得・保持
+                for (Map.Entry<String, String> answerEntry : question.getAnswers().entrySet()) {
+                    QuestionsEntity questionsEntity = new QuestionsEntity();
+                    questionsEntity.setUserId(questionsResponse.getUserId());
+                    questionsEntity.setEsId(questionsResponse.getUserId());
+                    questionsEntity.setQId(Integer.parseInt(questionEntry.getKey()));
+                    questionsEntity.setQuestion(question.getQuestion());
+                    questionsEntity.setMaxChars(question.getMaxChars());
+                    questionsEntity.setAId(Integer.parseInt(answerEntry.getKey()));
+                    questionsEntity.setAnswer(answerEntry.getValue());
+                    questionsList.add(questionsEntity);
+                }
+            }
+
+        }
+        return questionsList;
     }
 
     // Question型を定義してQuestionオブジェクトを扱いやすくする
