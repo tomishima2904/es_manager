@@ -11,12 +11,17 @@ import reactor.core.publisher.Mono;
 import org.springframework.beans.factory.annotation.Autowired;
 // For Controller
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import chibainfo5.es_manager.domain.EntrysheetsEntity;
 import chibainfo5.es_manager.domain.EntrysheetsResponse;
 import chibainfo5.es_manager.repositories.EntrysheetsRepository;
+import chibainfo5.es_manager.services.EntrysheetsService;
+
+import java.time.LocalDateTime;
+
 
 @RestController
 public class EntrysheetsController {
@@ -24,6 +29,10 @@ public class EntrysheetsController {
     // データベースアクセスのために必要なリポジトリを定義
     @Autowired
     private EntrysheetsRepository entrysheetsRepository;
+
+    // データベースに新規ESのレコードを追加するためのサービス
+    @Autowired
+    private EntrysheetsService entrysheetsService;
 
     // アプリ起動時にダミーデータをデータベース内に登録
     @PostConstruct
@@ -48,4 +57,20 @@ public class EntrysheetsController {
 
         return Mono.just(response);
     }
+
+    // 新規ES作成. 下記コマンドで実行を確認できる
+    // curl -X POST http://localhost:8001/{userId}/entrysheets
+    @PostMapping("/{userId}/entrysheets")
+    public EntrysheetsEntity createNewEntrysheet(@PathVariable Long userId) {
+        // 新規ES作成時の初期値
+        String company = "会社XX";  // 空欄はダメなので
+        String job = "";
+        String event = "";
+        LocalDateTime deadline = null;
+        Boolean isReleased = false;
+
+        return entrysheetsService.createNewEntrysheetWithIncrementedEsId(
+            userId, company, job, event, deadline, isReleased);
+    }
+
 }
