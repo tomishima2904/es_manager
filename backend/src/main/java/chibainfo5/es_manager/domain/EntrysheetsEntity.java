@@ -27,8 +27,9 @@ public class EntrysheetsEntity {
 
     public EntrysheetsEntity(){}
 
-    public EntrysheetsEntity(Long userId, Long esId, String company, String job,
-                       LocalDateTime deadline, String event, Boolean isReleased){
+    public EntrysheetsEntity(
+            Long userId, Long esId, String company, String job,
+            String event, LocalDateTime deadline, Boolean isReleased){
         this.userId = userId;
         this.esId = esId;
         this.company = company;

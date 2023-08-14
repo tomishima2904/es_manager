@@ -28,9 +28,9 @@ public class EntrysheetsController {
     // アプリ起動時にダミーデータをデータベース内に登録
     @PostConstruct
     public void init(){
-        EntrysheetsEntity entrysheet1 = new EntrysheetsEntity(0L, 0L, "A株式会社", "エンジニア", null, "本選考", false);
-        EntrysheetsEntity entrysheet2 = new EntrysheetsEntity(1L, 0L, "C株式会社", "データサイエンティスト", null, "冬インターン", false);
-        EntrysheetsEntity entrysheet3 = new EntrysheetsEntity(0L, 1L, "B株式会社", "総合職", null, "夏インターン", true);
+        EntrysheetsEntity entrysheet1 = new EntrysheetsEntity(0L, 0L, "A株式会社", "エンジニア", "本選考", null, false);
+        EntrysheetsEntity entrysheet2 = new EntrysheetsEntity(1L, 0L, "C株式会社", "データサイエンティスト", "冬インターン", null, false);
+        EntrysheetsEntity entrysheet3 = new EntrysheetsEntity(0L, 1L, "B株式会社", "総合職", "夏インターン", null, true);
         entrysheetsRepository.saveAndFlush(entrysheet1);
         entrysheetsRepository.saveAndFlush(entrysheet2);
         entrysheetsRepository.saveAndFlush(entrysheet3);
