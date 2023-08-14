@@ -57,7 +57,7 @@ public class QuestionsEntity {
     @Column(name = "question", length = 200, nullable = true)
     private String question;
 
-    @Column(name = "maxChars", columnDefinition = "INT DEFAULT 0")
+    @Column(name = "maxChars", columnDefinition = "INT DEFAULT 400")
     private Integer maxChars;
 
     @Id  // 主キー
@@ -76,7 +76,7 @@ public class QuestionsEntity {
     public void setEsId(Long esId) {this.esId = esId;}
 
     public Integer getQId() {return qId;}
-    public void setQid(Integer qId) {this.qId = qId;}
+    public void setQId(Integer qId) {this.qId = qId;}
 
     public String getQuestion() {return question;}
     public void setQuestion(String question) {this.question = question;}
@@ -85,7 +85,7 @@ public class QuestionsEntity {
     public void setMaxChars(Integer maxChars) {this.maxChars = maxChars;}
 
     public Integer getAId() {return aId;}
-    public void setAid(Integer aId) {this.aId = aId;}
+    public void setAId(Integer aId) {this.aId = aId;}
 
     public String getAnswer() {return answer;}
     public void setAnswer(String answer) {this.answer = answer;}
