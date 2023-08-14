@@ -36,6 +36,7 @@
     "@storybook/react": "^7.0.7",
     "@storybook/testing-library": "^0.0.14-next.2",
     "eslint-plugin-storybook": "^0.6.11",
-    "storybook": "^7.0.7"
+    "storybook": "^7.0.7",
+    "swc": "^1.0.11"
   }
 }
