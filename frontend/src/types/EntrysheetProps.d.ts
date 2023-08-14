@@ -1,14 +1,15 @@
 // entrysheetsのリストの1行
-export type LightEntrysheetProps = {
+export type EntrysheetEntityProps = {
+  userId: number;
+  esId: number;
   company: string;
   job: string;
   event: string;
   deadline: string;
+  isReleased: boolean;
 };
 
-export type EntrysheetsProps = {
-  [esId: string]: LightEntrysheetProps;
-};
+export type EntrysheetsProps = { [key: string]: EntrysheetEntityProps[] };
 
 export type NewEntrysheetProps = {
   esId: string;
@@ -29,7 +30,7 @@ export type QuestionsProps = {
 };
 
 export type RichEntrysheetProps = {
-  esId: string;
+  esId: number;
   company: string;
   job: string;
   event: string;

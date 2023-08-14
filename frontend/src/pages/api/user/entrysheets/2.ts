@@ -1,12 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler = (
   req: NextApiRequest,
   res: NextApiResponse<RichEntrysheetProps>
 ) => {
   const entrysheet: RichEntrysheetProps = {
-    esId: "2",
+    esId: 2,
     company: "Untitled",
     job: "",
     event: "",
