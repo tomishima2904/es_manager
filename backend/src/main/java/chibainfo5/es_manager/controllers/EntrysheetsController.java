@@ -11,12 +11,19 @@ import reactor.core.publisher.Mono;
 import org.springframework.beans.factory.annotation.Autowired;
 // For Controller
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import chibainfo5.es_manager.domain.EntrysheetsEntity;
 import chibainfo5.es_manager.domain.EntrysheetsResponse;
 import chibainfo5.es_manager.repositories.EntrysheetsRepository;
+import chibainfo5.es_manager.services.EntrysheetsService;
+
+import java.time.LocalDateTime;
+
 
 @RestController
 public class EntrysheetsController {
@@ -25,12 +32,16 @@ public class EntrysheetsController {
     @Autowired
     private EntrysheetsRepository entrysheetsRepository;
 
+    // データベースに新規ESのレコードを追加するためのサービス
+    @Autowired
+    private EntrysheetsService entrysheetsService;
+
     // アプリ起動時にダミーデータをデータベース内に登録
     @PostConstruct
     public void init(){
-        EntrysheetsEntity entrysheet1 = new EntrysheetsEntity(0L, 0L, "A株式会社", "エンジニア", null, "本選考", false);
-        EntrysheetsEntity entrysheet2 = new EntrysheetsEntity(1L, 0L, "C株式会社", "データサイエンティスト", null, "冬インターン", false);
-        EntrysheetsEntity entrysheet3 = new EntrysheetsEntity(0L, 1L, "B株式会社", "総合職", null, "夏インターン", true);
+        EntrysheetsEntity entrysheet1 = new EntrysheetsEntity(0L, 0L, "A株式会社", "エンジニア", "本選考", null, false);
+        EntrysheetsEntity entrysheet2 = new EntrysheetsEntity(1L, 0L, "C株式会社", "データサイエンティスト", "冬インターン", null, false);
+        EntrysheetsEntity entrysheet3 = new EntrysheetsEntity(0L, 1L, "B株式会社", "総合職", "夏インターン", null, true);
         entrysheetsRepository.saveAndFlush(entrysheet1);
         entrysheetsRepository.saveAndFlush(entrysheet2);
         entrysheetsRepository.saveAndFlush(entrysheet3);
@@ -48,4 +59,27 @@ public class EntrysheetsController {
 
         return Mono.just(response);
     }
+
+    // 新規ES作成. 下記コマンドで実行を確認できる
+    // curl -X POST http://localhost:8001/{userId}/entrysheets
+    @PostMapping("/{userId}/entrysheets")
+    public Mono<ResponseEntity<String>> createNewEntrysheet(@PathVariable Long userId) {
+        // 新規ES作成時の初期値
+        String company = "会社XX";  // 空欄はダメなので
+        String job = "";
+        String event = "";
+        LocalDateTime deadline = null;
+        Boolean isReleased = false;
+
+        // 新規ES作成して保存
+        Long newEsId = entrysheetsService.createNewEntrysheetWithIncrementedEsId(
+            userId, company, job, event, deadline, isReleased);
+
+        // 新規で作成したESの編集画面のエンドポイントへリダイレクト
+        String redirectUrl = String.format("/%d/entrysheets/%d", userId, newEsId);
+        return Mono.just(ResponseEntity.status(HttpStatus.SEE_OTHER)
+            .header("Location", redirectUrl)
+            .body("Redirecting to " + redirectUrl));
+    }
+
 }
