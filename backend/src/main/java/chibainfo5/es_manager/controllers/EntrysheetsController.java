@@ -71,7 +71,7 @@ public class EntrysheetsController {
     @PostMapping("/{userId}/entrysheets")
     public Mono<ResponseEntity<String>> createNewEntrysheet(@PathVariable Long userId) {
         // 新規ES作成時の初期値
-        String company = "会社XX";  // 空欄はダメなので
+        String company = "Untitled";  // 空欄はダメなので
         String job = "";
         String event = "";
         LocalDateTime deadline = null;

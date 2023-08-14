@@ -64,7 +64,6 @@ public class QuestionsController {
         @RequestBody QuestionsResponse inputQuestionsResponse
     ){
         // 差分（特に削除されたレコード）を把握するために古いレコードを取得
-        // EntrysheetsEntity oldEntrysheet = entrysheetsRepository.findByUserIdAndEsId(userId, esId);
         List<QuestionsEntity> oldQuestionsList = questionsRepository.findByUserIdAndEsId(userId, esId);
 
         // Formから送信されたJSON形式の新しいレコードをDBに保存できる形式に変換
