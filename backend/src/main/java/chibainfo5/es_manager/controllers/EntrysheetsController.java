@@ -21,6 +21,8 @@ import chibainfo5.es_manager.domain.EntrysheetsEntity;
 import chibainfo5.es_manager.domain.EntrysheetsResponse;
 import chibainfo5.es_manager.repositories.EntrysheetsRepository;
 import chibainfo5.es_manager.services.EntrysheetsService;
+import chibainfo5.es_manager.domain.QuestionsEntity;
+import chibainfo5.es_manager.repositories.QuestionsRepository;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +33,10 @@ public class EntrysheetsController {
     // データベースアクセスのために必要なリポジトリを定義
     @Autowired
     private EntrysheetsRepository entrysheetsRepository;
+
+    // 新規ESの質問を作成するために必要なリポジトリを定義
+    @Autowired
+    private QuestionsRepository questionsRepository;
 
     // データベースに新規ESのレコードを追加するためのサービス
     @Autowired
@@ -74,6 +80,10 @@ public class EntrysheetsController {
         // 新規ES作成して保存
         Long newEsId = entrysheetsService.createNewEntrysheetWithIncrementedEsId(
             userId, company, job, event, deadline, isReleased);
+
+        // 新規ESの質問と解答も初期値を入れて作成
+        QuestionsEntity newQuestions = new QuestionsEntity(userId, newEsId, 0, "", 400, 0, "");
+        questionsRepository.saveAndFlush(newQuestions);
 
         // 新規で作成したESの編集画面のエンドポイントへリダイレクト
         String redirectUrl = String.format("/%d/entrysheets/%d", userId, newEsId);
