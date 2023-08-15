@@ -10,7 +10,8 @@ const handler = (
     res.status(200).json({ ...entrysheet });
   } else {
     const entrysheet: RichEntrysheetProps = {
-      esId: 0,
+      userId: 1,
+      esId: 1,
       company: "A株式会社",
       job: "総合職",
       event: "夏インターン",

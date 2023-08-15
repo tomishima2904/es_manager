@@ -30,6 +30,7 @@ export type QuestionsProps = {
 };
 
 export type RichEntrysheetProps = {
+  userId: number;
   esId: number;
   company: string;
   job: string;
