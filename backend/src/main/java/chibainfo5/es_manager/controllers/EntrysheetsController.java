@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
@@ -55,6 +56,7 @@ public class EntrysheetsController {
 
     // ユーザー毎のエントリーシートリストのページ. 任意のユーザーIDのエントリーシート情報を取得する.
     @GetMapping("/{userId}/entrysheets")
+    @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<EntrysheetsResponse> getUserEntrysheets(@PathVariable Long userId) {
 
         // 条件に合うuserIdのデータをデータベースから取得
@@ -69,6 +71,7 @@ public class EntrysheetsController {
     // 新規ES作成. 下記コマンドで実行を確認できる
     // curl -X POST http://localhost:8001/{userId}/entrysheets
     @PostMapping("/{userId}/entrysheets")
+    @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<ResponseEntity<String>> createNewEntrysheet(@PathVariable Long userId) {
         // 新規ES作成時の初期値
         String company = "Untitled";  // 空欄はダメなので
