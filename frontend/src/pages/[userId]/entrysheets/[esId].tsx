@@ -1,10 +1,7 @@
-import { GetServerSidePropsContext } from "next";
-import { useState, useEffect } from "react";
-import useSWR from "swr";
-import fetcher from "@/utils/fetcher";
-import axios from "axios";
 import EditingEntrysheet from "@/components/editing/EditingEntrysheet";
-import { RichEntrysheetProps } from "@/types/EntrysheetProps";
+import fetcher from "@/utils/fetcher";
+import { GetServerSidePropsContext } from "next";
+import useSWR from "swr";
 
 // 動的なパスの値を取得
 export async function getServerSideProps({ query }: GetServerSidePropsContext) {
