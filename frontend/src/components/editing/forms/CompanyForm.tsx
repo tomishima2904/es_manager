@@ -1,6 +1,5 @@
-import { useState } from "react";
-import DoubleClickForm from "./DoubleClickForm";
 import { RichEntrysheetProps } from "@/types/EntrysheetProps";
+import DoubleClickForm from "./DoubleClickForm";
 
 const CompanyForm = (props: {
   company: string;
@@ -24,6 +23,7 @@ const CompanyForm = (props: {
       <DoubleClickForm
         text={company}
         classNames={classNames}
+        placeholder="企業名"
         onChange={handleCompanyChange}
       />
     </div>
