@@ -1,14 +1,22 @@
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import fetcher from "@/utils/fetcher";
 import EntrysheetsList from "@/components/entrysheets/EntrysheetsList";
 import Sidebar from "@/components/entrysheets/Sidebar";
+import fetcher from "@/utils/fetcher";
+import { GetServerSidePropsContext } from "next";
+import { useRouter } from "next/router";
+import useSWR from "swr";
 
-export default function Entrysheets() {
+// 動的なパスの値を取得
+export async function getServerSideProps({ query }: GetServerSidePropsContext) {
+  return {
+    props: { query },
+  };
+}
+
+const Entrysheets = ({ query }: GetServerSidePropsContext) => {
   const router = useRouter();
 
   // SWR で データフェッチ
-  const url: string = "/api/user/entrysheets";
+  const url: string = "/api/" + query.userId + "/entrysheets";
   const { data: entrysheets, error } = useSWR(url, fetcher);
 
   if (error) {
@@ -22,4 +30,6 @@ export default function Entrysheets() {
       <EntrysheetsList entrysheets={entrysheets} />
     </div>
   );
-}
+};
+
+export default Entrysheets;
