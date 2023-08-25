@@ -1,12 +1,16 @@
+import { UserIdContext } from "@/pages/[userId]/entrysheets";
 import axios from "axios";
 import type { NextRouter } from "next/router";
+import { useContext } from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineFileAdd } from "react-icons/ai"; // 画像icon
 
 export default function CreateEntrysheetButton(props: { router: NextRouter }) {
+  const userId = useContext(UserIdContext);
+
   // POSTメソッドで新しいエントリーシートを作成
   const createNewEntrysheet = async () => {
-    const ENDPOINT: string = "/api/user/entrysheets";
+    const ENDPOINT: string = `/api/${userId}/entrysheets`;
     try {
       const response = await axios.post(
         ENDPOINT,
@@ -18,7 +22,8 @@ export default function CreateEntrysheetButton(props: { router: NextRouter }) {
       console.log("Success", response);
       // レスポンスオブジェクトから新しく作成されたリソースのIDを取得
       const esId: string = response.data.esId.toString();
-      const newENDPOINT: string = "entrysheets/" + esId;
+      console.log(userId);
+      const newENDPOINT: string = `/${userId}/entrysheets/${esId}`;
       // useRouterでnewENDPOINTへ画面遷移
       const { router } = props;
       router.push({ pathname: newENDPOINT });
