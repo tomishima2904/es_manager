@@ -1,9 +1,11 @@
+import { UserIdContext } from "@/pages/[userId]/entrysheets";
 import {
   EntrysheetEntityProps,
   EntrysheetsProps,
 } from "@/types/EntrysheetProps";
 import dateFormatter from "@/utils/dateFormatter";
 import Link from "next/link";
+import { useContext } from "react";
 
 // ヘッダー行
 const ListHeader = () => {
@@ -28,7 +30,8 @@ const EntrysheetItem = (props: {
   // 日時を yyyy/mm/dd hh:mm の文字列に変換
   const deadline = new Date(entrysheet.deadline);
   const formattedDate = dateFormatter(deadline);
-  const endpoint = `/user/entrysheets/${esId}`;
+  const userId = useContext(UserIdContext);
+  const endpoint = `/${userId}/entrysheets/${esId}`;
 
   return (
     <Link href={endpoint}>
