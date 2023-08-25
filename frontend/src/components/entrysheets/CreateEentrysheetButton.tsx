@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineFileAdd } from "react-icons/ai"; // 画像icon
 
-export default function CreateEntrysheetButton(props: { router: NextRouter }) {
+const CreateEntrysheetButton = (props: { router: NextRouter }): JSX.Element => {
   const userId = useContext(UserIdContext);
 
   // POSTメソッドで新しいエントリーシートを作成
@@ -46,4 +46,6 @@ export default function CreateEntrysheetButton(props: { router: NextRouter }) {
       </button>
     </IconContext.Provider>
   );
-}
+};
+
+export default CreateEntrysheetButton;
