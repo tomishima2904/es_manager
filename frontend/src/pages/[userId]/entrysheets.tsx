@@ -21,9 +21,7 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
   const router = useRouter();
 
   // SWR で データフェッチ
-  // TODO: ホストを環境変数で変えられるようにしたい
-  const url: string = `/api/${query.userId}/entrysheets`;
-  //   const url: string = "http://localhost:8001/" + query.userId + "/entrysheets";
+  const url: string = `${process.env.API_HOST}/${query.userId}/entrysheets`;
   const { data: entrysheets, error } = useSWR(url, fetcher);
 
   if (error) {

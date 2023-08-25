@@ -10,8 +10,7 @@ export default function CreateEntrysheetButton(props: { router: NextRouter }) {
 
   // POSTメソッドで新しいエントリーシートを作成
   const createNewEntrysheet = async () => {
-    const url: string = `/api/${userId}/entrysheets`;
-    // const url: string = `http://localhost:8001/${userId}/entrysheets`;
+    const url: string = `${process.env.API_HOST}/${userId}/entrysheets`;
     try {
       const response = await axios.post(
         url,
