@@ -11,10 +11,6 @@ export type EntrysheetEntityProps = {
 
 export type EntrysheetsProps = { [key: string]: EntrysheetEntityProps[] };
 
-export type NewEntrysheetProps = {
-  esId: string;
-};
-
 export type AnswersProps = {
   [aId: string]: string;
 };
@@ -36,5 +32,6 @@ export type RichEntrysheetProps = {
   job: string;
   event: string;
   deadline: string;
+  isReleased: boolean;
   questions: QuestionsProps;
 };

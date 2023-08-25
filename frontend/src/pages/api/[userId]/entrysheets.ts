@@ -1,17 +1,30 @@
 import type {
   EntrysheetEntityProps,
   EntrysheetsProps,
-  NewEntrysheetProps,
+  QandAProps,
+  RichEntrysheetProps,
 } from "@/types/EntrysheetProps";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler = (
   req: NextApiRequest,
-  res: NextApiResponse<EntrysheetsProps | NewEntrysheetProps>
+  res: NextApiResponse<EntrysheetsProps | RichEntrysheetProps>
 ) => {
   if (req.method === "POST") {
-    const entrysheet: NewEntrysheetProps = {
-      esId: "2",
+    const qAndAProps: QandAProps = {
+      question: "",
+      maxChars: 400,
+      answers: { "0": "" },
+    };
+    const entrysheet: RichEntrysheetProps = {
+      userId: 1,
+      esId: 2,
+      company: "Untitled",
+      job: "",
+      event: "",
+      deadline: "2023-03-31T12:00:00",
+      isReleased: false,
+      questions: { "0": qAndAProps },
     };
     res.status(200).json(entrysheet);
   } else {

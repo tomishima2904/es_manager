@@ -16,6 +16,7 @@ const handler = (
       job: "総合職",
       event: "夏インターン",
       deadline: "2023-03-31T12:00:00",
+      isReleased: false,
       questions: {
         "0": {
           question: "志望動機は?",

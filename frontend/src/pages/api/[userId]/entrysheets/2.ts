@@ -12,6 +12,7 @@ const handler = (
     job: "",
     event: "",
     deadline: "",
+    isReleased: false,
     questions: {
       "0": { question: "", maxChars: 100, answers: { "0": "" } },
     },
