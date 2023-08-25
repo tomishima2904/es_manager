@@ -10,10 +10,11 @@ export default function CreateEntrysheetButton(props: { router: NextRouter }) {
 
   // POSTメソッドで新しいエントリーシートを作成
   const createNewEntrysheet = async () => {
-    const ENDPOINT: string = `/api/${userId}/entrysheets`;
+    const url: string = `/api/${userId}/entrysheets`;
+    // const url: string = `http://localhost:8001/${userId}/entrysheets`;
     try {
       const response = await axios.post(
-        ENDPOINT,
+        url,
         {},
         {
           headers: { "Content-Type": "application/json" },
@@ -23,10 +24,10 @@ export default function CreateEntrysheetButton(props: { router: NextRouter }) {
       // レスポンスオブジェクトから新しく作成されたリソースのIDを取得
       const esId: string = response.data.esId.toString();
       console.log(userId);
-      const newENDPOINT: string = `/${userId}/entrysheets/${esId}`;
-      // useRouterでnewENDPOINTへ画面遷移
+      const newUrl: string = `/${userId}/entrysheets/${esId}`;
+      // useRouterでnewUrlへ画面遷移
       const { router } = props;
-      router.push({ pathname: newENDPOINT });
+      router.push({ pathname: newUrl });
     } catch (error) {
       console.error("Error", error);
     }
