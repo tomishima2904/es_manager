@@ -1,14 +1,18 @@
-import axios from "axios";
+import { UserIdContext } from "@/pages/[userId]/entrysheets/[esId]";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
+import axios from "axios";
+import { useContext } from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineSave } from "react-icons/ai";
 
 const SaveEntrysheetButton = (props: {
   entrysheet: RichEntrysheetProps;
 }): JSX.Element => {
+  const userId = useContext(UserIdContext);
+
   const handleClick = () => {
     const { entrysheet } = props;
-    const endpoint: string = "/api/user/entrysheets/" + entrysheet.esId;
+    const endpoint: string = `${process.env.API_HOST}/${userId}/entrysheets/${entrysheet.esId}`;
     console.log(entrysheet);
     axios
       .post(endpoint, entrysheet, {
