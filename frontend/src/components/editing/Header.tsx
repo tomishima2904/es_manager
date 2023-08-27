@@ -1,24 +1,27 @@
-import { useState, useEffect } from "react";
+import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
+import { useEffect, useState } from "react";
+import SaveEntrysheetButton from "./buttons/SaveEntrysheetButton";
 import CompanyForm from "./forms/CompanyForm";
 import MetaForm from "./forms/MetaForm";
-import SaveEntrysheetButton from "./buttons/SaveEntrysheetButton";
-import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
 
 const Header = (props: {
   company: string;
   job: string;
   event: string;
+  deadline: string;
   entrysheet: RichEntrysheetProps;
   setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
 }): JSX.Element => {
   const [company, setCompany] = useState<string>("");
   const [job, setJob] = useState<string>("");
   const [event, setEvent] = useState<string>("");
+  const [deadline, setDeadline] = useState<string>("");
   // レンダリング時にprops.entrysheetが存在する場合は、初期化を実行する
   useEffect(() => {
     if (props.company) setCompany(props.company);
     if (props.job) setJob(props.job);
     if (props.event) setEvent(props.event);
+    if (props.deadline) setDeadline(props.deadline);
   }, [props]);
 
   // companyがnullの場合
@@ -34,6 +37,7 @@ const Header = (props: {
           <MetaForm
             job={job}
             event={event}
+            deadline={deadline}
             setEntrysheet={props.setEntrysheet}
           />
         </div>

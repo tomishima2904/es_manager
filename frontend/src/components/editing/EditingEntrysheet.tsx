@@ -62,6 +62,7 @@ const EditingEntrysheet = (props: {
         company={company}
         job={job}
         event={event}
+        deadline={deadline}
         entrysheet={entrysheet}
         setEntrysheet={setEntrysheet}
       />
