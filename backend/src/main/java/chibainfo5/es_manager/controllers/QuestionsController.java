@@ -37,10 +37,12 @@ public class QuestionsController {
         QuestionsEntity question2 = new QuestionsEntity(0L, 0L, 1, "趣味は?", 30, 0, "サウナ");
         QuestionsEntity question3 = new QuestionsEntity(0L, 0L, 0, "志望動機は?", 30, 1, "駅近だから");
         QuestionsEntity question4 = new QuestionsEntity(0L, 1L, 0, "ガクチカは?", 20, 0, "特になし");
+        QuestionsEntity question5 = new QuestionsEntity(0L, 0L, 1, "趣味は?", 30, 1, "旅行");
         questionsRepository.saveAndFlush(question1);
         questionsRepository.saveAndFlush(question2);
         questionsRepository.saveAndFlush(question3);
         questionsRepository.saveAndFlush(question4);
+        questionsRepository.saveAndFlush(question5);
     }
 
     // エントリーシートを編集するためにDBからES情報を取得
