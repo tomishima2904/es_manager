@@ -1,12 +1,17 @@
 package chibainfo5.es_manager.controllers;
 
-import java.util.List;
+import chibainfo5.es_manager.domain.QuestionsEntity;
+import chibainfo5.es_manager.domain.QuestionsResponse;
+import chibainfo5.es_manager.repositories.QuestionsRepository;
+import chibainfo5.es_manager.domain.EntrysheetsEntity;
+import chibainfo5.es_manager.repositories.EntrysheetsRepository;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 
-import reactor.core.publisher.Mono;
 import org.springframework.beans.factory.annotation.Autowired;
-// For Controller
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Mono;
 
-import chibainfo5.es_manager.domain.QuestionsEntity;
-import chibainfo5.es_manager.domain.QuestionsResponse;
-import chibainfo5.es_manager.repositories.QuestionsRepository;
-import chibainfo5.es_manager.domain.EntrysheetsEntity;
-import chibainfo5.es_manager.repositories.EntrysheetsRepository;
 
 @RestController
 public class QuestionsController {
@@ -96,6 +97,16 @@ public class QuestionsController {
             questionsRepository.save(newEntity);
         }
 
+        // questionsが空の場合初期値を与える  (生じないが一応)
+        if (newQuestionsList.size() == 0){
+            QuestionsEntity initQuestion = new QuestionsEntity(userId, esId, 0, "", 400, 0, "");
+            questionsRepository.saveAndFlush(initQuestion);
+            List<QuestionsEntity> questions = new ArrayList<>();
+            questions.add(initQuestion);
+            QuestionsResponse newQuestionsResponse = QuestionsResponse.convertToQuestionsResponse(newEntrysheet, questions);
+            return Mono.just(newQuestionsResponse);
+        }
+
         return Mono.just(inputQuestionsResponse);
     }
 
@@ -103,5 +114,5 @@ public class QuestionsController {
 
 /*  テスト用
 curl -X POST http://localhost:8001/1/entrysheets
-curl -X POST -H "Content-Type: application/json" -d '{"userId":1,"esId":1,"company":"B株式会社","job":"総合職","event":"夏インターン","deadline":null,"isReleased":true,"questions":{"0":{"question":"ガクチカは?","maxChars":500,"answers":{"0":"特になし"}}}}' http://localhost:8001/1/entrysheets/1
+curl -X POST -H "Content-Type: application/json" -d '{"userId":1,"esId":1,"company":"BbBbBbE","job":"総合職","event":"夏インターン","deadline":"2083-09-25T12:45:00","isReleased":true,"questions":{"0":{"question":"ガクチカは?","maxChars":500,"answers":{"0":"nothing"}}}}' http://localhost:8001/1/entrysheets/1
  */
