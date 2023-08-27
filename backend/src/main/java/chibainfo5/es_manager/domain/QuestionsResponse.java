@@ -112,7 +112,7 @@ public class QuestionsResponse {
     public static List<QuestionsEntity> convertToQuestionsList(
         QuestionsResponse questionsResponse
     ){
-        List<QuestionsEntity> questionsList = new ArrayList<>();
+        List<QuestionsEntity> questionsList = new ArrayList<QuestionsEntity>();
 
         // Quesiton情報 (`question`や`maxChars`)を取得・保持
         for (Map.Entry<String, QuestionsResponse.Question> questionEntry : questionsResponse.getQuestions().entrySet()) {
@@ -125,7 +125,7 @@ public class QuestionsResponse {
                 for (Map.Entry<String, String> answerEntry : question.getAnswers().entrySet()) {
                     QuestionsEntity questionsEntity = new QuestionsEntity();
                     questionsEntity.setUserId(questionsResponse.getUserId());
-                    questionsEntity.setEsId(questionsResponse.getUserId());
+                    questionsEntity.setEsId(questionsResponse.getEsId());
                     questionsEntity.setQId(Integer.parseInt(questionEntry.getKey()));
                     questionsEntity.setQuestion(question.getQuestion());
                     questionsEntity.setMaxChars(question.getMaxChars());
