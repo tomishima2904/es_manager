@@ -75,12 +75,6 @@ public class QuestionsController {
         EntrysheetsEntity newEntrysheet = QuestionsResponse.convertToEntrysheetEntity(inputQuestionsResponse);
         List<QuestionsEntity> newQuestionsList = QuestionsResponse.convertToQuestionsList(inputQuestionsResponse);
 
-        // 更新されたものを保存
-        entrysheetsRepository.save(newEntrysheet);
-        for (QuestionsEntity newEntity : newQuestionsList) {
-            questionsRepository.save(newEntity);
-        }
-
         // 古いレコードにはあった削除されたものを削除
         for (QuestionsEntity oldEntity : oldQuestionsList) {
             boolean isEntityExistsInNewList = newQuestionsList.stream()
@@ -93,6 +87,13 @@ public class QuestionsController {
             if (!isEntityExistsInNewList) {
                 questionsRepository.delete(oldEntity);
             }
+        }
+
+        // 更新されたものを保存
+        entrysheetsRepository.save(newEntrysheet);
+        for (QuestionsEntity newEntity : newQuestionsList) {
+            System.out.println(newEntity);
+            questionsRepository.save(newEntity);
         }
 
         return Mono.just(inputQuestionsResponse);
