@@ -1,18 +1,19 @@
-import { useState, useEffect } from "react";
 import type {
-  RichEntrysheetProps,
   QuestionsProps,
+  RichEntrysheetProps,
 } from "@/types/EntrysheetProps";
+import { useEffect, useState } from "react";
 import Header from "./Header";
 import QuestionArea from "./QuestionArea";
 import AddQuestionButton from "./buttons/AddQestionButton";
-import SaveEntrysheetButton from "./buttons/SaveEntrysheetButton";
 
 const EditingEntrysheet = (props: {
   entrysheet: RichEntrysheetProps;
 }): JSX.Element => {
-  const { esId, company, job, event, deadline, questions } = props.entrysheet;
+  const { userId, esId, company, job, event, deadline, questions } =
+    props.entrysheet;
   const [entrysheet, setEntrysheet] = useState<RichEntrysheetProps>({
+    userId: userId,
     esId: esId,
     company: company,
     job: job,
@@ -26,6 +27,7 @@ const EditingEntrysheet = (props: {
 
   useEffect(() => {
     setEntrysheet({
+      userId: userId,
       esId: esId,
       company: company,
       job: job,
@@ -34,7 +36,7 @@ const EditingEntrysheet = (props: {
       questions: { ...questions },
     });
     setNumQuestions(Object.keys(questions).length);
-  }, [esId, company, job, event, deadline, questions]);
+  }, [userId, esId, company, job, event, deadline, questions]);
 
   if (!entrysheet) {
     return <div>Loading...</div>;

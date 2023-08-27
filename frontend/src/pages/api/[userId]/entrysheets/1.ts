@@ -1,5 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from "next";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 const handler = (
   req: NextApiRequest,
@@ -10,11 +10,13 @@ const handler = (
     res.status(200).json({ ...entrysheet });
   } else {
     const entrysheet: RichEntrysheetProps = {
-      esId: "0",
+      userId: 1,
+      esId: 1,
       company: "A株式会社",
       job: "総合職",
       event: "夏インターン",
       deadline: "2023-03-31T12:00:00",
+      isReleased: false,
       questions: {
         "0": {
           question: "志望動機は?",

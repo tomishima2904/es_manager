@@ -1,15 +1,19 @@
+import { UserIdContext } from "@/pages/[userId]/entrysheets";
 import axios from "axios";
 import type { NextRouter } from "next/router";
+import { useContext } from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineFileAdd } from "react-icons/ai"; // 画像icon
 
-export default function CreateEntrysheetButton(props: { router: NextRouter }) {
+const CreateEntrysheetButton = (props: { router: NextRouter }): JSX.Element => {
+  const userId = useContext(UserIdContext);
+
   // POSTメソッドで新しいエントリーシートを作成
   const createNewEntrysheet = async () => {
-    const ENDPOINT: string = "/api/user/entrysheets";
+    const url: string = `${process.env.API_HOST}/${userId}/entrysheets`;
     try {
       const response = await axios.post(
-        ENDPOINT,
+        url,
         {},
         {
           headers: { "Content-Type": "application/json" },
@@ -18,10 +22,11 @@ export default function CreateEntrysheetButton(props: { router: NextRouter }) {
       console.log("Success", response);
       // レスポンスオブジェクトから新しく作成されたリソースのIDを取得
       const esId: string = response.data.esId.toString();
-      const newENDPOINT: string = "entrysheets/" + esId;
-      // useRouterでnewENDPOINTへ画面遷移
+      console.log(userId);
+      const newUrl: string = `/${userId}/entrysheets/${esId}`;
+      // useRouterでnewUrlへ画面遷移
       const { router } = props;
-      router.push({ pathname: newENDPOINT });
+      router.push({ pathname: newUrl });
     } catch (error) {
       console.error("Error", error);
     }
@@ -41,4 +46,6 @@ export default function CreateEntrysheetButton(props: { router: NextRouter }) {
       </button>
     </IconContext.Provider>
   );
-}
+};
+
+export default CreateEntrysheetButton;

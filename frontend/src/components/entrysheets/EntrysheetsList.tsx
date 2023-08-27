@@ -1,9 +1,11 @@
+import { UserIdContext } from "@/pages/[userId]/entrysheets";
 import {
-  LightEntrysheetProps,
+  EntrysheetEntityProps,
   EntrysheetsProps,
 } from "@/types/EntrysheetProps";
 import dateFormatter from "@/utils/dateFormatter";
 import Link from "next/link";
+import { useContext } from "react";
 
 // ヘッダー行
 const ListHeader = () => {
@@ -21,14 +23,15 @@ const ListHeader = () => {
 
 // EntrySheetsでリスト表示する際のentrysheet1行
 const EntrysheetItem = (props: {
-  esId: string;
-  entrysheet: LightEntrysheetProps;
+  esId: number;
+  entrysheet: EntrysheetEntityProps;
 }): JSX.Element => {
   const { esId, entrysheet } = props;
   // 日時を yyyy/mm/dd hh:mm の文字列に変換
   const deadline = new Date(entrysheet.deadline);
   const formattedDate = dateFormatter(deadline);
-  const endpoint = `/user/entrysheets/${esId}`;
+  const userId = useContext(UserIdContext);
+  const endpoint = `/${userId}/entrysheets/${esId}`;
 
   return (
     <Link href={endpoint}>
@@ -55,13 +58,15 @@ const EntrysheetsList = (props: {
     <main className="flex-1 bg-white p-4 rounded-lg">
       <ListHeader />
       <ul className="list-none">
-        {Object.keys(entrysheets).map((esId) => (
-          <EntrysheetItem
-            key={esId}
-            esId={esId}
-            entrysheet={entrysheets[esId]}
-          />
-        ))}
+        {Object.values(entrysheets).map((entrysheetArray) =>
+          entrysheetArray.map((entrysheet) => (
+            <EntrysheetItem
+              key={entrysheet.esId}
+              esId={entrysheet.esId}
+              entrysheet={entrysheet}
+            />
+          ))
+        )}
       </ul>
     </main>
   );

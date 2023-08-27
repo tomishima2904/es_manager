@@ -1,15 +1,15 @@
 version: "3"
 
 services:
-  #コンテナ1　MySQL
+  #コンテナ1 MySQL
   db:
     container_name: mysql
     image: mysql:8
     env_file: ./.env
 
   #コンテナ2 SpringBoot
-  app:
-    container_name: springboot
+  backend:
+    container_name: backend
     image: gradle:7.6.1-jdk-alpine
     env_file: ./.env
     # デフォルトはTomcatサーバーが8080に指定
@@ -29,8 +29,8 @@ services:
     command: sh -c "gradle bootRun --args='--server.port=8001'"
 
   #コンテナ3 Next.js
-  front:
-    container_name: nextjs
+  frontend:
+    container_name: frontend
     image: node:18.15.0-alpine
     env_file: ./.env
     ports:
@@ -38,7 +38,7 @@ services:
     #コンテナを起動したままにする
     tty: true
     stdin_open: true
-    #volunesを設定して、./frontendのファイル変更をdockerコンテナ内でも即時反映
+    #volumesを設定して、./frontendのファイル変更をdockerコンテナ内でも即時反映
     working_dir: /front
     volumes:
       - ./:/front
