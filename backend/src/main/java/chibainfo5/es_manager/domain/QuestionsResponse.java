@@ -44,6 +44,12 @@ public class QuestionsResponse {
     public Map<String, Question> getQuestions() {return questions;}
     public void setQuestions(Map<String, Question> questions) {this.questions = questions;}
 
+    @Override
+    public String toString(){
+        return "{userId: " + this.userId + ", esId: " + this.esId +
+        ", company: " + this.company + ", deadline: " + this.deadline +"}";
+    }
+
     // DBから取得したList<QuestionsEntity>をオブジェクト形式に変換
     public static QuestionsResponse convertToQuestionsResponse(
         EntrysheetsEntity entrysheet,
@@ -147,6 +153,11 @@ public class QuestionsResponse {
 
         public Map<String, String> getAnswers() {return answers;}
         public void setAnswers(Map<String, String> answers) {this.answers = answers;}
+
+        @Override
+        public String toString(){
+            return "{" + this.question + " " + this.maxChars +"}";
+        }
     }
 
 }
