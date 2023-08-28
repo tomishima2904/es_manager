@@ -45,4 +45,3 @@ $ docker compose run --rm front sh -c "cd frontend && yarn install"
 ```
 $ docker compose up front
 ```
-
