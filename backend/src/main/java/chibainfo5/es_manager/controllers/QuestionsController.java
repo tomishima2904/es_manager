@@ -93,7 +93,6 @@ public class QuestionsController {
         // 更新されたものを保存
         entrysheetsRepository.save(newEntrysheet);
         for (QuestionsEntity newEntity : newQuestionsList) {
-            System.out.println(newEntity);
             questionsRepository.save(newEntity);
         }
 
