@@ -12,10 +12,14 @@ const SaveEntrysheetButton = (props: {
 
   const handleClick = () => {
     const { entrysheet } = props;
+    const validated_entrysheet = {
+      ...entrysheet,
+      company: entrysheet.company || "Untitled", // companyは空文字を許容しない
+      deadline: entrysheet.deadline || null, // deadlineのどこかに空欄があればnullとみなす
+    };
     const endpoint: string = `${process.env.API_HOST}/${userId}/entrysheets/${entrysheet.esId}`;
-    console.log(entrysheet);
     axios
-      .post(endpoint, entrysheet, {
+      .post(endpoint, validated_entrysheet, {
         headers: { "Content-Type": "application/json" },
       })
       .then((response) => {
