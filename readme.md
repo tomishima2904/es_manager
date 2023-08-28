@@ -1,3 +1,6 @@
+# es_manager
+Spring Boot & Next.js の勉強 ✍️
+
 # 環境構築
 
 ## MySQL
