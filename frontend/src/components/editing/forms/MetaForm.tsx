@@ -4,11 +4,11 @@ import DoubleClickForm from "./DoubleClickForm";
 
 const classNames: string[] = [
   "px-2 py-1 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white mt-1",
-  "",
+  "px-2 py-1 rounded-lg border border-white focus:bg-white mt-1",
 ];
 const wrapper: string = "mr-8 pr-8 flex justify-around items-center";
 const borderWrapper: string = wrapper + " border-r border-gray-300";
-const spanClassName: string = "mr-3 font-bold ";
+const spanClassName: string = "mt-1 mr-3 font-bold ";
 
 const JobForm = (props: {
   job: string;
