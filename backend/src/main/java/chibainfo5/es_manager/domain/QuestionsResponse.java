@@ -2,12 +2,12 @@ package chibainfo5.es_manager.domain;
 
 import chibainfo5.es_manager.domain.EntrysheetsEntity;
 import chibainfo5.es_manager.domain.QuestionsEntity;
-
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 
 public class QuestionsResponse {
@@ -43,6 +43,12 @@ public class QuestionsResponse {
 
     public Map<String, Question> getQuestions() {return questions;}
     public void setQuestions(Map<String, Question> questions) {this.questions = questions;}
+
+    @Override
+    public String toString(){
+        return "{userId: " + this.userId + ", esId: " + this.esId +
+        ", company: " + this.company + ", deadline: " + this.deadline +"}";
+    }
 
     // DBから取得したList<QuestionsEntity>をオブジェクト形式に変換
     public static QuestionsResponse convertToQuestionsResponse(
@@ -106,7 +112,7 @@ public class QuestionsResponse {
     public static List<QuestionsEntity> convertToQuestionsList(
         QuestionsResponse questionsResponse
     ){
-        List<QuestionsEntity> questionsList = new ArrayList<>();
+        List<QuestionsEntity> questionsList = new ArrayList<QuestionsEntity>();
 
         // Quesiton情報 (`question`や`maxChars`)を取得・保持
         for (Map.Entry<String, QuestionsResponse.Question> questionEntry : questionsResponse.getQuestions().entrySet()) {
@@ -119,7 +125,7 @@ public class QuestionsResponse {
                 for (Map.Entry<String, String> answerEntry : question.getAnswers().entrySet()) {
                     QuestionsEntity questionsEntity = new QuestionsEntity();
                     questionsEntity.setUserId(questionsResponse.getUserId());
-                    questionsEntity.setEsId(questionsResponse.getUserId());
+                    questionsEntity.setEsId(questionsResponse.getEsId());
                     questionsEntity.setQId(Integer.parseInt(questionEntry.getKey()));
                     questionsEntity.setQuestion(question.getQuestion());
                     questionsEntity.setMaxChars(question.getMaxChars());
@@ -147,6 +153,11 @@ public class QuestionsResponse {
 
         public Map<String, String> getAnswers() {return answers;}
         public void setAnswers(Map<String, String> answers) {this.answers = answers;}
+
+        @Override
+        public String toString(){
+            return "{" + this.question + " " + this.maxChars +"}";
+        }
     }
 
 }

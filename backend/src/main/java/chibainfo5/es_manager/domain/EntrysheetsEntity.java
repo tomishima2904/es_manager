@@ -1,5 +1,7 @@
 package chibainfo5.es_manager.domain;
 
+import chibainfo5.es_manager.domain.EntrysheetsKey;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,8 +17,6 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 import lombok.Data;
-
-import chibainfo5.es_manager.domain.EntrysheetsKey;
 
 
 @Entity
@@ -95,5 +95,11 @@ public class EntrysheetsEntity {
 
     public boolean getIsReleased() {return isReleased;}
     public void setIsReleased(Boolean isReleased) {this.isReleased = isReleased;}
+
+    @Override
+    public String toString(){
+        return "{userId: " + this.userId + ", esId: " + this.esId +
+        ", company: " + this.company + ", deadline: " + this.deadline +"}";
+    }
 
 }

@@ -7,8 +7,8 @@ const CompanyForm = (props: {
 }) => {
   const { company, setEntrysheet } = props;
   const classNames: string[] = [
-    "px-2 py-1 rounded-lg border border-gray-300 bg-transparent",
-    "text-lg font-bold",
+    "px-2 py-0.5 rounded-lg border border-gray-300 bg-transparent",
+    "text-lg font-bold px-2 py-0.5 rounded-lg border border-white bg-transparent",
   ];
 
   const handleCompanyChange = (text: string): void => {

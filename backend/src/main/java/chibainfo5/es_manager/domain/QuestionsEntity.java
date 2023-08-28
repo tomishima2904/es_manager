@@ -90,4 +90,11 @@ public class QuestionsEntity {
     public String getAnswer() {return answer;}
     public void setAnswer(String answer) {this.answer = answer;}
 
+    @Override
+    public String toString(){
+        return "{userId: " + this.userId + ", esId: " + this.esId +
+         ", qId: " + this.qId + ", question: " + this.question +
+         ", aId: " + this.aId + ", answer: " + this.answer +"}";
+    }
+
 }

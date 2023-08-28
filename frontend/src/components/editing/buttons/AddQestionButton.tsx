@@ -1,5 +1,4 @@
-import type { QandAProps, QuestionsProps } from "@/types/EntrysheetProps";
-import React from "react";
+import type { QuestionsProps } from "@/types/EntrysheetProps";
 import { IconContext } from "react-icons";
 import { GrAdd } from "react-icons/gr";
 

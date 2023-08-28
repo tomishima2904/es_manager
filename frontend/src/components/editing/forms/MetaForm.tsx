@@ -1,13 +1,14 @@
-import DoubleClickForm from "./DoubleClickForm";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
+import DateTimeForm from "./DateTimeForm";
+import DoubleClickForm from "./DoubleClickForm";
 
 const classNames: string[] = [
   "px-2 py-1 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white mt-1",
-  "",
+  "px-2 py-1 rounded-lg border border-white focus:bg-white mt-1",
 ];
 const wrapper: string = "mr-8 pr-8 flex justify-around items-center";
 const borderWrapper: string = wrapper + " border-r border-gray-300";
-const spanClassName: string = "mr-3 font-bold ";
+const spanClassName: string = "mt-1 mr-3 font-bold ";
 
 const JobForm = (props: {
   job: string;
@@ -62,15 +63,24 @@ const EventForm = (props: {
 };
 
 // TODO: 仮のフォームなので完成させる
-const DeadlineForm = (): JSX.Element => {
-  const handleDeadlineChange = (text: string): void => {};
+const DeadlineForm = (props: {
+  deadline: string;
+  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+}): JSX.Element => {
+  const { deadline, setEntrysheet } = props;
+
+  const handleDeadlineChange = (text: string): void => {
+    setEntrysheet((prevEntrysheet: RichEntrysheetProps) => ({
+      ...prevEntrysheet,
+      deadline: text,
+    }));
+  };
   return (
     <div className={wrapper}>
       <span className={spanClassName}>締切:</span>
-      <DoubleClickForm
-        text={"ほげ"}
-        placeholder=""
-        classNames={classNames}
+      <DateTimeForm
+        datetime={deadline}
+        className_={""}
         onChange={handleDeadlineChange}
       />
     </div>
@@ -80,14 +90,15 @@ const DeadlineForm = (): JSX.Element => {
 const MetaForm = (props: {
   job: string;
   event: string;
+  deadline: string;
   setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
 }): JSX.Element => {
-  const { job, event, setEntrysheet } = props;
+  const { job, event, deadline, setEntrysheet } = props;
   return (
     <div className="flex justify-start items-center pb-2">
       <JobForm job={job} setEntrysheet={setEntrysheet} />
       <EventForm event={event} setEntrysheet={setEntrysheet} />
-      <DeadlineForm />
+      <DeadlineForm deadline={deadline} setEntrysheet={setEntrysheet} />
     </div>
   );
 };

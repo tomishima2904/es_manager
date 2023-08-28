@@ -1,31 +1,25 @@
 package chibainfo5.es_manager.controllers;
 
-
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-
-// For WebFlux
-import reactor.core.publisher.Mono;
-// For Repository
-import org.springframework.beans.factory.annotation.Autowired;
-// For Controller
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatus;
-
 import chibainfo5.es_manager.domain.EntrysheetsEntity;
 import chibainfo5.es_manager.domain.EntrysheetsResponse;
-import chibainfo5.es_manager.repositories.EntrysheetsRepository;
-import chibainfo5.es_manager.services.EntrysheetsService;
 import chibainfo5.es_manager.domain.QuestionsEntity;
+import chibainfo5.es_manager.repositories.EntrysheetsRepository;
 import chibainfo5.es_manager.repositories.QuestionsRepository;
+import chibainfo5.es_manager.services.EntrysheetsService;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 
 @RestController
@@ -46,9 +40,9 @@ public class EntrysheetsController {
     // アプリ起動時にダミーデータをデータベース内に登録
     @PostConstruct
     public void init(){
-        EntrysheetsEntity entrysheet1 = new EntrysheetsEntity(0L, 0L, "A株式会社", "エンジニア", "本選考", null, false);
-        EntrysheetsEntity entrysheet2 = new EntrysheetsEntity(1L, 0L, "C株式会社", "データサイエンティスト", "冬インターン", null, false);
-        EntrysheetsEntity entrysheet3 = new EntrysheetsEntity(0L, 1L, "B株式会社", "総合職", "夏インターン", null, true);
+        EntrysheetsEntity entrysheet1 = new EntrysheetsEntity(0L, 0L, "A株式会社", "エンジニア", "本選考", LocalDateTime.of(2023, 7, 31, 12, 0, 0), false);
+        EntrysheetsEntity entrysheet2 = new EntrysheetsEntity(1L, 0L, "C株式会社", "データサイエンティスト", "冬インターン", LocalDateTime.of(2023, 8, 25, 12, 45, 0), false);
+        EntrysheetsEntity entrysheet3 = new EntrysheetsEntity(0L, 1L, "B株式会社", "総合職", "夏インターン", LocalDateTime.of(2023, 9, 25, 12, 45, 0), true);
         entrysheetsRepository.saveAndFlush(entrysheet1);
         entrysheetsRepository.saveAndFlush(entrysheet2);
         entrysheetsRepository.saveAndFlush(entrysheet3);

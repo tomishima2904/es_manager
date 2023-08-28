@@ -10,7 +10,7 @@ import AddQuestionButton from "./buttons/AddQestionButton";
 const EditingEntrysheet = (props: {
   entrysheet: RichEntrysheetProps;
 }): JSX.Element => {
-  const { userId, esId, company, job, event, deadline, questions } =
+  const { userId, esId, company, job, event, deadline, isReleased, questions } =
     props.entrysheet;
   const [entrysheet, setEntrysheet] = useState<RichEntrysheetProps>({
     userId: userId,
@@ -19,6 +19,7 @@ const EditingEntrysheet = (props: {
     job: job,
     event: event,
     deadline: deadline,
+    isReleased: isReleased,
     questions: {},
   });
   const [numQuestions, setNumQuestions] = useState<number>(
@@ -33,10 +34,11 @@ const EditingEntrysheet = (props: {
       job: job,
       event: event,
       deadline: deadline,
+      isReleased: isReleased,
       questions: { ...questions },
     });
     setNumQuestions(Object.keys(questions).length);
-  }, [userId, esId, company, job, event, deadline, questions]);
+  }, [userId, esId, company, job, event, deadline, isReleased, questions]);
 
   if (!entrysheet) {
     return <div>Loading...</div>;
@@ -60,6 +62,7 @@ const EditingEntrysheet = (props: {
         company={company}
         job={job}
         event={event}
+        deadline={deadline}
         entrysheet={entrysheet}
         setEntrysheet={setEntrysheet}
       />
