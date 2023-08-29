@@ -21,7 +21,7 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
   const router = useRouter();
 
   // SWR で データフェッチ
-  const url: string = `${process.env.API_HOST}/${query.userId}/entrysheets`;
+  const url: string = `${process.env.API_HOST}/users/${query.userId}/entrysheets`;
   const { data: entrysheets, error } = useSWR(url, fetcher);
 
   if (error) {

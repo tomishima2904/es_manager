@@ -1,4 +1,4 @@
-import { UserIdContext } from "@/pages/[userId]/entrysheets/[esId]";
+import { UserIdContext } from "@/pages/users/[userId]/entrysheets/[esId]";
 import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
 import axios from "axios";
 import { useContext } from "react";

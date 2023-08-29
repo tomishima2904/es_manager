@@ -49,7 +49,7 @@ public class EntrysheetsController {
     }
 
     // ユーザー毎のエントリーシートリストのページ. 任意のユーザーIDのエントリーシート情報を取得する.
-    @GetMapping("/{userId}/entrysheets")
+    @GetMapping("/users/{userId}/entrysheets")
     @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<EntrysheetsResponse> getUserEntrysheets(@PathVariable Long userId) {
 
@@ -64,7 +64,7 @@ public class EntrysheetsController {
 
     // 新規ES作成. 下記コマンドで実行を確認できる
     // curl -X POST http://localhost:8001/{userId}/entrysheets
-    @PostMapping("/{userId}/entrysheets")
+    @PostMapping("/users/{userId}/entrysheets")
     @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<ResponseEntity<String>> createNewEntrysheet(@PathVariable Long userId) {
         // 新規ES作成時の初期値

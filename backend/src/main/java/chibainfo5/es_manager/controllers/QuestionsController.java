@@ -47,7 +47,7 @@ public class QuestionsController {
     }
 
     // エントリーシートを編集するためにDBからES情報を取得
-    @GetMapping("/{userId}/entrysheets/{esId}")
+    @GetMapping("/users/{userId}/entrysheets/{esId}")
     @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<QuestionsResponse> getEntrysheetQuestions(@PathVariable Long userId, @PathVariable Long esId) {
 
@@ -62,7 +62,7 @@ public class QuestionsController {
 
     // 編集されたES情報をDBで更新・削除
     // curl -X POST -H "Content-Type: application/json" -d '{body}' http://localhost:8001/{userId}/entrysheets/{esId}
-    @PostMapping("/{userId}/entrysheets/{esId}")
+    @PostMapping("/users/{userId}/entrysheets/{esId}")
     @Transactional
     @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<QuestionsResponse> updateEntrysheetQuestions(
