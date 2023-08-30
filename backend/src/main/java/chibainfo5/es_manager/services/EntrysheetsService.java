@@ -21,11 +21,6 @@ public class EntrysheetsService {
             LocalDateTime deadline, Boolean isReleased) {
 
         // 指定したuserIdの最大のesIdをインクリメンタして新たなレコードを作成
-        Long maxEsId = entrysheetsRepository.findMaxEsIdByUserId(userId);
-        if (maxEsId == null) {
-            maxEsId = 0L;
-        }
-        Long newEsId = maxEsId + 1;
         int maxEsId = entrysheetsRepository.findMaxEsIdByUserId(userId);
         int newEsId = maxEsId + 1;
 

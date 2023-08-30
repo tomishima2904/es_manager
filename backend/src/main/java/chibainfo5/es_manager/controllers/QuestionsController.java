@@ -81,9 +81,9 @@ public class QuestionsController {
             boolean isEntityExistsInNewList = newQuestionsList.stream()
                     .anyMatch(newEntity ->
                             newEntity.getUserId().equals(oldEntity.getUserId()) &&
-                            newEntity.getEsId().equals(oldEntity.getEsId()) &&
-                            newEntity.getQId().equals(oldEntity.getQId()) &&
-                            newEntity.getAId().equals(oldEntity.getAId()));
+                            newEntity.getEsId() == oldEntity.getEsId() &&
+                            newEntity.getQId() == oldEntity.getQId() &&
+                            newEntity.getAId() == oldEntity.getAId());
 
             if (!isEntityExistsInNewList) {
                 questionsRepository.delete(oldEntity);
