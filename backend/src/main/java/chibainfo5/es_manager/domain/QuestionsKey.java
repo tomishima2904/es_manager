@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class QuestionsKey implements Serializable{
-    private Long userId;
-    private Long esId;
-    private Integer qId;
-    private Integer aId;
+    private String userId;
+    private int esId;
+    private int qId;
+    private int aId;
 }

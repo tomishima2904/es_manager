@@ -17,7 +17,7 @@ const handler = (
       answers: { "0": "" },
     };
     const entrysheet: RichEntrysheetProps = {
-      userId: 1,
+      userId: "tomi",
       esId: 2,
       company: "Untitled",
       job: "",
@@ -29,7 +29,7 @@ const handler = (
     res.status(200).json(entrysheet);
   } else {
     const entrysheet1: EntrysheetEntityProps = {
-      userId: 1,
+      userId: "tomi",
       esId: 1,
       company: "A株式会社",
       job: "総合職",
@@ -38,7 +38,7 @@ const handler = (
       isReleased: false,
     };
     const entrysheet2: EntrysheetEntityProps = {
-      userId: 1,
+      userId: "tomi",
       esId: 2,
       company: "株式会社B",
       job: "エンジニア",

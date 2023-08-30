@@ -6,7 +6,7 @@ const handler = (
   res: NextApiResponse<RichEntrysheetProps>
 ) => {
   const entrysheet: RichEntrysheetProps = {
-    userId: 1,
+    userId: "tomi",
     esId: 2,
     company: "Untitled",
     job: "",

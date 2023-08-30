@@ -1,6 +1,6 @@
 // entrysheetsのリストの1行
 export type EntrysheetEntityProps = {
-  userId: number;
+  userId: String;
   esId: number;
   company: string;
   job: string;
@@ -26,7 +26,7 @@ export type QuestionsProps = {
 };
 
 export type RichEntrysheetProps = {
-  userId: number;
+  userId: String;
   esId: number;
   company: string;
   job: string;

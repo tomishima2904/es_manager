@@ -40,9 +40,9 @@ public class EntrysheetsController {
     // アプリ起動時にダミーデータをデータベース内に登録
     @PostConstruct
     public void init(){
-        EntrysheetsEntity entrysheet1 = new EntrysheetsEntity(0L, 0L, "A株式会社", "エンジニア", "本選考", LocalDateTime.of(2023, 7, 31, 12, 0, 0), false);
-        EntrysheetsEntity entrysheet2 = new EntrysheetsEntity(1L, 0L, "C株式会社", "データサイエンティスト", "冬インターン", LocalDateTime.of(2023, 8, 25, 12, 45, 0), false);
-        EntrysheetsEntity entrysheet3 = new EntrysheetsEntity(0L, 1L, "B株式会社", "総合職", "夏インターン", LocalDateTime.of(2023, 9, 25, 12, 45, 0), true);
+        EntrysheetsEntity entrysheet1 = new EntrysheetsEntity("tomi", 0, "A株式会社", "エンジニア", "本選考", LocalDateTime.of(2023, 7, 31, 12, 0, 0), false);
+        EntrysheetsEntity entrysheet2 = new EntrysheetsEntity("wara", 0, "C株式会社", "DS", "冬インターン", LocalDateTime.of(2023, 8, 25, 12, 45, 0), false);
+        EntrysheetsEntity entrysheet3 = new EntrysheetsEntity("tomi", 1, "B株式会社", "総合職", "夏インターン", LocalDateTime.of(2023, 9, 25, 12, 45, 0), true);
         entrysheetsRepository.saveAndFlush(entrysheet1);
         entrysheetsRepository.saveAndFlush(entrysheet2);
         entrysheetsRepository.saveAndFlush(entrysheet3);
@@ -51,7 +51,7 @@ public class EntrysheetsController {
     // ユーザー毎のエントリーシートリストのページ. 任意のユーザーIDのエントリーシート情報を取得する.
     @GetMapping("/users/{userId}/entrysheets")
     @CrossOrigin(origins = {"http://localhost:3001"})
-    public Mono<EntrysheetsResponse> getUserEntrysheets(@PathVariable Long userId) {
+    public Mono<EntrysheetsResponse> getUserEntrysheets(@PathVariable String userId) {
 
         // 条件に合うuserIdのデータをデータベースから取得
         List<EntrysheetsEntity> entrysheets = entrysheetsRepository.findByUserId(userId);
@@ -66,7 +66,7 @@ public class EntrysheetsController {
     // curl -X POST http://localhost:8001/{userId}/entrysheets
     @PostMapping("/users/{userId}/entrysheets")
     @CrossOrigin(origins = {"http://localhost:3001"})
-    public Mono<ResponseEntity<String>> createNewEntrysheet(@PathVariable Long userId) {
+    public Mono<ResponseEntity<String>> createNewEntrysheet(@PathVariable String userId) {
         // 新規ES作成時の初期値
         String company = "Untitled";  // 空欄はダメなので
         String job = "";
@@ -75,7 +75,7 @@ public class EntrysheetsController {
         Boolean isReleased = false;
 
         // 新規ES作成して保存
-        Long newEsId = entrysheetsService.createNewEntrysheetWithIncrementedEsId(
+        int newEsId = entrysheetsService.createNewEntrysheetWithIncrementedEsId(
             userId, company, job, event, deadline, isReleased);
 
         // 新規ESの質問と解答も初期値を入れて作成
