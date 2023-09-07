@@ -68,7 +68,7 @@ public class QuestionsController {
 
     // 編集されたES情報をDBで更新・削除
     // curl -X POST -H "Content-Type: application/json" -d '{body}' http://localhost:8001/{userId}/entrysheets/{esId}
-    @PostMapping("/users/{userId}/entrysheets/{esId}")
+    @PostMapping("/users/self/entrysheets/{esId}")
     @Transactional
     @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<QuestionsResponse> updateEntrysheetQuestions(
