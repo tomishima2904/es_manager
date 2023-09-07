@@ -12,6 +12,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,9 +49,13 @@ public class QuestionsController {
     }
 
     // エントリーシートを編集するためにDBからES情報を取得
-    @GetMapping("/users/{userId}/entrysheets/{esId}")
+    @GetMapping("/users/self/entrysheets/{esId}")
     @CrossOrigin(origins = {"http://localhost:3001"})
-    public Mono<QuestionsResponse> getEntrysheetQuestions(@PathVariable String userId, @PathVariable int esId) {
+    public Mono<QuestionsResponse> getEntrysheetQuestions(
+        @AuthenticationPrincipal UserDetails userDetails,
+        @PathVariable int esId
+    ) {
+        String userId = userDetails.getUsername();
 
         // 条件に合うuserIdのあるesIdのデータをデータベースから取得
         EntrysheetsEntity entrysheet = entrysheetsRepository.findByUserIdAndEsId(userId, esId);
@@ -66,9 +72,12 @@ public class QuestionsController {
     @Transactional
     @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<QuestionsResponse> updateEntrysheetQuestions(
-        @PathVariable String userId, @PathVariable int esId,
+        @AuthenticationPrincipal UserDetails userDetails,
+        @PathVariable int esId,
         @RequestBody QuestionsResponse inputQuestionsResponse
     ){
+        String userId = userDetails.getUsername();
+
         // 差分（特に削除されたレコード）を把握するために古いレコードを取得
         List<QuestionsEntity> oldQuestionsList = questionsRepository.findByUserIdAndEsId(userId, esId);
 

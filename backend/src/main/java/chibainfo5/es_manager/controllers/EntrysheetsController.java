@@ -14,6 +14,8 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,9 +51,11 @@ public class EntrysheetsController {
     }
 
     // ユーザー毎のエントリーシートリストのページ. 任意のユーザーIDのエントリーシート情報を取得する.
-    @GetMapping("/users/{userId}/entrysheets")
+    @GetMapping("/users/self/entrysheets")
     @CrossOrigin(origins = {"http://localhost:3001"})
-    public Mono<EntrysheetsResponse> getUserEntrysheets(@PathVariable String userId) {
+    public Mono<EntrysheetsResponse> getUserEntrysheets(@AuthenticationPrincipal UserDetails userDetails) {
+
+        String userId = userDetails.getUsername();
 
         // 条件に合うuserIdのデータをデータベースから取得
         List<EntrysheetsEntity> entrysheets = entrysheetsRepository.findByUserId(userId);
@@ -64,9 +68,12 @@ public class EntrysheetsController {
 
     // 新規ES作成. 下記コマンドで実行を確認できる
     // curl -X POST http://localhost:8001/{userId}/entrysheets
-    @PostMapping("/users/{userId}/entrysheets")
+    @PostMapping("/users/self/entrysheets")
     @CrossOrigin(origins = {"http://localhost:3001"})
-    public Mono<ResponseEntity<String>> createNewEntrysheet(@PathVariable String userId) {
+    public Mono<ResponseEntity<String>> createNewEntrysheet(@AuthenticationPrincipal UserDetails userDetails) {
+
+        String userId = userDetails.getUsername();
+
         // 新規ES作成時の初期値
         String company = "Untitled";  // 空欄はダメなので
         String job = "";
