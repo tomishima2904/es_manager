@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -52,6 +53,7 @@ public class EntrysheetsController {
 
     // ユーザー毎のエントリーシートリストのページ. 任意のユーザーIDのエントリーシート情報を取得する.
     @GetMapping("/users/self/entrysheets")
+    @PreAuthorize("isAuthenticated()")
     @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<EntrysheetsResponse> getUserEntrysheets(@AuthenticationPrincipal UserDetails userDetails) {
 
@@ -69,6 +71,7 @@ public class EntrysheetsController {
     // 新規ES作成. 下記コマンドで実行を確認できる
     // curl -X POST http://localhost:8001/{userId}/entrysheets
     @PostMapping("/users/self/entrysheets")
+    @PreAuthorize("isAuthenticated()")
     @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<ResponseEntity<String>> createNewEntrysheet(@AuthenticationPrincipal UserDetails userDetails) {
 

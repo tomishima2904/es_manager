@@ -12,6 +12,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +51,7 @@ public class QuestionsController {
 
     // エントリーシートを編集するためにDBからES情報を取得
     @GetMapping("/users/self/entrysheets/{esId}")
+    @PreAuthorize("isAuthenticated()")
     @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<QuestionsResponse> getEntrysheetQuestions(
         @AuthenticationPrincipal UserDetails userDetails,
@@ -69,6 +71,7 @@ public class QuestionsController {
     // 編集されたES情報をDBで更新・削除
     // curl -X POST -H "Content-Type: application/json" -d '{body}' http://localhost:8001/{userId}/entrysheets/{esId}
     @PostMapping("/users/self/entrysheets/{esId}")
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<QuestionsResponse> updateEntrysheetQuestions(
