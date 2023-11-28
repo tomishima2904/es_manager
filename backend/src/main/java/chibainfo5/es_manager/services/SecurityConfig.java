@@ -1,5 +1,7 @@
 package chibainfo5.es_manager.services;
 
+import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
@@ -10,6 +12,10 @@ import org.springframework.security.core.userdetails.MapReactiveUserDetailsServi
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 
@@ -17,24 +23,35 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
-    // 管理者ユーザーのユーザー名とパスワードを事前登録
-    // 参考: https://spring.pleiades.io/spring-security/reference/reactive/configuration/webflux.html
-    // TODO: インメモリユーザーではなくDBで管理したい
-    @Bean
-    public MapReactiveUserDetailsService userDetailsManager(){
-        // 環境変数で管理者用のユーザーとパスワードを読み込む
-        String username = System.getenv("APP_USER");
-        String password = System.getenv("APP_PASSWORD");
 
-        UserDetails user = User.withUsername(username)
-            .password(
-                PasswordEncoderFactories
-                    .createDelegatingPasswordEncoder()
-                    .encode(password)
-            )
-            .roles("USER")
-            .build();
-        return new MapReactiveUserDetailsService(user);
+    @Autowired
+    private DataSource dataSource;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    // データベースにあらかじめ登録しておくユーザー
+    @Bean
+    public UserDetailsManager userDetailsManager() {
+        JdbcUserDetailsManager user = new JdbcUserDetailsManager(this.dataSource);
+        if (user.userExists("tomi")) user.deleteUser("tomi");
+        user.createUser(makeUser("tomi", "tomi", "ADMIN"));
+        if (user.userExists("wara")) user.deleteUser("wara");
+        user.createUser(makeUser("wara", "wara", "USER"));
+        if (user.userExists("yuma")) user.deleteUser("yuma");
+        user.createUser(makeUser("yuma", "yuma", "USER"));
+        return user;
+    }
+    
+    // 参考: https://zenn.dev/peishim/articles/6946f72e15affa
+    private UserDetails makeUser(String user, String pass, String role) {
+        return User.withUsername(user)
+                .password(passwordEncoder().encode(pass))
+                .roles(role)
+                .disabled(true)  // XXX: mysql側では`enabled`というカラム名で登録されている
+                .build();
     }
 
     // 認証・認可を制御
