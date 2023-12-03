@@ -66,7 +66,7 @@ public class EntrysheetsController {
     // curl -X POST http://localhost:8001/{userId}/entrysheets
     @PostMapping("/users/{userId}/entrysheets")
     @CrossOrigin(origins = {"http://localhost:3001"})
-    public Mono<ResponseEntity<String>> createNewEntrysheet(@PathVariable int userId) {
+    public Mono<EntrysheetsEntity> createNewEntrysheet(@PathVariable int userId) {
         // 新規ES作成時の初期値
         String company = "Untitled";  // 空欄はダメなので
         String job = "";
@@ -82,11 +82,9 @@ public class EntrysheetsController {
         QuestionsEntity newQuestions = new QuestionsEntity(userId, newEsId, 0, "", 400, 0, "");
         questionsRepository.saveAndFlush(newQuestions);
 
-        // 新規で作成したESの編集画面のエンドポイントへリダイレクト
-        String redirectUrl = String.format("/%d/entrysheets/%d", userId, newEsId);
-        return Mono.just(ResponseEntity.status(HttpStatus.SEE_OTHER)
-            .header("Location", redirectUrl)
-            .body("Redirecting to " + redirectUrl));
+        // 新しく作成されたESentityを返す
+        EntrysheetsEntity newEntrysheetEntity = new EntrysheetsEntity(userId, newEsId, company, job, event, deadline, isReleased);
+        return Mono.just(newEntrysheetEntity);
     }
 
 }
