@@ -9,6 +9,8 @@ export type EntrysheetEntityProps = {
   isReleased: boolean;
 };
 
+// EntrysheetsPropsの例.
+// entrysheets = {entrysheets: [entrysheetEntiti1, entrysheetEntity2]}
 export type EntrysheetsProps = { [key: string]: EntrysheetEntityProps[] };
 
 export type AnswersProps = {
