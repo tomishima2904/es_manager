@@ -1,15 +1,14 @@
 import { EntrysheetsProps } from "@/types/EntrysheetProps";
-import { NextRouter } from "next/router";
 import { useState } from "react";
 import CreateEntrysheetButton from "./CreateEentrysheetButton";
 import EntrysheetsList from "./EntrysheetsList";
 import MenuButton from "./MenuButton";
 
 const Sidebar = (props: {
-  router: NextRouter;
   entrysheets: EntrysheetsProps;
+  setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
 }): JSX.Element => {
-  const { router, entrysheets } = props;
+  const { entrysheets, setEntrysheets } = props;
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = (): void => {
@@ -24,7 +23,7 @@ const Sidebar = (props: {
         >
           <div className="flex justify-start items-start pl-4 pb-2 gap-4">
             <MenuButton onClick={toggleSidebar} />
-            <CreateEntrysheetButton router={router} />
+            <CreateEntrysheetButton setEntrysheets={setEntrysheets} />
           </div>
           <EntrysheetsList entrysheets={entrysheets} />
         </aside>

@@ -1,11 +1,14 @@
 import { UserIdContext } from "@/pages/users/[userId]/entrysheets";
+import { EntrysheetsProps } from "@/types/EntrysheetProps";
 import axios from "axios";
-import type { NextRouter } from "next/router";
 import { useContext } from "react";
 import { IconContext } from "react-icons";
 import { AiOutlineFileAdd } from "react-icons/ai"; // 画像icon
 
-const CreateEntrysheetButton = (props: { router: NextRouter }): JSX.Element => {
+const CreateEntrysheetButton = (props: {
+  setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
+}): JSX.Element => {
+  const { setEntrysheets } = props;
   const userId = useContext(UserIdContext);
 
   // POSTメソッドで新しいエントリーシートを作成
@@ -20,13 +23,12 @@ const CreateEntrysheetButton = (props: { router: NextRouter }): JSX.Element => {
         }
       );
       console.log("Success", response);
-      // レスポンスオブジェクトから新しく作成されたリソースのIDを取得
-      const esId: string = response.data.esId.toString();
-      console.log(userId);
-      const newUrl: string = `/${userId}/entrysheets/${esId}`;
-      // useRouterでnewUrlへ画面遷移
-      const { router } = props;
-      router.push({ pathname: newUrl });
+
+      // 新規作成されたリソースを追加
+      setEntrysheets((prevEntrySheets) => ({
+        ...prevEntrySheets,
+        entrysheets: [...prevEntrySheets.entrysheets, { ...response.data }],
+      }));
     } catch (error) {
       console.error("Error", error);
     }
