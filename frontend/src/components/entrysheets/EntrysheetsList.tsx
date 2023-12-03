@@ -1,4 +1,4 @@
-import { UserIdContext } from "@/pages/[userId]/entrysheets";
+import { UserIdContext } from "@/pages/users/[userId]/entrysheets";
 import {
   EntrysheetEntityProps,
   EntrysheetsProps,

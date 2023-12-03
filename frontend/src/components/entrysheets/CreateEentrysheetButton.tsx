@@ -1,4 +1,4 @@
-import { UserIdContext } from "@/pages/[userId]/entrysheets";
+import { UserIdContext } from "@/pages/users/[userId]/entrysheets";
 import axios from "axios";
 import type { NextRouter } from "next/router";
 import { useContext } from "react";
