@@ -1,4 +1,3 @@
-import EntrysheetsList from "@/components/entrysheets/EntrysheetsList";
 import Sidebar from "@/components/entrysheets/Sidebar";
 import fetcher from "@/utils/fetcher";
 import { GetServerSidePropsContext } from "next";
@@ -32,8 +31,7 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
   return (
     <div className="flex p-4">
       <UserIdContext.Provider value={query.userId}>
-        <Sidebar router={router} />
-        <EntrysheetsList entrysheets={entrysheets} />
+        <Sidebar router={router} entrysheets={entrysheets} />
       </UserIdContext.Provider>
     </div>
   );

@@ -1,15 +1,39 @@
-import type { NextRouter } from "next/router";
+import { EntrysheetsProps } from "@/types/EntrysheetProps";
+import { NextRouter } from "next/router";
+import { useState } from "react";
 import CreateEntrysheetButton from "./CreateEentrysheetButton";
+import EntrysheetsList from "./EntrysheetsList";
+import MenuButton from "./MenuButton";
 
-const Sidebar = (props: { router: NextRouter }): JSX.Element => {
-  const { router } = props;
+const Sidebar = (props: {
+  router: NextRouter;
+  entrysheets: EntrysheetsProps;
+}): JSX.Element => {
+  const { router, entrysheets } = props;
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = (): void => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+
   return (
-    <aside
-      className="w-1/6 bg-white flex-none rounded-lg p-4 mr-4
-      flex justify-center "
-    >
-      <CreateEntrysheetButton router={router} />
-    </aside>
+    <>
+      {isSidebarOpen ? (
+        <aside
+          className={`w-1/2 bg-blue-100 flex-none p-4 mr-4 flex flex-col border-r border-gray-300`}
+        >
+          <div className="flex justify-start items-start pl-4 pb-2 gap-4">
+            <MenuButton onClick={toggleSidebar} />
+            <CreateEntrysheetButton router={router} />
+          </div>
+          <EntrysheetsList entrysheets={entrysheets} />
+        </aside>
+      ) : (
+        <div className="pl-8 p-4 flex items-start bg-blue-100">
+          <MenuButton onClick={toggleSidebar} />
+        </div>
+      )}
+    </>
   );
 };
 
