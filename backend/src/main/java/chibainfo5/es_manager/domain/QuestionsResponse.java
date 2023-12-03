@@ -11,8 +11,8 @@ import java.util.Map;
 
 
 public class QuestionsResponse {
-    private Long userId;
-    private Long esId;
+    private int userId;
+    private int esId;
     private String company;
     private String job;
     private String event;
@@ -20,11 +20,11 @@ public class QuestionsResponse {
     private boolean isReleased;
     private Map<String, Question> questions;
 
-    public Long getEsId() {return esId;}
-    public void setEsId(Long esId) {this.esId = esId;}
+    public int getUserId() {return userId;}
+    public void setUserId(int userId) {this.userId = userId;}
 
-    public Long getUserId() {return userId;}
-    public void setUserId(Long userId) {this.userId = userId;}
+    public int getEsId() {return esId;}
+    public void setEsId(int esId) {this.esId = esId;}
 
     public String getCompany() {return company;}
     public void setCompany(String company) {this.company = company;}
@@ -94,8 +94,8 @@ public class QuestionsResponse {
     public static EntrysheetsEntity convertToEntrysheetEntity(
         QuestionsResponse questionsResponse
     ){
-        Long userId = questionsResponse.getUserId();
-        Long esId = questionsResponse.getEsId();
+        int userId = questionsResponse.getUserId();
+        int esId = questionsResponse.getEsId();
         String company = questionsResponse.getCompany();
         String job = questionsResponse.getJob();
         String event = questionsResponse.getEvent();

@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class EntrysheetsKey implements Serializable {
-    private Long userId;
-    private Long esId;
+    private int userId;
+    private int esId;
 }

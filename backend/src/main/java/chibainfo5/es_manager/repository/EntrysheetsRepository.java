@@ -13,10 +13,10 @@ import java.util.List;
 
 @Repository
 public interface EntrysheetsRepository extends JpaRepository<EntrysheetsEntity, EntrysheetsKey> {
-    public List<EntrysheetsEntity> findByUserId(Long userId);
+    public List<EntrysheetsEntity> findByUserId(int userId);
 
-    public EntrysheetsEntity findByUserIdAndEsId(Long userId, Long esId);
+    public EntrysheetsEntity findByUserIdAndEsId(int userId, int esId);
 
     @Query(value = "SELECT MAX(es_id) FROM entrysheets WHERE user_id = :userId", nativeQuery = true)
-    public Long findMaxEsIdByUserId(@Param("userId") Long userId);
+    public int findMaxEsIdByUserId(@Param("userId") int userId);
 }

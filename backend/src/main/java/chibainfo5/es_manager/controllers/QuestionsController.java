@@ -34,11 +34,11 @@ public class QuestionsController {
     // アプリ起動時にダミーデータをデータベース内に登録
     @PostConstruct
     public void init(){
-        QuestionsEntity question1 = new QuestionsEntity(0L, 0L, 0, "志望動機は?", 30, 0, "ホワイトだから");
-        QuestionsEntity question2 = new QuestionsEntity(0L, 0L, 1, "趣味は?", 30, 0, "サウナ");
-        QuestionsEntity question3 = new QuestionsEntity(0L, 0L, 0, "志望動機は?", 30, 1, "駅近だから");
-        QuestionsEntity question4 = new QuestionsEntity(0L, 1L, 0, "ガクチカは?", 20, 0, "特になし");
-        QuestionsEntity question5 = new QuestionsEntity(0L, 0L, 1, "趣味は?", 30, 1, "旅行");
+        QuestionsEntity question1 = new QuestionsEntity(0, 0, 0, "志望動機は?", 30, 0, "ホワイトだから");
+        QuestionsEntity question2 = new QuestionsEntity(0, 0, 1, "趣味は?", 30, 0, "サウナ");
+        QuestionsEntity question3 = new QuestionsEntity(0, 0, 0, "志望動機は?", 30, 1, "駅近だから");
+        QuestionsEntity question4 = new QuestionsEntity(0, 1, 0, "ガクチカは?", 20, 0, "特になし");
+        QuestionsEntity question5 = new QuestionsEntity(0, 0, 1, "趣味は?", 30, 1, "旅行");
         questionsRepository.saveAndFlush(question1);
         questionsRepository.saveAndFlush(question2);
         questionsRepository.saveAndFlush(question3);
@@ -47,9 +47,9 @@ public class QuestionsController {
     }
 
     // エントリーシートを編集するためにDBからES情報を取得
-    @GetMapping("/{userId}/entrysheets/{esId}")
+    @GetMapping("/users/{userId}/entrysheets/{esId}")
     @CrossOrigin(origins = {"http://localhost:3001"})
-    public Mono<QuestionsResponse> getEntrysheetQuestions(@PathVariable Long userId, @PathVariable Long esId) {
+    public Mono<QuestionsResponse> getEntrysheetQuestions(@PathVariable int userId, @PathVariable int esId) {
 
         // 条件に合うuserIdのあるesIdのデータをデータベースから取得
         EntrysheetsEntity entrysheet = entrysheetsRepository.findByUserIdAndEsId(userId, esId);
@@ -62,11 +62,11 @@ public class QuestionsController {
 
     // 編集されたES情報をDBで更新・削除
     // curl -X POST -H "Content-Type: application/json" -d '{body}' http://localhost:8001/{userId}/entrysheets/{esId}
-    @PostMapping("/{userId}/entrysheets/{esId}")
+    @PostMapping("/users/{userId}/entrysheets/{esId}")
     @Transactional
     @CrossOrigin(origins = {"http://localhost:3001"})
     public Mono<QuestionsResponse> updateEntrysheetQuestions(
-        @PathVariable Long userId, @PathVariable Long esId,
+        @PathVariable int userId, @PathVariable int esId,
         @RequestBody QuestionsResponse inputQuestionsResponse
     ){
         // 差分（特に削除されたレコード）を把握するために古いレコードを取得
@@ -80,10 +80,10 @@ public class QuestionsController {
         for (QuestionsEntity oldEntity : oldQuestionsList) {
             boolean isEntityExistsInNewList = newQuestionsList.stream()
                     .anyMatch(newEntity ->
-                            newEntity.getUserId().equals(oldEntity.getUserId()) &&
-                            newEntity.getEsId().equals(oldEntity.getEsId()) &&
-                            newEntity.getQId().equals(oldEntity.getQId()) &&
-                            newEntity.getAId().equals(oldEntity.getAId()));
+                            newEntity.getUserId() == oldEntity.getUserId() &&
+                            newEntity.getEsId() == oldEntity.getEsId() &&
+                            newEntity.getQId() == oldEntity.getQId() &&
+                            newEntity.getAId() == oldEntity.getAId());
 
             if (!isEntityExistsInNewList) {
                 questionsRepository.delete(oldEntity);
