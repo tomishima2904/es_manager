@@ -16,7 +16,7 @@ export const UserIdContext = createContext<
 >(null);
 
 const Entrysheet = ({ query }: GetServerSidePropsContext) => {
-  const url: string = `${process.env.API_HOST}/${query.userId}/entrysheets/${query.esId}`;
+  const url: string = `${process.env.API_HOST}/users/${query.userId}/entrysheets/${query.esId}`;
   const { data: entrysheet, error } = useSWR(url, fetcher);
 
   if (error) {

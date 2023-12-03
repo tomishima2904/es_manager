@@ -31,7 +31,7 @@ const EntrysheetItem = (props: {
   const deadline = new Date(entrysheet.deadline);
   const formattedDate = dateFormatter(deadline);
   const userId = useContext(UserIdContext);
-  const endpoint = `/${userId}/entrysheets/${esId}`;
+  const endpoint = `users/${userId}/entrysheets/${esId}`;
 
   return (
     <Link href={endpoint}>
