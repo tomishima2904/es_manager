@@ -28,7 +28,7 @@ public class EntrysheetsEntity {
     public EntrysheetsEntity(){}
 
     public EntrysheetsEntity(
-            Long userId, Long esId, String company, String job,
+            int userId, int esId, String company, String job,
             String event, LocalDateTime deadline, Boolean isReleased){
         this.userId = userId;
         this.esId = esId;
@@ -42,12 +42,12 @@ public class EntrysheetsEntity {
     @Id // 主キーの設定
     @NotNull // キーがnullでないか、あるいは空文字でないかの検証を行う
     @Column(name = "user_id")
-    private Long userId;
+    private int userId;
 
     @Id // 主キーの設定
     @NotNull
     @Column(name = "es_id")
-    private Long esId;
+    private int esId;
 
     @NotBlank
     @Size(min=1, max=40)
@@ -72,11 +72,11 @@ public class EntrysheetsEntity {
     private boolean isReleased;
 
     // Getter and Setter methods
-    public Long getEsId() {return esId;}
-    public void setEsId(Long esId) {this.esId = esId;}
+    public int getUserId() {return userId;}
+    public void setUserId(int userId) {this.userId = userId;}
 
-    public Long getUserId() {return userId;}
-    public void setUserId(Long userId) {this.userId = userId;}
+    public int getEsId() {return esId;}
+    public void setEsId(int esId) {this.esId = esId;}
 
     public String getCompany() {return company;}
     public void setCompany(String company) {this.company = company;}

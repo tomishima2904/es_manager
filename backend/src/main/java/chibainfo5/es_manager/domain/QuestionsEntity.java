@@ -26,9 +26,9 @@ import chibainfo5.es_manager.domain.QuestionsKey;
 public class QuestionsEntity {
     public QuestionsEntity(){}
 
-    public QuestionsEntity(Long userId, Long esId,
-                            Integer qId, String question, Integer maxChars,
-                            Integer aId, String answer){
+    public QuestionsEntity(int userId, int esId,
+                            int qId, String question, int maxChars,
+                            int aId, String answer){
         this.userId = userId;
         this.esId = esId;
         this.qId = qId;
@@ -41,51 +41,51 @@ public class QuestionsEntity {
     @Id  // 主キー
     @NotNull
     @Column(name = "user_id")
-    private Long userId;
+    private int userId;
 
     @Id  // 主キー
     @NotNull
     @Column(name = "es_id")
-    private Long esId;
+    private int esId;
 
     @Id  // 主キー
     @NotNull
     @Column(name = "q_id")
-    private Integer qId;
+    private int qId;
 
     @Size(min=0, max=200)
     @Column(name = "question", length = 200, nullable = true)
     private String question;
 
     @Column(name = "maxChars", columnDefinition = "INT DEFAULT 400")
-    private Integer maxChars;
+    private int maxChars;
 
     @Id  // 主キー
     @NotNull
     @Column(name = "a_id")
-    private Integer aId;
+    private int aId;
 
     @Size(min=0, max=2000)
     @Column(name = "answer", length = 2000, nullable = true)
     private String answer;
 
-    public Long getUserId() {return userId;}
-    public void setUserId(Long userId) {this.userId = userId;}
+    public int getUserId() {return userId;}
+    public void setUserId(int userId) {this.userId = userId;}
 
-    public Long getEsId() {return esId;}
-    public void setEsId(Long esId) {this.esId = esId;}
+    public int getEsId() {return esId;}
+    public void setEsId(int esId) {this.esId = esId;}
 
-    public Integer getQId() {return qId;}
-    public void setQId(Integer qId) {this.qId = qId;}
+    public int getQId() {return qId;}
+    public void setQId(int qId) {this.qId = qId;}
 
     public String getQuestion() {return question;}
     public void setQuestion(String question) {this.question = question;}
 
-    public Integer getMaxChars() {return maxChars;}
-    public void setMaxChars(Integer maxChars) {this.maxChars = maxChars;}
+    public int getMaxChars() {return maxChars;}
+    public void setMaxChars(int maxChars) {this.maxChars = maxChars;}
 
-    public Integer getAId() {return aId;}
-    public void setAId(Integer aId) {this.aId = aId;}
+    public int getAId() {return aId;}
+    public void setAId(int aId) {this.aId = aId;}
 
     public String getAnswer() {return answer;}
     public void setAnswer(String answer) {this.answer = answer;}
