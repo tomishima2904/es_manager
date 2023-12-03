@@ -20,7 +20,7 @@ const Sidebar = (props: {
     <>
       {isSidebarOpen ? (
         <aside
-          className={`w-1/2 bg-blue-100 flex-none p-4 mr-4 flex flex-col border-r border-gray-300`}
+          className={`w-1/3 bg-blue-100 flex-none p-4 mr-4 flex flex-col border-r border-gray-300`}
         >
           <div className="flex justify-start items-start pl-4 pb-2 gap-4">
             <MenuButton onClick={toggleSidebar} />

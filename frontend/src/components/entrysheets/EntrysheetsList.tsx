@@ -11,11 +11,11 @@ import { useContext } from "react";
 const ListHeader = () => {
   return (
     <div className="flex items-center px-4 py-2 border-b border-gray-300 bg-white">
-      <div className="font-bold flex-grow flex-shrink-0">企業</div>
-      <div className="font-bold w-1/4 flex-shrink-0">職種</div>
-      <div className="font-bold w-1/4 flex-shrink-0">イベント</div>
-      <div className="font-bold w-1/4 flex-shrink-0">
-        <button className="focus:outline-none">締切</button>
+      <div className="font-bold flex-grow flex-shrink-0 text-xs">企業</div>
+      <div className="font-bold w-1/4 flex-shrink-0 text-xs">職種</div>
+      <div className="font-bold w-1/4 flex-shrink-0 text-xs">イベント</div>
+      <div className="font-bold w-1/4 flex-shrink-0 text-xs">
+        <button className="focus:outline-none text-xs">締切</button>
       </div>
     </div>
   );
@@ -39,10 +39,12 @@ const EntrysheetItem = (props: {
         className="flex items-center px-4 py-2 border-b border-gray-300 bg-white
     transition duration-300 ease-in-out hover:bg-gray-100"
       >
-        <div className="flex-grow flex-shrink-0">{entrysheet.company}</div>
-        <div className="w-1/4 flex-shrink-0">{entrysheet.job}</div>
-        <div className="w-1/4 flex-shrink-0">{entrysheet.event}</div>
-        <div className="w-1/4 flex-shrink-0">{formattedDate}</div>
+        <div className="flex-grow flex-shrink-0 text-xs">
+          {entrysheet.company}
+        </div>
+        <div className="w-1/4 flex-shrink-0 text-xs">{entrysheet.job}</div>
+        <div className="w-1/4 flex-shrink-0 text-xs">{entrysheet.event}</div>
+        <div className="w-1/4 flex-shrink-0 text-xs">{formattedDate}</div>
       </li>
     </Link>
   );
