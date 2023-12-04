@@ -28,8 +28,9 @@ const EntrysheetItem = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }): JSX.Element => {
-  const { esId, entrysheet, setEditingEntrysheets } = props;
+  const { esId, entrysheet, setEditingEntrysheets, setSelectedTab } = props;
   // 日時を yyyy/mm/dd hh:mm の文字列に変換
   const deadline = new Date(entrysheet.deadline);
   const formattedDate = dateFormatter(deadline);
@@ -56,6 +57,7 @@ const EntrysheetItem = (props: {
 
   const handleClick = () => {
     fetchData(); // クリック時にデータをフェッチする関数を呼び出す
+    setSelectedTab(String(esId));
   };
 
   return (
@@ -80,8 +82,9 @@ const EntrysheetsList = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }): JSX.Element => {
-  const { entrysheets, setEditingEntrysheets } = props;
+  const { entrysheets, setEditingEntrysheets, setSelectedTab } = props;
 
   return (
     <main className="flex-1 bg-white p-4 rounded-lg">
@@ -94,6 +97,7 @@ const EntrysheetsList = (props: {
               esId={entrysheet.esId}
               entrysheet={entrysheet}
               setEditingEntrysheets={setEditingEntrysheets}
+              setSelectedTab={setSelectedTab}
             />
           ))
         )}

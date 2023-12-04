@@ -27,6 +27,8 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
   const [editingEntrysheets, setEditingEntrysheets] =
     useState<EditingEntrysheetsProps>({});
 
+  const [selectedTab, setSelectedTab] = useState<string>("");
+
   // SWR で データフェッチ
   const url: string = `${process.env.API_HOST}/users/${query.userId}/entrysheets`;
   const { data: entrysheets, error } = useSWR(url, fetcher);
@@ -56,10 +58,13 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
           entrysheets={localEntrysheets}
           setEntrysheets={setLocalEntrysheets}
           setEditingEntrysheets={setEditingEntrysheets}
+          setSelectedTab={setSelectedTab}
         />
         <EditingEntrysheets
           editingEntrysheets={editingEntrysheets}
           setEditingEntrysheets={setEditingEntrysheets}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
         />
       </UserIdContext.Provider>
     </div>

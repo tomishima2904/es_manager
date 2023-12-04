@@ -13,8 +13,10 @@ const Sidebar = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }): JSX.Element => {
-  const { entrysheets, setEntrysheets, setEditingEntrysheets } = props;
+  const { entrysheets, setEntrysheets, setEditingEntrysheets, setSelectedTab } =
+    props;
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const toggleSidebar = (): void => {
@@ -29,11 +31,15 @@ const Sidebar = (props: {
         >
           <div className="flex justify-start items-start pl-4 pb-2 gap-4">
             <MenuButton onClick={toggleSidebar} />
-            <CreateEntrysheetButton setEntrysheets={setEntrysheets} />
+            <CreateEntrysheetButton
+              setEntrysheets={setEntrysheets}
+              setSelectedTab={setSelectedTab}
+            />
           </div>
           <EntrysheetsList
             entrysheets={entrysheets}
             setEditingEntrysheets={setEditingEntrysheets}
+            setSelectedTab={setSelectedTab}
           />
         </aside>
       ) : (

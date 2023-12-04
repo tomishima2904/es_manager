@@ -1,5 +1,4 @@
 import { EditingEntrysheetsProps } from "@/types/EntrysheetProps";
-import { useState } from "react";
 import EditingEntrysheet from "./EditingEntrysheet";
 
 const EditingEntrysheets = (props: {
@@ -7,11 +6,17 @@ const EditingEntrysheets = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
+  selectedTab: string;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }): JSX.Element => {
-  const { editingEntrysheets, setEditingEntrysheets } = props;
-  const [selectedKey, setSelectedKey] = useState<string>("");
+  const {
+    editingEntrysheets,
+    setEditingEntrysheets,
+    selectedTab,
+    setSelectedTab,
+  } = props;
 
-  const handleChange = (selectedKey: string) => setSelectedKey(selectedKey);
+  const handleChange = (selectedTab: string) => setSelectedTab(selectedTab);
 
   return (
     <div className="flex flex-grow flex-shrink-0 flex-col pl-2 pr-2">
@@ -21,7 +26,7 @@ const EditingEntrysheets = (props: {
           <div
             key={key}
             className={`flex-grow flex-shrink-0 px-4 py-2 text-sm cursor-pointer ${
-              key === selectedKey
+              key === selectedTab
                 ? "bg-white border-t border-l border-r border-gray-300 rounded-t-xl"
                 : "bg-gray-100 hover:bg-gray-200"
             }`}
@@ -35,7 +40,7 @@ const EditingEntrysheets = (props: {
       {/* 選択されたキーに対応するエントリーシートを表示 */}
       <div>
         {Object.keys(editingEntrysheets).map((key) => (
-          <div key={key} className={key === selectedKey ? "block" : "hidden"}>
+          <div key={key} className={key === selectedTab ? "block" : "hidden"}>
             <EditingEntrysheet
               entrysheet={editingEntrysheets[Number(key)]}
               setEditingEntrysheets={setEditingEntrysheets}
