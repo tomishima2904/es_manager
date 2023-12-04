@@ -37,3 +37,7 @@ export type RichEntrysheetProps = {
   isReleased: boolean;
   questions: QuestionsProps;
 };
+
+export type EditingEntrysheetsProps = {
+  [esId: number]: RichEntrysheetProps;
+};
