@@ -1,20 +1,21 @@
-import { useState, useEffect } from "react";
-import validateInput from "@/utils/validateInputError";
-import FormWithError from "./FormWithError";
-import AddAnswerButton from "../buttons/AddAnswerButton";
-import AnswerArea from "../AnswerArea";
 import type {
   AnswersProps,
-  RichEntrysheetProps,
+  EditingEntrysheetsProps,
 } from "@/types/EntrysheetProps";
+import { useState } from "react";
+import AnswerArea from "../AnswerArea";
+import AddAnswerButton from "../buttons/AddAnswerButton";
 
 const AnswerForms = (props: {
+  esId: number;
   qId: string;
   answers: { [aId: string]: string };
   maxChars: number;
-  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
 }): JSX.Element => {
-  const { qId, answers, maxChars, setEntrysheet } = props;
+  const { esId, qId, answers, maxChars, setEditingEntrysheets } = props;
 
   // 解答フォームの数
   const [numAnswers, setNumAnswers] = useState<number>(
@@ -23,19 +24,24 @@ const AnswerForms = (props: {
 
   // 解答フォームの追加を行う
   const handleAddAnswer = (newAnswerProps: AnswersProps) => {
-    setEntrysheet((prevEntrySheet: RichEntrysheetProps) => ({
-      ...prevEntrySheet,
-      questions: {
-        ...prevEntrySheet.questions,
-        [qId]: {
-          ...prevEntrySheet.questions[qId],
-          answers: {
-            ...prevEntrySheet.questions[qId].answers,
-            ...newAnswerProps,
+    setEditingEntrysheets(
+      (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
+        ...prevEditingEntrysheets,
+        [esId]: {
+          ...prevEditingEntrysheets[esId],
+          questions: {
+            ...prevEditingEntrysheets[esId].questions,
+            [qId]: {
+              ...prevEditingEntrysheets[esId].questions[qId],
+              answers: {
+                ...prevEditingEntrysheets[esId].questions[qId].answers,
+                ...newAnswerProps,
+              },
+            },
           },
         },
-      },
-    }));
+      })
+    );
     setNumAnswers((prev) => prev + 1);
   };
 
@@ -44,11 +50,12 @@ const AnswerForms = (props: {
       {Object.keys(answers).map((aId) => (
         <AnswerArea
           key={aId}
+          esId={esId}
           qId={qId}
           aId={aId}
           answer={answers[aId]}
           maxChars={maxChars}
-          setEntrysheet={setEntrysheet}
+          setEditingEntrysheets={setEditingEntrysheets}
           numAnswers={numAnswers}
           setNumAnswers={setNumAnswers}
         />

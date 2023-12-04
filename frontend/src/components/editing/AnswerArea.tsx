@@ -1,18 +1,20 @@
-import { useState, useEffect } from "react";
+import { EditingEntrysheetsProps } from "@/types/EntrysheetProps";
 import validateInput from "@/utils/validateInputError";
-import FormWithError from "./forms/FormWithError";
-import AddAnswerButton from "./buttons/AddAnswerButton";
+import { useEffect, useState } from "react";
 import RemoveFormButton from "./buttons/RemoveFormButton";
-import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
+import FormWithError from "./forms/FormWithError";
 
 const AnswerForm = (props: {
+  esId: number;
   qId: string;
   aId: string;
   answer: string;
   maxChars: number;
-  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
 }): JSX.Element => {
-  const { qId, aId, answer, maxChars, setEntrysheet } = props;
+  const { esId, qId, aId, answer, maxChars, setEditingEntrysheets } = props;
   const [text, setText] = useState<string>(answer);
   const [error, setError] = useState<string>("");
   const [isOver, setIsOver] = useState<boolean>(false);
@@ -27,19 +29,24 @@ const AnswerForm = (props: {
 
   // answerの変更をEditingEntrysheetに即時反映
   const handleAnswerChange = (text: string): void => {
-    setEntrysheet((prevEntrySheet) => ({
-      ...prevEntrySheet,
-      questions: {
-        ...prevEntrySheet.questions,
-        [qId]: {
-          ...prevEntrySheet.questions[qId],
-          answers: {
-            ...prevEntrySheet.questions[qId].answers,
-            [aId]: text,
+    setEditingEntrysheets(
+      (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
+        ...prevEditingEntrysheets,
+        [esId]: {
+          ...prevEditingEntrysheets[esId],
+          questions: {
+            ...prevEditingEntrysheets[esId].questions,
+            [qId]: {
+              ...prevEditingEntrysheets[esId].questions[qId],
+              answers: {
+                ...prevEditingEntrysheets[esId].questions[qId].answers,
+                [aId]: text,
+              },
+            },
           },
         },
-      },
-    }));
+      })
+    );
   };
 
   // フォームの変更を検知
@@ -66,34 +73,38 @@ const AnswerForm = (props: {
 };
 
 const AnswerArea = (props: {
+  esId: number;
   qId: string;
   aId: string;
   answer: string;
   maxChars: number;
-  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
   numAnswers: number;
   setNumAnswers: React.Dispatch<React.SetStateAction<number>>;
 }): JSX.Element => {
   const {
+    esId,
     qId,
     aId,
     answer,
     maxChars,
-    setEntrysheet,
+    setEditingEntrysheets,
     numAnswers,
     setNumAnswers,
   } = props;
 
   const handleRemoveAnswer = (): void => {
-    setEntrysheet((prevEntrysheet) => {
-      const updatedQuestions = { ...prevEntrysheet.questions };
+    setEditingEntrysheets((prevEditingEntrysheets: EditingEntrysheetsProps) => {
+      const updatedQuestions = { ...prevEditingEntrysheets[esId].questions };
       const updatedAnswers = { ...updatedQuestions[qId].answers };
       delete updatedAnswers[aId];
       updatedQuestions[qId] = {
         ...updatedQuestions[qId],
         answers: updatedAnswers,
       };
-      return { ...prevEntrysheet, questions: updatedQuestions };
+      return { ...prevEditingEntrysheets[esId], questions: updatedQuestions };
     });
     setNumAnswers((prev) => prev - 1);
   };
@@ -102,11 +113,12 @@ const AnswerArea = (props: {
     <div className="flex items-center">
       <AnswerForm
         key={aId}
+        esId={esId}
         qId={qId}
         aId={aId}
         answer={answer}
         maxChars={maxChars}
-        setEntrysheet={setEntrysheet}
+        setEditingEntrysheets={setEditingEntrysheets}
       />
       {numAnswers > 1 && (
         <RemoveFormButton handleRemoveForm={handleRemoveAnswer} />
