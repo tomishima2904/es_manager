@@ -14,16 +14,16 @@ const EditingEntrysheets = (props: {
   const handleChange = (selectedKey: string) => setSelectedKey(selectedKey);
 
   return (
-    <div className="flex flex-col pl-2 pr-2">
+    <div className="flex flex-grow flex-shrink-0 flex-col pl-2 pr-2">
       {/* タブの選択 */}
       <div className="flex">
         {Object.keys(editingEntrysheets).map((key) => (
           <div
             key={key}
-            className={`flex-shrink-0 px-4 py-2 cursor-pointer ${
+            className={`flex-grow flex-shrink-0 px-4 py-2 text-sm cursor-pointer ${
               key === selectedKey
                 ? "bg-white border-t border-l border-r border-gray-300 rounded-t-xl"
-                : "bg-gray-100 hover:bg-gray-200 rounded-t-xl"
+                : "bg-gray-100 hover:bg-gray-200"
             }`}
             onClick={() => handleChange(key)}
           >
