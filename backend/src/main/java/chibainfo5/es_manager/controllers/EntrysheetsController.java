@@ -40,9 +40,9 @@ public class EntrysheetsController {
     // アプリ起動時にダミーデータをデータベース内に登録
     @PostConstruct
     public void init(){
-        EntrysheetsEntity entrysheet1 = new EntrysheetsEntity(0, 0, "A株式会社", "エンジニア", "本選考", LocalDateTime.of(2023, 7, 31, 12, 0, 0), false);
-        EntrysheetsEntity entrysheet2 = new EntrysheetsEntity(1, 0, "C株式会社", "DS", "冬インターン", LocalDateTime.of(2023, 8, 25, 12, 45, 0), false);
-        EntrysheetsEntity entrysheet3 = new EntrysheetsEntity(0, 1, "B株式会社", "総合職", "夏インターン", LocalDateTime.of(2023, 9, 25, 12, 45, 0), true);
+        EntrysheetsEntity entrysheet1 = new EntrysheetsEntity(1, 1, "A株式会社", "エンジニア", "本選考", LocalDateTime.of(2023, 7, 31, 12, 0, 0), false);
+        EntrysheetsEntity entrysheet2 = new EntrysheetsEntity(2, 1, "C株式会社", "DS", "冬インターン", LocalDateTime.of(2023, 8, 25, 12, 45, 0), false);
+        EntrysheetsEntity entrysheet3 = new EntrysheetsEntity(1, 2, "B株式会社", "総合職", "夏インターン", LocalDateTime.of(2023, 9, 25, 12, 45, 0), true);
         entrysheetsRepository.saveAndFlush(entrysheet1);
         entrysheetsRepository.saveAndFlush(entrysheet2);
         entrysheetsRepository.saveAndFlush(entrysheet3);
@@ -79,7 +79,7 @@ public class EntrysheetsController {
             userId, company, job, event, deadline, isReleased);
 
         // 新規ESの質問と解答も初期値を入れて作成
-        QuestionsEntity newQuestions = new QuestionsEntity(userId, newEsId, 0, "", 400, 0, "");
+        QuestionsEntity newQuestions = new QuestionsEntity(userId, newEsId, 1, "", 400, 1, "");
         questionsRepository.saveAndFlush(newQuestions);
 
         // 新しく作成されたESentityを返す
