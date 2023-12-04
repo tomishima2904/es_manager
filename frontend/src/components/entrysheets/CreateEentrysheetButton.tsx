@@ -7,8 +7,9 @@ import { AiOutlineFileAdd } from "react-icons/ai"; // 画像icon
 
 const CreateEntrysheetButton = (props: {
   setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
+  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
 }): JSX.Element => {
-  const { setEntrysheets } = props;
+  const { setEntrysheets, setSelectedTab } = props;
   const userId = useContext(UserIdContext);
 
   // POSTメソッドで新しいエントリーシートを作成
@@ -29,6 +30,7 @@ const CreateEntrysheetButton = (props: {
         ...prevEntrySheets,
         entrysheets: [...prevEntrySheets.entrysheets, { ...response.data }],
       }));
+      setSelectedTab(String(response.data.esId));
     } catch (error) {
       console.error("Error", error);
     }

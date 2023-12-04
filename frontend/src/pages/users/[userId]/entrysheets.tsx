@@ -1,5 +1,9 @@
+import EditingEntrysheets from "@/components/editing/EditingEntrysheets";
 import Sidebar from "@/components/entrysheets/Sidebar";
-import { EntrysheetsProps } from "@/types/EntrysheetProps";
+import {
+  EditingEntrysheetsProps,
+  EntrysheetsProps,
+} from "@/types/EntrysheetProps";
 import fetcher from "@/utils/fetcher";
 import { GetServerSidePropsContext } from "next";
 import { createContext, useEffect, useState } from "react";
@@ -12,11 +16,19 @@ export async function getServerSideProps({ query }: GetServerSidePropsContext) {
   };
 }
 
+// 全てのコンポーネントで利用するであろうuserIdを定義
+// TODO: userIdの型をnumberにする
 export const UserIdContext = createContext<
   string | string[] | undefined | null
 >(null);
 
 const Entrysheets = ({ query }: GetServerSidePropsContext) => {
+  // 編集中のエントリシートを管理する
+  const [editingEntrysheets, setEditingEntrysheets] =
+    useState<EditingEntrysheetsProps>({});
+
+  const [selectedTab, setSelectedTab] = useState<string>("");
+
   // SWR で データフェッチ
   const url: string = `${process.env.API_HOST}/users/${query.userId}/entrysheets`;
   const { data: entrysheets, error } = useSWR(url, fetcher);
@@ -40,11 +52,19 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
   if (!localEntrysheets || !UserIdContext) return <div>Loading...</div>;
 
   return (
-    <div className="flex p-4">
+    <div className="flex pl-4 pr-4">
       <UserIdContext.Provider value={query.userId}>
         <Sidebar
           entrysheets={localEntrysheets}
           setEntrysheets={setLocalEntrysheets}
+          setEditingEntrysheets={setEditingEntrysheets}
+          setSelectedTab={setSelectedTab}
+        />
+        <EditingEntrysheets
+          editingEntrysheets={editingEntrysheets}
+          setEditingEntrysheets={setEditingEntrysheets}
+          selectedTab={selectedTab}
+          setSelectedTab={setSelectedTab}
         />
       </UserIdContext.Provider>
     </div>

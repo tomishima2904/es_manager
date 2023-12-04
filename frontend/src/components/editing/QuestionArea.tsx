@@ -1,22 +1,25 @@
-import QuestionForm from "./forms/QuestionForm";
-import SetCharsForm from "./forms/SetCharsForm";
-import AnswerForms from "./forms/AnswerForms";
-import RemoveFormButton from "./buttons/RemoveFormButton";
 import type {
-  QandAProps,
   AnswersProps,
-  RichEntrysheetProps,
+  EditingEntrysheetsProps,
+  QandAProps,
 } from "@/types/EntrysheetProps";
 import { useState } from "react";
+import RemoveFormButton from "./buttons/RemoveFormButton";
+import AnswerForms from "./forms/AnswerForms";
+import QuestionForm from "./forms/QuestionForm";
+import SetCharsForm from "./forms/SetCharsForm";
 
 const QuestionArea = (props: {
+  esId: number;
   qId: string;
   qAndAProps: QandAProps;
-  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
   numQuestions: number;
   setNumQuestions: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const { qId, qAndAProps, setEntrysheet } = props;
+  const { esId, qId, qAndAProps, setEditingEntrysheets } = props;
   const question: string = qAndAProps.question;
   const answers: AnswersProps = qAndAProps.answers;
 
@@ -29,37 +32,47 @@ const QuestionArea = (props: {
 
   // EditingEntrysheetのentrysheetに変更を反映させる
   const handleQuestionChange = (text: string): void => {
-    setEntrysheet((prevEntrySheet: RichEntrysheetProps) => ({
-      ...prevEntrySheet,
-      questions: {
-        ...prevEntrySheet.questions,
-        [qId]: {
-          ...prevEntrySheet.questions[qId],
-          question: text,
+    setEditingEntrysheets(
+      (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
+        ...prevEditingEntrysheets,
+        [esId]: {
+          ...prevEditingEntrysheets[esId],
+          questions: {
+            ...prevEditingEntrysheets[esId].questions,
+            [qId]: {
+              ...prevEditingEntrysheets[esId].questions[qId],
+              question: text,
+            },
+          },
         },
-      },
-    }));
+      })
+    );
   };
 
   // EditingEntrysheetのentrysheetに変更を反映させる
   const handleMaxCharsChange = (chars: number): void => {
-    setEntrysheet((prevEntrySheet: RichEntrysheetProps) => ({
-      ...prevEntrySheet,
-      questions: {
-        ...prevEntrySheet.questions,
-        [qId]: {
-          ...prevEntrySheet.questions[qId],
-          maxChars: chars,
+    setEditingEntrysheets(
+      (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
+        ...prevEditingEntrysheets,
+        [esId]: {
+          ...prevEditingEntrysheets[esId],
+          questions: {
+            ...prevEditingEntrysheets[esId].questions,
+            [qId]: {
+              ...prevEditingEntrysheets[esId].questions[qId],
+              maxChars: chars,
+            },
+          },
         },
-      },
-    }));
+      })
+    );
   };
 
   const handleRemoveQuestion = (): void => {
-    setEntrysheet((prevEntrysheet) => {
-      const updatedQuestions = { ...prevEntrysheet.questions };
+    setEditingEntrysheets((prevEditingEntrysheets: EditingEntrysheetsProps) => {
+      const updatedQuestions = { ...prevEditingEntrysheets[esId].questions };
       delete updatedQuestions[qId];
-      return { ...prevEntrysheet, questions: updatedQuestions };
+      return { ...prevEditingEntrysheets[esId], questions: updatedQuestions };
     });
     setNumQuestions((prev) => prev - 1);
   };
@@ -85,10 +98,11 @@ const QuestionArea = (props: {
         )}
       </div>
       <AnswerForms
+        esId={esId}
         qId={qId}
         answers={answers}
         maxChars={maxChars}
-        setEntrysheet={setEntrysheet}
+        setEditingEntrysheets={setEditingEntrysheets}
       />
     </form>
   );

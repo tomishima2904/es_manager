@@ -1,4 +1,4 @@
-import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
+import type { EditingEntrysheetsProps } from "@/types/EntrysheetProps";
 import DateTimeForm from "./DateTimeForm";
 import DoubleClickForm from "./DoubleClickForm";
 
@@ -11,16 +11,24 @@ const borderWrapper: string = wrapper + " border-r border-gray-300";
 const spanClassName: string = "mt-1 mr-3 font-bold ";
 
 const JobForm = (props: {
+  esId: number;
   job: string;
-  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
 }): JSX.Element => {
-  const { job, setEntrysheet } = props;
+  const { esId, job, setEditingEntrysheets } = props;
 
   const handleJobChange = (text: string): void => {
-    setEntrysheet((prevEntrysheet: RichEntrysheetProps) => ({
-      ...prevEntrysheet,
-      job: text,
-    }));
+    setEditingEntrysheets(
+      (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
+        ...prevEditingEntrysheets,
+        [esId]: {
+          ...prevEditingEntrysheets[esId],
+          job: text,
+        },
+      })
+    );
   };
 
   return (
@@ -37,16 +45,24 @@ const JobForm = (props: {
 };
 
 const EventForm = (props: {
+  esId: number;
   event: string;
-  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
 }): JSX.Element => {
-  const { event, setEntrysheet } = props;
+  const { esId, event, setEditingEntrysheets } = props;
 
   const handleEventChange = (text: string): void => {
-    setEntrysheet((prevEntrysheet: RichEntrysheetProps) => ({
-      ...prevEntrysheet,
-      event: text,
-    }));
+    setEditingEntrysheets(
+      (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
+        ...prevEditingEntrysheets,
+        [esId]: {
+          ...prevEditingEntrysheets[esId],
+          event: text,
+        },
+      })
+    );
   };
 
   return (
@@ -64,16 +80,24 @@ const EventForm = (props: {
 
 // TODO: 仮のフォームなので完成させる
 const DeadlineForm = (props: {
+  esId: number;
   deadline: string;
-  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
 }): JSX.Element => {
-  const { deadline, setEntrysheet } = props;
+  const { esId, deadline, setEditingEntrysheets } = props;
 
   const handleDeadlineChange = (text: string): void => {
-    setEntrysheet((prevEntrysheet: RichEntrysheetProps) => ({
-      ...prevEntrysheet,
-      deadline: text,
-    }));
+    setEditingEntrysheets(
+      (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
+        ...prevEditingEntrysheets,
+        [esId]: {
+          ...prevEditingEntrysheets[esId],
+          deadline: text,
+        },
+      })
+    );
   };
   return (
     <div className={wrapper}>
@@ -88,17 +112,32 @@ const DeadlineForm = (props: {
 };
 
 const MetaForm = (props: {
+  esId: number;
   job: string;
   event: string;
   deadline: string;
-  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
 }): JSX.Element => {
-  const { job, event, deadline, setEntrysheet } = props;
+  const { esId, job, event, deadline, setEditingEntrysheets } = props;
   return (
     <div className="flex justify-start items-center pb-2">
-      <JobForm job={job} setEntrysheet={setEntrysheet} />
-      <EventForm event={event} setEntrysheet={setEntrysheet} />
-      <DeadlineForm deadline={deadline} setEntrysheet={setEntrysheet} />
+      <JobForm
+        esId={esId}
+        job={job}
+        setEditingEntrysheets={setEditingEntrysheets}
+      />
+      <EventForm
+        esId={esId}
+        event={event}
+        setEditingEntrysheets={setEditingEntrysheets}
+      />
+      <DeadlineForm
+        esId={esId}
+        deadline={deadline}
+        setEditingEntrysheets={setEditingEntrysheets}
+      />
     </div>
   );
 };

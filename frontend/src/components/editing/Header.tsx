@@ -1,17 +1,24 @@
-import type { RichEntrysheetProps } from "@/types/EntrysheetProps";
+import type {
+  EditingEntrysheetsProps,
+  RichEntrysheetProps,
+} from "@/types/EntrysheetProps";
 import { useEffect, useState } from "react";
 import SaveEntrysheetButton from "./buttons/SaveEntrysheetButton";
 import CompanyForm from "./forms/CompanyForm";
 import MetaForm from "./forms/MetaForm";
 
 const Header = (props: {
+  esId: number;
   company: string;
   job: string;
   event: string;
   deadline: string;
   entrysheet: RichEntrysheetProps;
-  setEntrysheet: React.Dispatch<React.SetStateAction<RichEntrysheetProps>>;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
 }): JSX.Element => {
+  const esId: number = props.esId;
   const [company, setCompany] = useState<string>("");
   const [job, setJob] = useState<string>("");
   const [event, setEvent] = useState<string>("");
@@ -30,15 +37,20 @@ const Header = (props: {
   }
   return (
     <header className="flex flex-col border-b border-gray-300 pl-4">
-      <CompanyForm company={company} setEntrysheet={props.setEntrysheet} />
+      <CompanyForm
+        esId={esId}
+        company={company}
+        setEditingEntrysheets={props.setEditingEntrysheets}
+      />
 
       <div className="flex justify-start items-center">
         <div className="flex-initial w-128 pr-4">
           <MetaForm
+            esId={esId}
             job={job}
             event={event}
             deadline={deadline}
-            setEntrysheet={props.setEntrysheet}
+            setEditingEntrysheets={props.setEditingEntrysheets}
           />
         </div>
         <div className="flex-none">
