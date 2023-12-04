@@ -72,7 +72,13 @@ const QuestionArea = (props: {
     setEditingEntrysheets((prevEditingEntrysheets: EditingEntrysheetsProps) => {
       const updatedQuestions = { ...prevEditingEntrysheets[esId].questions };
       delete updatedQuestions[qId];
-      return { ...prevEditingEntrysheets[esId], questions: updatedQuestions };
+      return {
+        ...prevEditingEntrysheets,
+        [esId]: {
+          ...prevEditingEntrysheets[esId],
+          questions: updatedQuestions,
+        },
+      };
     });
     setNumQuestions((prev) => prev - 1);
   };
