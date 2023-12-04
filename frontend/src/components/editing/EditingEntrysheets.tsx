@@ -1,5 +1,6 @@
 import { EditingEntrysheetsProps } from "@/types/EntrysheetProps";
 import EditingEntrysheet from "./EditingEntrysheet";
+import TabCloseButton from "./buttons/TabCloseButton";
 
 const EditingEntrysheets = (props: {
   editingEntrysheets: EditingEntrysheetsProps;
@@ -25,14 +26,22 @@ const EditingEntrysheets = (props: {
         {Object.keys(editingEntrysheets).map((key) => (
           <div
             key={key}
-            className={`flex-grow flex-shrink-0 px-4 py-2 text-sm cursor-pointer ${
+            className={`flex-grow max-w-xs flex-shrink-0 px-4 py-2 text-sm cursor-pointer ${
               key === selectedTab
                 ? "bg-white border-t border-l border-r border-gray-300 rounded-t-xl"
                 : "bg-gray-100 hover:bg-gray-200"
             }`}
             onClick={() => handleChange(key)}
           >
-            {editingEntrysheets[Number(key)].company}
+            <div className="flex justify-between">
+              <div className="">{editingEntrysheets[Number(key)].company}</div>
+              <div className="flex-none">
+                <TabCloseButton
+                  esId={Number(key)}
+                  setEditingEntrysheets={setEditingEntrysheets}
+                />
+              </div>
+            </div>
           </div>
         ))}
       </div>
