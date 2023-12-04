@@ -55,6 +55,9 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
         <Sidebar
           entrysheets={localEntrysheets}
           setEntrysheets={setLocalEntrysheets}
+        <EditingEntrysheets
+          editingEntrysheets={editingEntrysheets}
+          setEditingEntrysheets={setEditingEntrysheets}
         />
       </UserIdContext.Provider>
     </div>
