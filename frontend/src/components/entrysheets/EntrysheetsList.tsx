@@ -1,10 +1,10 @@
 import { UserIdContext } from "@/pages/users/[userId]/entrysheets";
 import {
+  EditingEntrysheetsProps,
   EntrysheetEntityProps,
   EntrysheetsProps,
 } from "@/types/EntrysheetProps";
 import dateFormatter from "@/utils/dateFormatter";
-import Link from "next/link";
 import { useContext } from "react";
 
 // ヘッダー行
@@ -25,36 +25,63 @@ const ListHeader = () => {
 const EntrysheetItem = (props: {
   esId: number;
   entrysheet: EntrysheetEntityProps;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
 }): JSX.Element => {
-  const { esId, entrysheet } = props;
+  const { esId, entrysheet, setEditingEntrysheets } = props;
   // 日時を yyyy/mm/dd hh:mm の文字列に変換
   const deadline = new Date(entrysheet.deadline);
   const formattedDate = dateFormatter(deadline);
   const userId = useContext(UserIdContext);
-  const endpoint = `users/${userId}/entrysheets/${esId}`;
+  const url = `${process.env.API_HOST}/users/${userId}/entrysheets/${esId}`;
+
+  // Clickされたらデータをフェッチして編集中ESオブジェクトに入れる
+  const fetchData = async () => {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data);
+      setEditingEntrysheets(
+        (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
+          ...prevEditingEntrysheets,
+          [esId]: { ...data },
+        })
+      );
+    } catch (error) {
+      // エラーが発生した場合の処理
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleClick = () => {
+    fetchData(); // クリック時にデータをフェッチする関数を呼び出す
+  };
 
   return (
-    <Link href={endpoint}>
-      <li
-        className="flex items-center px-4 py-2 border-b border-gray-300 bg-white
+    <li
+      className="flex items-center px-4 py-2 border-b border-gray-300 bg-white
     transition duration-300 ease-in-out hover:bg-gray-100"
-      >
-        <div className="flex-grow flex-shrink-0 text-xs">
-          {entrysheet.company}
-        </div>
-        <div className="w-1/4 flex-shrink-0 text-xs">{entrysheet.job}</div>
-        <div className="w-1/4 flex-shrink-0 text-xs">{entrysheet.event}</div>
-        <div className="w-1/4 flex-shrink-0 text-xs">{formattedDate}</div>
-      </li>
-    </Link>
+      onClick={handleClick}
+    >
+      <div className="flex-grow flex-shrink-0 text-xs">
+        {entrysheet.company}
+      </div>
+      <div className="w-1/4 flex-shrink-0 text-xs">{entrysheet.job}</div>
+      <div className="w-1/4 flex-shrink-0 text-xs">{entrysheet.event}</div>
+      <div className="w-1/4 flex-shrink-0 text-xs">{formattedDate}</div>
+    </li>
   );
 };
 
 // EntrySheetsリストのコンポーネント
 const EntrysheetsList = (props: {
   entrysheets: EntrysheetsProps;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
 }): JSX.Element => {
-  const { entrysheets } = props;
+  const { entrysheets, setEditingEntrysheets } = props;
 
   return (
     <main className="flex-1 bg-white p-4 rounded-lg">
@@ -66,6 +93,7 @@ const EntrysheetsList = (props: {
               key={entrysheet.esId}
               esId={entrysheet.esId}
               entrysheet={entrysheet}
+              setEditingEntrysheets={setEditingEntrysheets}
             />
           ))
         )}
