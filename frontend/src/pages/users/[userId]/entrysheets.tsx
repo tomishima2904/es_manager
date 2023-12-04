@@ -50,7 +50,7 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
   if (!localEntrysheets || !UserIdContext) return <div>Loading...</div>;
 
   return (
-    <div className="flex p-4">
+    <div className="flex pl-4 pr-4">
       <UserIdContext.Provider value={query.userId}>
         <Sidebar
           entrysheets={localEntrysheets}
