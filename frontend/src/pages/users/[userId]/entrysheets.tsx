@@ -65,6 +65,8 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
           setTabOrder={setTabOrder}
         />
         <EditingEntrysheets
+          entrysheets={localEntrysheets}
+          setEntrysheets={setLocalEntrysheets}
           editingEntrysheets={editingEntrysheets}
           setEditingEntrysheets={setEditingEntrysheets}
           selectedTab={selectedTab}

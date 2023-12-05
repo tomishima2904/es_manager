@@ -39,7 +39,8 @@ const handler = (
       isReleased: false,
     };
     const entrysheets: EntrysheetsProps = {
-      entrysheets: [entrysheet1, entrysheet2],
+      1: entrysheet1,
+      2: entrysheet2,
     };
     res.status(200).json(entrysheets);
   }

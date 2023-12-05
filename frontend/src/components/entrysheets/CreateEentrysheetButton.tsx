@@ -39,7 +39,7 @@ const CreateEntrysheetButton = (props: {
       // 新規作成されたリソースを追加
       setEntrysheets((prevEntrysheets: EntrysheetsProps) => ({
         ...prevEntrysheets,
-        entrysheets: [...prevEntrysheets.entrysheets, { ...postResponse.data }],
+        [newEsId]: { ...postResponse.data },
       }));
 
       // 新しく作成されたエントリーシートのデータをGETメソッドでフェッチ
@@ -50,7 +50,7 @@ const CreateEntrysheetButton = (props: {
       setEditingEntrysheets(
         (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
           ...prevEditingEntrysheets,
-          [newEsId]: { ...getResponse.data },
+          [newEsId]: { ...getResponse.data.questions },
         })
       );
 

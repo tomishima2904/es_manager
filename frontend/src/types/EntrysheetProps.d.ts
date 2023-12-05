@@ -9,9 +9,7 @@ export type EntrysheetEntityProps = {
   isReleased: boolean;
 };
 
-// EntrysheetsPropsの例.
-// entrysheets = {entrysheets: [entrysheetEntiti1, entrysheetEntity2]}
-export type EntrysheetsProps = { [key: string]: EntrysheetEntityProps[] };
+export type EntrysheetsProps = { [key: number]: EntrysheetEntityProps };
 
 export type AnswersProps = {
   [aId: string]: string;
@@ -27,6 +25,11 @@ export type QuestionsProps = {
   [qId: string]: QandAProps;
 };
 
+export type EditingEntrysheetsProps = {
+  [esId: number]: QuestionsProps;
+};
+
+// バックエンドからのレスポンスデータの形式
 export type RichEntrysheetProps = {
   userId: number;
   esId: number;
@@ -36,8 +39,4 @@ export type RichEntrysheetProps = {
   deadline: string;
   isReleased: boolean;
   questions: QuestionsProps;
-};
-
-export type EditingEntrysheetsProps = {
-  [esId: number]: RichEntrysheetProps;
 };

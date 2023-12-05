@@ -53,7 +53,7 @@ const EntrysheetItem = (props: {
       setEditingEntrysheets(
         (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
           ...prevEditingEntrysheets,
-          [esId]: { ...data },
+          [esId]: { ...data.questions },
         })
       );
       // タブの順序配列にクリックされたesIdをappend
@@ -112,18 +112,16 @@ const EntrysheetsList = (props: {
     <main className="flex-1 bg-white p-4 rounded-lg">
       <ListHeader />
       <ul className="list-none">
-        {Object.values(entrysheets).map((entrysheetArray) =>
-          entrysheetArray.map((entrysheet) => (
-            <EntrysheetItem
-              key={entrysheet.esId}
-              esId={entrysheet.esId}
-              entrysheet={entrysheet}
-              setEditingEntrysheets={setEditingEntrysheets}
-              setSelectedTab={setSelectedTab}
-              setTabOrder={setTabOrder}
-            />
-          ))
-        )}
+        {Object.keys(entrysheets).map((esId) => (
+          <EntrysheetItem
+            key={esId}
+            esId={Number(esId)}
+            entrysheet={entrysheets[Number(esId)]}
+            setEditingEntrysheets={setEditingEntrysheets}
+            setSelectedTab={setSelectedTab}
+            setTabOrder={setTabOrder}
+          />
+        ))}
       </ul>
     </main>
   );

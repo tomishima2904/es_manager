@@ -1,14 +1,15 @@
 package chibainfo5.es_manager.controllers;
 
 import chibainfo5.es_manager.domain.EntrysheetsEntity;
-import chibainfo5.es_manager.domain.EntrysheetsResponse;
 import chibainfo5.es_manager.domain.QuestionsEntity;
 import chibainfo5.es_manager.repositories.EntrysheetsRepository;
 import chibainfo5.es_manager.repositories.QuestionsRepository;
 import chibainfo5.es_manager.services.EntrysheetsService;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,13 +52,16 @@ public class EntrysheetsController {
     // ユーザー毎のエントリーシートリストのページ. 任意のユーザーIDのエントリーシート情報を取得する.
     @GetMapping("/users/{userId}/entrysheets")
     @CrossOrigin(origins = {"http://localhost:3001"})
-    public Mono<EntrysheetsResponse> getUserEntrysheets(@PathVariable int userId) {
+    public Mono<Map<Integer, EntrysheetsEntity>> getUserEntrysheets(@PathVariable int userId) {
 
         // 条件に合うuserIdのデータをデータベースから取得
         List<EntrysheetsEntity> entrysheets = entrysheetsRepository.findByUserId(userId);
 
-        // 配列をそのまま返すとJSONインジェクションの可能性があるためJSONでレスポンスデータを包む
-        EntrysheetsResponse response = new EntrysheetsResponse(entrysheets);
+        // esIdをキーに, 各entrysheetをバリューに持つようにresponseデータを変形
+        Map<Integer, EntrysheetsEntity> response = new HashMap<>();
+        for (EntrysheetsEntity entrysheet : entrysheets) {
+            response.put(entrysheet.getEsId(), entrysheet);
+        }
 
         return Mono.just(response);
     }

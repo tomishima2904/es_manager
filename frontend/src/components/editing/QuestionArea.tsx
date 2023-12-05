@@ -37,12 +37,9 @@ const QuestionArea = (props: {
         ...prevEditingEntrysheets,
         [esId]: {
           ...prevEditingEntrysheets[esId],
-          questions: {
-            ...prevEditingEntrysheets[esId].questions,
-            [qId]: {
-              ...prevEditingEntrysheets[esId].questions[qId],
-              question: text,
-            },
+          [qId]: {
+            ...prevEditingEntrysheets[esId][qId],
+            question: text,
           },
         },
       })
@@ -56,12 +53,9 @@ const QuestionArea = (props: {
         ...prevEditingEntrysheets,
         [esId]: {
           ...prevEditingEntrysheets[esId],
-          questions: {
-            ...prevEditingEntrysheets[esId].questions,
-            [qId]: {
-              ...prevEditingEntrysheets[esId].questions[qId],
-              maxChars: chars,
-            },
+          [qId]: {
+            ...prevEditingEntrysheets[esId][qId],
+            maxChars: chars,
           },
         },
       })
@@ -70,14 +64,13 @@ const QuestionArea = (props: {
 
   const handleRemoveQuestion = (): void => {
     setEditingEntrysheets((prevEditingEntrysheets: EditingEntrysheetsProps) => {
-      const updatedQuestions = { ...prevEditingEntrysheets[esId].questions };
+      const updatedQuestions = {
+        ...prevEditingEntrysheets[esId],
+      };
       delete updatedQuestions[qId];
       return {
         ...prevEditingEntrysheets,
-        [esId]: {
-          ...prevEditingEntrysheets[esId],
-          questions: updatedQuestions,
-        },
+        [esId]: updatedQuestions,
       };
     });
     setNumQuestions((prev) => prev - 1);

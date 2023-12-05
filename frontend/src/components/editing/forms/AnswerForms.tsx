@@ -29,14 +29,11 @@ const AnswerForms = (props: {
         ...prevEditingEntrysheets,
         [esId]: {
           ...prevEditingEntrysheets[esId],
-          questions: {
-            ...prevEditingEntrysheets[esId].questions,
-            [qId]: {
-              ...prevEditingEntrysheets[esId].questions[qId],
-              answers: {
-                ...prevEditingEntrysheets[esId].questions[qId].answers,
-                ...newAnswerProps,
-              },
+          [qId]: {
+            ...prevEditingEntrysheets[esId][qId],
+            answers: {
+              ...prevEditingEntrysheets[esId][qId].answers,
+              ...newAnswerProps,
             },
           },
         },
