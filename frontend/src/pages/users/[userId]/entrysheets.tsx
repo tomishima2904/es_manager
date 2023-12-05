@@ -27,6 +27,9 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
   const [editingEntrysheets, setEditingEntrysheets] =
     useState<EditingEntrysheetsProps>({});
 
+  // 編集中のエントリーシートのタブの順番を管理する
+  const [tabOrder, setTabOrder] = useState<string[]>([]);
+
   const [selectedTab, setSelectedTab] = useState<string>("");
 
   // SWR で データフェッチ
@@ -59,12 +62,15 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
           setEntrysheets={setLocalEntrysheets}
           setEditingEntrysheets={setEditingEntrysheets}
           setSelectedTab={setSelectedTab}
+          setTabOrder={setTabOrder}
         />
         <EditingEntrysheets
           editingEntrysheets={editingEntrysheets}
           setEditingEntrysheets={setEditingEntrysheets}
           selectedTab={selectedTab}
           setSelectedTab={setSelectedTab}
+          tabOrder={tabOrder}
+          setTabOrder={setTabOrder}
         />
       </UserIdContext.Provider>
     </div>

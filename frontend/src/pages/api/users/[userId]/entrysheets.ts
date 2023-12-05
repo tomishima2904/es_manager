@@ -11,7 +11,7 @@ const handler = (
   if (req.method === "POST") {
     const entrysheet: EntrysheetEntityProps = {
       userId: 1,
-      esId: 2,
+      esId: 3,
       company: "Untitled",
       job: "",
       event: "",
@@ -22,7 +22,7 @@ const handler = (
   } else {
     const entrysheet1: EntrysheetEntityProps = {
       userId: 1,
-      esId: 0,
+      esId: 1,
       company: "A株式会社",
       job: "総合職",
       event: "夏インターン",
@@ -31,7 +31,7 @@ const handler = (
     };
     const entrysheet2: EntrysheetEntityProps = {
       userId: 1,
-      esId: 1,
+      esId: 2,
       company: "株式会社B",
       job: "エンジニア",
       event: "本選考",

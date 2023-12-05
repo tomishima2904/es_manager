@@ -104,7 +104,13 @@ const AnswerArea = (props: {
         ...updatedQuestions[qId],
         answers: updatedAnswers,
       };
-      return { ...prevEditingEntrysheets[esId], questions: updatedQuestions };
+      return {
+        ...prevEditingEntrysheets,
+        [esId]: {
+          ...prevEditingEntrysheets[esId],
+          questions: updatedQuestions,
+        },
+      };
     });
     setNumAnswers((prev) => prev - 1);
   };

@@ -34,11 +34,11 @@ public class QuestionsController {
     // アプリ起動時にダミーデータをデータベース内に登録
     @PostConstruct
     public void init(){
-        QuestionsEntity question1 = new QuestionsEntity(0, 0, 0, "志望動機は?", 30, 0, "ホワイトだから");
-        QuestionsEntity question2 = new QuestionsEntity(0, 0, 1, "趣味は?", 30, 0, "サウナ");
-        QuestionsEntity question3 = new QuestionsEntity(0, 0, 0, "志望動機は?", 30, 1, "駅近だから");
-        QuestionsEntity question4 = new QuestionsEntity(0, 1, 0, "ガクチカは?", 20, 0, "特になし");
-        QuestionsEntity question5 = new QuestionsEntity(0, 0, 1, "趣味は?", 30, 1, "旅行");
+        QuestionsEntity question1 = new QuestionsEntity(1, 1, 1, "志望動機は?", 30, 1, "ホワイトだから");
+        QuestionsEntity question2 = new QuestionsEntity(1, 1, 2, "趣味は?", 30, 1, "サウナ");
+        QuestionsEntity question3 = new QuestionsEntity(1, 1, 1, "志望動機は?", 30, 2, "駅近だから");
+        QuestionsEntity question4 = new QuestionsEntity(1, 2, 1, "ガクチカは?", 20, 1, "特になし");
+        QuestionsEntity question5 = new QuestionsEntity(1, 1, 2, "趣味は?", 30, 2, "旅行");
         questionsRepository.saveAndFlush(question1);
         questionsRepository.saveAndFlush(question2);
         questionsRepository.saveAndFlush(question3);
@@ -98,7 +98,7 @@ public class QuestionsController {
 
         // questionsが空の場合初期値を与える  (生じないが一応)
         if (newQuestionsList.size() == 0){
-            QuestionsEntity initQuestion = new QuestionsEntity(userId, esId, 0, "", 400, 0, "");
+            QuestionsEntity initQuestion = new QuestionsEntity(userId, esId, 1, "", 400, 1, "");
             questionsRepository.saveAndFlush(initQuestion);
             List<QuestionsEntity> questions = new ArrayList<>();
             questions.add(initQuestion);
