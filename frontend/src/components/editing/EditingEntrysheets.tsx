@@ -9,36 +9,46 @@ const EditingEntrysheets = (props: {
   >;
   selectedTab: string;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+  tabOrder: string[];
+  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
 }): JSX.Element => {
   const {
     editingEntrysheets,
     setEditingEntrysheets,
     selectedTab,
     setSelectedTab,
+    tabOrder,
+    setTabOrder,
   } = props;
 
   const handleChange = (selectedTab: string) => setSelectedTab(selectedTab);
+  tabOrder.forEach((item, index) => {
+    console.log(`Index: ${index}, Value: ${item}`);
+  });
 
   return (
     <div className="flex flex-grow flex-shrink-0 flex-col pl-2 pr-2">
       {/* タブの選択 */}
       <div className="flex">
-        {Object.keys(editingEntrysheets).map((key) => (
+        {tabOrder.map((order, index) => (
           <div
-            key={key}
+            key={order}
             className={`flex-grow max-w-xs flex-shrink-0 px-4 py-2 text-sm cursor-pointer ${
-              key === selectedTab
+              order === selectedTab
                 ? "bg-white border-t border-l border-r border-gray-300 rounded-t-xl"
                 : "bg-gray-100 hover:bg-gray-200"
             }`}
-            onClick={() => handleChange(key)}
+            onClick={() => handleChange(order)}
           >
             <div className="flex justify-between">
-              <div className="">{editingEntrysheets[Number(key)].company}</div>
+              <div className="">
+                {editingEntrysheets[Number(order)].company}
+              </div>
               <div className="flex-none">
                 <TabCloseButton
-                  esId={Number(key)}
+                  esId={Number(order)}
                   setEditingEntrysheets={setEditingEntrysheets}
+                  setTabOrder={setTabOrder}
                 />
               </div>
             </div>
@@ -48,10 +58,13 @@ const EditingEntrysheets = (props: {
 
       {/* 選択されたキーに対応するエントリーシートを表示 */}
       <div>
-        {Object.keys(editingEntrysheets).map((key) => (
-          <div key={key} className={key === selectedTab ? "block" : "hidden"}>
+        {tabOrder.map((order, index) => (
+          <div
+            key={order}
+            className={order === selectedTab ? "block" : "hidden"}
+          >
             <EditingEntrysheet
-              entrysheet={editingEntrysheets[Number(key)]}
+              entrysheet={editingEntrysheets[Number(order)]}
               setEditingEntrysheets={setEditingEntrysheets}
             />
           </div>

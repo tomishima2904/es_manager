@@ -1,5 +1,8 @@
 import { UserIdContext } from "@/pages/users/[userId]/entrysheets";
-import { EntrysheetsProps } from "@/types/EntrysheetProps";
+import {
+  EditingEntrysheetsProps,
+  EntrysheetsProps,
+} from "@/types/EntrysheetProps";
 import axios from "axios";
 import { useContext } from "react";
 import { IconContext } from "react-icons";
@@ -7,30 +10,58 @@ import { AiOutlineFileAdd } from "react-icons/ai"; // 画像icon
 
 const CreateEntrysheetButton = (props: {
   setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
+  setEditingEntrysheets: React.Dispatch<
+    React.SetStateAction<EditingEntrysheetsProps>
+  >;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
 }): JSX.Element => {
-  const { setEntrysheets, setSelectedTab } = props;
+  const { setEntrysheets, setEditingEntrysheets, setSelectedTab, setTabOrder } =
+    props;
   const userId = useContext(UserIdContext);
 
   // POSTメソッドで新しいエントリーシートを作成
   const createNewEntrysheet = async () => {
     const url: string = `${process.env.API_HOST}/users/${userId}/entrysheets`;
     try {
-      const response = await axios.post(
+      const postResponse = await axios.post(
         url,
         {},
         {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log("Success", response);
+      console.log("Success", postResponse);
+
+      // 新しく作成されたエントリーシートのesIdを取得
+      const newEsId = String(postResponse.data.esId);
 
       // 新規作成されたリソースを追加
-      setEntrysheets((prevEntrySheets) => ({
-        ...prevEntrySheets,
-        entrysheets: [...prevEntrySheets.entrysheets, { ...response.data }],
+      setEntrysheets((prevEntrysheets: EntrysheetsProps) => ({
+        ...prevEntrysheets,
+        entrysheets: [...prevEntrysheets.entrysheets, { ...postResponse.data }],
       }));
-      setSelectedTab(String(response.data.esId));
+
+      // 新しく作成されたエントリーシートのデータをGETメソッドでフェッチ
+      const getUrl: string = `${url}/${newEsId}`;
+      const getResponse = await axios.get(getUrl);
+
+      // 編集中のESオブジェクトに追加
+      setEditingEntrysheets(
+        (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
+          ...prevEditingEntrysheets,
+          [newEsId]: { ...getResponse.data },
+        })
+      );
+
+      // タブ順序配列にも追加
+      setTabOrder((prevTabOrder) => {
+        const newTabOrder = [...prevTabOrder, String(newEsId)];
+        return newTabOrder;
+      });
+
+      // 編集中のタブに選択
+      setSelectedTab(String(newEsId));
     } catch (error) {
       console.error("Error", error);
     }

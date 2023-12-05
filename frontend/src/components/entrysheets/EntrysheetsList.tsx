@@ -29,8 +29,15 @@ const EntrysheetItem = (props: {
     React.SetStateAction<EditingEntrysheetsProps>
   >;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
 }): JSX.Element => {
-  const { esId, entrysheet, setEditingEntrysheets, setSelectedTab } = props;
+  const {
+    esId,
+    entrysheet,
+    setEditingEntrysheets,
+    setSelectedTab,
+    setTabOrder,
+  } = props;
   // 日時を yyyy/mm/dd hh:mm の文字列に変換
   const deadline = new Date(entrysheet.deadline);
   const formattedDate = dateFormatter(deadline);
@@ -49,6 +56,19 @@ const EntrysheetItem = (props: {
           [esId]: { ...data },
         })
       );
+      // タブの順序配列にクリックされたesIdをappend
+      setTabOrder((prevTabOrder) => {
+        const newEsId = String(esId);
+
+        // 指定したesIdが含まれていない場合のみ追加
+        if (!prevTabOrder.includes(newEsId)) {
+          const newTabOrder = [...prevTabOrder, newEsId];
+          return newTabOrder;
+        }
+
+        // 指定したesIdが含まれている場合はそのまま返す
+        return prevTabOrder;
+      });
     } catch (error) {
       // エラーが発生した場合の処理
       console.error("Error fetching data:", error);
@@ -83,8 +103,10 @@ const EntrysheetsList = (props: {
     React.SetStateAction<EditingEntrysheetsProps>
   >;
   setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
 }): JSX.Element => {
-  const { entrysheets, setEditingEntrysheets, setSelectedTab } = props;
+  const { entrysheets, setEditingEntrysheets, setSelectedTab, setTabOrder } =
+    props;
 
   return (
     <main className="flex-1 bg-white p-4 rounded-lg">
@@ -98,6 +120,7 @@ const EntrysheetsList = (props: {
               entrysheet={entrysheet}
               setEditingEntrysheets={setEditingEntrysheets}
               setSelectedTab={setSelectedTab}
+              setTabOrder={setTabOrder}
             />
           ))
         )}

@@ -7,8 +7,9 @@ const TabCloseButton = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
+  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
 }): JSX.Element => {
-  const { esId, setEditingEntrysheets } = props;
+  const { esId, setEditingEntrysheets, setTabOrder } = props;
 
   const handleClick = () => {
     setEditingEntrysheets((prevEditingEntrysheets: EditingEntrysheetsProps) => {
@@ -16,6 +17,11 @@ const TabCloseButton = (props: {
       const { [esId]: removedEntry, ...updatedEntries } =
         prevEditingEntrysheets;
       return updatedEntries;
+    });
+    // タブ順序配列からも削除
+    setTabOrder((prevTabOrder) => {
+      const newTabOrder = prevTabOrder.filter((tab) => tab !== String(esId));
+      return newTabOrder;
     });
   };
 
