@@ -1,4 +1,4 @@
-import type { EditingEntrysheetsProps } from "@/types/EntrysheetProps";
+import type { EntrysheetsProps } from "@/types/EntrysheetProps";
 import DateTimeForm from "./DateTimeForm";
 import DoubleClickForm from "./DoubleClickForm";
 
@@ -13,22 +13,18 @@ const spanClassName: string = "mt-1 mr-3 font-bold ";
 const JobForm = (props: {
   esId: number;
   job: string;
-  setEditingEntrysheets: React.Dispatch<
-    React.SetStateAction<EditingEntrysheetsProps>
-  >;
+  setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
 }): JSX.Element => {
-  const { esId, job, setEditingEntrysheets } = props;
+  const { esId, job, setEntrysheets } = props;
 
   const handleJobChange = (text: string): void => {
-    setEditingEntrysheets(
-      (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
-        ...prevEditingEntrysheets,
-        [esId]: {
-          ...prevEditingEntrysheets[esId],
-          job: text,
-        },
-      })
-    );
+    setEntrysheets((prevEntrysheets: EntrysheetsProps) => ({
+      ...prevEntrysheets,
+      [esId]: {
+        ...prevEntrysheets[esId],
+        job: text,
+      },
+    }));
   };
 
   return (
@@ -47,22 +43,18 @@ const JobForm = (props: {
 const EventForm = (props: {
   esId: number;
   event: string;
-  setEditingEntrysheets: React.Dispatch<
-    React.SetStateAction<EditingEntrysheetsProps>
-  >;
+  setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
 }): JSX.Element => {
-  const { esId, event, setEditingEntrysheets } = props;
+  const { esId, event, setEntrysheets } = props;
 
   const handleEventChange = (text: string): void => {
-    setEditingEntrysheets(
-      (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
-        ...prevEditingEntrysheets,
-        [esId]: {
-          ...prevEditingEntrysheets[esId],
-          event: text,
-        },
-      })
-    );
+    setEntrysheets((prevEntrysheets: EntrysheetsProps) => ({
+      ...prevEntrysheets,
+      [esId]: {
+        ...prevEntrysheets[esId],
+        event: text,
+      },
+    }));
   };
 
   return (
@@ -82,22 +74,18 @@ const EventForm = (props: {
 const DeadlineForm = (props: {
   esId: number;
   deadline: string;
-  setEditingEntrysheets: React.Dispatch<
-    React.SetStateAction<EditingEntrysheetsProps>
-  >;
+  setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
 }): JSX.Element => {
-  const { esId, deadline, setEditingEntrysheets } = props;
+  const { esId, deadline, setEntrysheets } = props;
 
   const handleDeadlineChange = (text: string): void => {
-    setEditingEntrysheets(
-      (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
-        ...prevEditingEntrysheets,
-        [esId]: {
-          ...prevEditingEntrysheets[esId],
-          deadline: text,
-        },
-      })
-    );
+    setEntrysheets((prevEntrysheets: EntrysheetsProps) => ({
+      ...prevEntrysheets,
+      [esId]: {
+        ...prevEntrysheets[esId],
+        deadline: text,
+      },
+    }));
   };
   return (
     <div className={wrapper}>
@@ -113,30 +101,26 @@ const DeadlineForm = (props: {
 
 const MetaForm = (props: {
   esId: number;
-  job: string;
-  event: string;
-  deadline: string;
-  setEditingEntrysheets: React.Dispatch<
-    React.SetStateAction<EditingEntrysheetsProps>
-  >;
+  entrysheets: EntrysheetsProps;
+  setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
 }): JSX.Element => {
-  const { esId, job, event, deadline, setEditingEntrysheets } = props;
+  const { esId, entrysheets, setEntrysheets } = props;
   return (
     <div className="flex justify-start items-center pb-2">
       <JobForm
         esId={esId}
-        job={job}
-        setEditingEntrysheets={setEditingEntrysheets}
+        job={entrysheets[esId].job}
+        setEntrysheets={setEntrysheets}
       />
       <EventForm
         esId={esId}
-        event={event}
-        setEditingEntrysheets={setEditingEntrysheets}
+        event={entrysheets[esId].event}
+        setEntrysheets={setEntrysheets}
       />
       <DeadlineForm
         esId={esId}
-        deadline={deadline}
-        setEditingEntrysheets={setEditingEntrysheets}
+        deadline={entrysheets[esId].deadline}
+        setEntrysheets={setEntrysheets}
       />
     </div>
   );

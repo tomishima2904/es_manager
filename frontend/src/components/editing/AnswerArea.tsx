@@ -34,14 +34,11 @@ const AnswerForm = (props: {
         ...prevEditingEntrysheets,
         [esId]: {
           ...prevEditingEntrysheets[esId],
-          questions: {
-            ...prevEditingEntrysheets[esId].questions,
-            [qId]: {
-              ...prevEditingEntrysheets[esId].questions[qId],
-              answers: {
-                ...prevEditingEntrysheets[esId].questions[qId].answers,
-                [aId]: text,
-              },
+          [qId]: {
+            ...prevEditingEntrysheets[esId][qId],
+            answers: {
+              ...prevEditingEntrysheets[esId][qId].answers,
+              [aId]: text,
             },
           },
         },
@@ -97,18 +94,19 @@ const AnswerArea = (props: {
 
   const handleRemoveAnswer = (): void => {
     setEditingEntrysheets((prevEditingEntrysheets: EditingEntrysheetsProps) => {
-      const updatedQuestions = { ...prevEditingEntrysheets[esId].questions };
+      const updatedQuestions = { ...prevEditingEntrysheets[esId] };
       const updatedAnswers = { ...updatedQuestions[qId].answers };
       delete updatedAnswers[aId];
       updatedQuestions[qId] = {
         ...updatedQuestions[qId],
         answers: updatedAnswers,
       };
+
       return {
         ...prevEditingEntrysheets,
         [esId]: {
           ...prevEditingEntrysheets[esId],
-          questions: updatedQuestions,
+          [qId]: updatedQuestions[qId],
         },
       };
     });

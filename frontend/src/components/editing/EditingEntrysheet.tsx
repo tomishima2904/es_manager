@@ -1,7 +1,7 @@
 import type {
   EditingEntrysheetsProps,
+  EntrysheetsProps,
   QuestionsProps,
-  RichEntrysheetProps,
 } from "@/types/EntrysheetProps";
 import { useEffect, useState } from "react";
 import Header from "./Header";
@@ -9,22 +9,28 @@ import QuestionArea from "./QuestionArea";
 import AddQuestionButton from "./buttons/AddQestionButton";
 
 const EditingEntrysheet = (props: {
-  entrysheet: RichEntrysheetProps;
+  esId: number;
+  entrysheets: EntrysheetsProps;
+  setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
+  editingEntrysheets: EditingEntrysheetsProps;
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
 }): JSX.Element => {
-  const { entrysheet, setEditingEntrysheets } = props;
-  const esId = entrysheet.esId;
-  const [numQuestions, setNumQuestions] = useState<number>(
-    Object.keys(entrysheet.questions).length
-  );
+  const {
+    esId,
+    entrysheets,
+    setEntrysheets,
+    editingEntrysheets,
+    setEditingEntrysheets,
+  } = props;
+  const [numQuestions, setNumQuestions] = useState<number>(0);
 
   useEffect(() => {
-    setNumQuestions(Object.keys(entrysheet.questions).length);
-  }, [entrysheet]);
+    setNumQuestions(Object.keys(editingEntrysheets[esId]).length);
+  }, [editingEntrysheets, esId, entrysheets]);
 
-  if (!entrysheet) {
+  if (!editingEntrysheets || !entrysheets || !esId) {
     return <div>Loading...</div>;
   }
 
@@ -35,10 +41,7 @@ const EditingEntrysheet = (props: {
         ...prevEditingEntrysheets,
         [esId]: {
           ...prevEditingEntrysheets[esId],
-          questions: {
-            ...prevEditingEntrysheets[esId].questions,
-            ...newQuestionProps,
-          },
+          ...newQuestionProps,
         },
       })
     );
@@ -48,27 +51,24 @@ const EditingEntrysheet = (props: {
   return (
     <div className="p-4 flex flex-col ">
       <Header
-        esId={entrysheet.esId}
-        company={entrysheet.company}
-        job={entrysheet.job}
-        event={entrysheet.event}
-        deadline={entrysheet.deadline}
-        entrysheet={entrysheet}
-        setEditingEntrysheets={setEditingEntrysheets}
+        esId={esId}
+        entrysheets={entrysheets}
+        setEntrysheets={setEntrysheets}
+        editingEntrysheets={editingEntrysheets}
       />
-      {Object.keys(entrysheet.questions).map((qId) => (
+      {Object.keys(editingEntrysheets[esId]).map((qId) => (
         <QuestionArea
           key={qId}
           esId={esId}
           qId={qId}
-          qAndAProps={entrysheet.questions[qId]}
+          qAndAProps={editingEntrysheets[esId][qId]}
           setEditingEntrysheets={setEditingEntrysheets}
           numQuestions={numQuestions}
           setNumQuestions={setNumQuestions}
         />
       ))}
       <AddQuestionButton
-        questions={entrysheet.questions}
+        questions={editingEntrysheets[esId]}
         setNewProps={handleAddQandAs}
       />
     </div>

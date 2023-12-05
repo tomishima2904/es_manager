@@ -1,29 +1,25 @@
-import { EditingEntrysheetsProps } from "@/types/EntrysheetProps";
+import { EntrysheetsProps } from "@/types/EntrysheetProps";
 import DoubleClickForm from "./DoubleClickForm";
 
 const CompanyForm = (props: {
   company: string;
   esId: number;
-  setEditingEntrysheets: React.Dispatch<
-    React.SetStateAction<EditingEntrysheetsProps>
-  >;
+  setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
 }) => {
-  const { company, esId, setEditingEntrysheets } = props;
+  const { company, esId, setEntrysheets } = props;
   const classNames: string[] = [
     "px-2 py-0.5 rounded-lg border border-gray-300 bg-transparent",
     "text-lg font-bold px-2 py-0.5 rounded-lg border border-white bg-transparent",
   ];
 
   const handleCompanyChange = (text: string): void => {
-    setEditingEntrysheets(
-      (prevEditingEntrysheets: EditingEntrysheetsProps) => ({
-        ...prevEditingEntrysheets,
-        [esId]: {
-          ...prevEditingEntrysheets[esId],
-          company: text,
-        },
-      })
-    );
+    setEntrysheets((prevEntrysheets: EntrysheetsProps) => ({
+      ...prevEntrysheets,
+      [esId]: {
+        ...prevEntrysheets[esId],
+        company: text,
+      },
+    }));
   };
 
   return (

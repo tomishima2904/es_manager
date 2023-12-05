@@ -1,8 +1,13 @@
-import { EditingEntrysheetsProps } from "@/types/EntrysheetProps";
+import {
+  EditingEntrysheetsProps,
+  EntrysheetsProps,
+} from "@/types/EntrysheetProps";
 import EditingEntrysheet from "./EditingEntrysheet";
 import TabCloseButton from "./buttons/TabCloseButton";
 
 const EditingEntrysheets = (props: {
+  entrysheets: EntrysheetsProps;
+  setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
   editingEntrysheets: EditingEntrysheetsProps;
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
@@ -13,7 +18,9 @@ const EditingEntrysheets = (props: {
   setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
 }): JSX.Element => {
   const {
-    editingEntrysheets,
+    entrysheets, // companyやevent等の情報
+    setEntrysheets,
+    editingEntrysheets, // 個々のES内の質問と解答の情報
     setEditingEntrysheets,
     selectedTab,
     setSelectedTab,
@@ -22,9 +29,6 @@ const EditingEntrysheets = (props: {
   } = props;
 
   const handleChange = (selectedTab: string) => setSelectedTab(selectedTab);
-  tabOrder.forEach((item, index) => {
-    console.log(`Index: ${index}, Value: ${item}`);
-  });
 
   return (
     <div className="flex flex-grow flex-shrink-0 flex-col pl-2 pr-2">
@@ -41,9 +45,7 @@ const EditingEntrysheets = (props: {
             onClick={() => handleChange(order)}
           >
             <div className="flex justify-between">
-              <div className="">
-                {editingEntrysheets[Number(order)].company}
-              </div>
+              <div className="">{entrysheets[Number(order)].company}</div>
               <div className="flex-none">
                 <TabCloseButton
                   esId={Number(order)}
@@ -64,7 +66,10 @@ const EditingEntrysheets = (props: {
             className={order === selectedTab ? "block" : "hidden"}
           >
             <EditingEntrysheet
-              entrysheet={editingEntrysheets[Number(order)]}
+              esId={Number(order)}
+              entrysheets={entrysheets}
+              setEntrysheets={setEntrysheets}
+              editingEntrysheets={editingEntrysheets}
               setEditingEntrysheets={setEditingEntrysheets}
             />
           </div>
