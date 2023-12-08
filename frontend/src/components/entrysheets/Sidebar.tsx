@@ -33,7 +33,7 @@ const Sidebar = (props: {
     <>
       {isSidebarOpen ? (
         <aside
-          className={`w-1/3 bg-blue-100 flex-none p-4 mr-4 flex flex-col border-r border-gray-300`}
+          className={`w-1/3 bg-blue-100 flex-none p-4 mr-4 flex flex-col border-r border-gray-300 z-50 fixed h-full`}
         >
           <div className="flex justify-start items-start pl-4 pb-2 gap-4">
             <MenuButton onClick={toggleSidebar} />
@@ -52,7 +52,7 @@ const Sidebar = (props: {
           />
         </aside>
       ) : (
-        <div className="pl-8 p-4 flex items-start bg-blue-100">
+        <div className="pl-8 p-4 flex-none items-start bg-blue-100 z-50 fixed h-full">
           <MenuButton onClick={toggleSidebar} />
         </div>
       )}
