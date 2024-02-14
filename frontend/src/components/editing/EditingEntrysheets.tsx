@@ -10,6 +10,10 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import {
+  restrictToHorizontalAxis,
+  restrictToParentElement,
+} from "@dnd-kit/modifiers";
+import {
   SortableContext,
   arrayMove,
   horizontalListSortingStrategy,
@@ -96,6 +100,7 @@ const EditingEntrysheets = (props: {
     <DndContext
       sensors={useSensors(useSensor(PointerSensor))}
       collisionDetection={closestCenter}
+      modifiers={[restrictToHorizontalAxis, restrictToParentElement]} // 可動範囲を制限
       onDragEnd={handleDragEnd}
     >
       <SortableContext items={items} strategy={horizontalListSortingStrategy}>
