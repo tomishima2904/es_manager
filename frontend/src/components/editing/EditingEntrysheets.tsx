@@ -77,8 +77,8 @@ const EditingEntrysheets = (props: {
       <div
         className={`flex-grow max-w-xs flex-shrink-0 px-4 py-2 text-sm cursor-pointer ${
           order === selectedTab
-            ? "bg-white border-t border-l border-r border-gray-300 rounded-t-xl"
-            : "bg-gray-100 hover:bg-gray-200"
+            ? "bg-white border-l border-r border-gray-300 border-t-2 border-t-green-300"
+            : "bg-gray-100 hover:bg-gray-200 border-r"
         }`}
         onClick={() => handleChange(order)}
       >
