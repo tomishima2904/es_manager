@@ -31,7 +31,7 @@ const EditingEntrysheets = (props: {
   const handleChange = (selectedTab: string) => setSelectedTab(selectedTab);
 
   return (
-    <div className="flex flex-grow flex-shrink-0 flex-col pl-2 pr-2">
+    <div className="flex flex-grow flex-shrink-0 flex-col pl-2 pr-2 ml-16">
       {/* タブの選択 */}
       <div className="flex">
         {tabOrder.map((order, index) => (
