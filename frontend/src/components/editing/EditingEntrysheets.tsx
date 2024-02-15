@@ -21,7 +21,7 @@ import {
 import { useEffect, useState } from "react";
 import EditingEntrysheet from "./EditingEntrysheet";
 import SortableItem from "./SortableItem";
-import TabCloseButton from "./buttons/TabCloseButton";
+import Tab from "./buttons/Tab";
 
 // HACK: こちらのコンポーネントが巨大になっていると思うので細分化してもいいかも
 const EditingEntrysheets = (props: {
@@ -70,32 +70,6 @@ const EditingEntrysheets = (props: {
   // 下記の `Tab` コンポーネントで使用
   const handleChange = (selectedTab: string) => setSelectedTab(selectedTab);
 
-  // `order`で selectedTab であるかそうでないかを判断して, スタイルを変える
-  const Tab = (props: { order: string }): JSX.Element => {
-    const { order } = props;
-    return (
-      <div
-        className={`flex-grow max-w-xs flex-shrink-0 px-4 py-2 text-sm cursor-pointer ${
-          order === selectedTab
-            ? "bg-white border-l border-r border-gray-300 border-t-2 border-t-green-300"
-            : "bg-gray-100 hover:bg-gray-200 border-r"
-        }`}
-        onClick={() => handleChange(order)}
-      >
-        <div className="flex justify-between">
-          <div className="">{entrysheets[Number(order)].company}</div>
-          <div className="flex-none">
-            <TabCloseButton
-              esId={Number(order)}
-              setEditingEntrysheets={setEditingEntrysheets}
-              setTabOrder={setTabOrder}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <DndContext
       sensors={useSensors(useSensor(PointerSensor))}
@@ -109,7 +83,14 @@ const EditingEntrysheets = (props: {
           <div className="flex">
             {items.map((order, index) => (
               <SortableItem key={order} id={order} onDragStart={handleChange}>
-                <Tab order={order} />
+                <Tab
+                  order={order}
+                  selectedTab={selectedTab}
+                  company={entrysheets[Number(order)].company}
+                  onHandleChange={handleChange}
+                  setEditingEntrysheets={setEditingEntrysheets}
+                  setTabOrder={setTabOrder}
+                />
               </SortableItem>
             ))}
           </div>
