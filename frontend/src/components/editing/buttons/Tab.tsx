@@ -2,7 +2,7 @@ import { EditingEntrysheetsProps } from "@/types/EntrysheetProps";
 import TabCloseButton from "./TabCloseButton";
 
 const Tab = (props: {
-  order: string;
+  esId: string;
   selectedTab: string;
   company: string;
   onHandleChange: (selectedTab: string) => void; // 選択中のタブを切り替える関数
@@ -14,17 +14,17 @@ const Tab = (props: {
   return (
     <div
       className={`flex-grow max-w-xs flex-shrink-0 px-4 py-2 text-sm cursor-pointer ${
-        props.order === props.selectedTab
+        props.esId === props.selectedTab
           ? "bg-white border-l border-r border-gray-300 border-t-2 border-t-green-300"
           : "bg-gray-100 hover:bg-gray-200 border-r"
       }`}
-      onClick={() => props.onHandleChange(props.order)}
+      onClick={() => props.onHandleChange(props.esId)}
     >
       <div className="flex justify-between">
         <div className="">{props.company}</div>
         <div className="flex-none">
           <TabCloseButton
-            esId={Number(props.order)}
+            esId={Number(props.esId)}
             setEditingEntrysheets={props.setEditingEntrysheets}
             setTabOrder={props.setTabOrder}
           />
