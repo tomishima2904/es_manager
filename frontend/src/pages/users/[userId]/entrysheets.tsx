@@ -29,8 +29,16 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
 
   // 編集中のエントリーシートのタブの順番を管理する
   const [tabOrder, setTabOrder] = useState<string[]>([]);
-
   const [selectedTab, setSelectedTab] = useState<string>("");
+
+  // `TabCloseButton`によってタブが閉じられた場合の挙動を制御
+  useEffect(() => {
+    // `tabOrder`の変化をwatch
+    if (tabOrder.length > 0 && !tabOrder.includes(selectedTab)) {
+      // `tabOrder`が空配列でなく，かつ，`selectedTab`が`tabOrder`中に存在しない場合
+      setSelectedTab(tabOrder[tabOrder.length - 1]); // `selectedTab`を更新
+    }
+  }, [tabOrder, selectedTab]);
 
   // SWR で データフェッチ
   const url: string = `${process.env.API_HOST}/users/${query.userId}/entrysheets`;
