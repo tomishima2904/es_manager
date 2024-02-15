@@ -7,7 +7,6 @@ import {
   PointerSensor,
   closestCenter,
   useSensor,
-  useSensors,
 } from "@dnd-kit/core";
 import {
   restrictToHorizontalAxis,
@@ -46,6 +45,12 @@ const EditingEntrysheets = (props: {
     setTabOrder,
   } = props;
 
+  const sensor = useSensor(PointerSensor, {
+    activationConstraint: {
+      distance: 5, // Set the distance threshold to 5px
+    },
+  });
+
   const handleDragEnd = ({ active, over }: any): void => {
     handleChange(active.id);
 
@@ -63,7 +68,7 @@ const EditingEntrysheets = (props: {
 
   return (
     <DndContext
-      sensors={useSensors(useSensor(PointerSensor))}
+      sensors={[sensor]}
       collisionDetection={closestCenter}
       modifiers={[restrictToHorizontalAxis, restrictToParentElement]} // 可動範囲を制限
       onDragEnd={handleDragEnd}
@@ -75,12 +80,12 @@ const EditingEntrysheets = (props: {
         <div className="flex flex-grow flex-shrink-0 flex-col pl-2 pr-2 ml-16">
           {/* タブの選択 */}
           <div className="flex">
-            {tabOrder.map((order, index) => (
-              <SortableItem key={order} id={order} onDragStart={handleChange}>
+            {tabOrder.map((esId, index) => (
+              <SortableItem key={esId} id={esId} onDragStart={handleChange}>
                 <Tab
-                  order={order}
+                  esId={esId}
                   selectedTab={selectedTab}
-                  company={entrysheets[Number(order)].company}
+                  company={entrysheets[Number(esId)].company}
                   onHandleChange={handleChange}
                   setEditingEntrysheets={setEditingEntrysheets}
                   setTabOrder={setTabOrder}
