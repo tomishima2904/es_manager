@@ -19,7 +19,7 @@ import {
 } from "@dnd-kit/sortable";
 import EditingEntrysheet from "./EditingEntrysheet";
 import SortableItem from "./SortableItem";
-import Tab from "./buttons/Tab";
+import Tab from "./Tab";
 
 // HACK: こちらのコンポーネントが巨大になっていると思うので細分化してもいいかも
 const EditingEntrysheets = (props: {
