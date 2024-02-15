@@ -18,7 +18,6 @@ import {
   arrayMove,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useEffect, useState } from "react";
 import EditingEntrysheet from "./EditingEntrysheet";
 import SortableItem from "./SortableItem";
 import Tab from "./buttons/Tab";
@@ -47,23 +46,15 @@ const EditingEntrysheets = (props: {
     setTabOrder,
   } = props;
 
-  // dnd-kit/sortableでタブをドラッグ&ドロップによるソート可能にするために使用
-  const [items, setItems] = useState<string[]>(tabOrder);
-  useEffect(() => {
-    setItems(tabOrder);
-  }, [tabOrder]);
-
   const handleDragEnd = ({ active, over }: any): void => {
     handleChange(active.id);
 
-    // ただクリックされた時だけの場合はこの関数は実行しない
     if (!active || !over || active.id === over.id) {
       return;
     }
 
-    const oldIndex = items.indexOf(active.id);
-    const newIndex = items.indexOf(over.id);
-    setItems(arrayMove(items, oldIndex, newIndex));
+    const oldIndex = tabOrder.indexOf(active.id);
+    const newIndex = tabOrder.indexOf(over.id);
     setTabOrder(arrayMove(tabOrder, oldIndex, newIndex));
   };
 
@@ -77,11 +68,14 @@ const EditingEntrysheets = (props: {
       modifiers={[restrictToHorizontalAxis, restrictToParentElement]} // 可動範囲を制限
       onDragEnd={handleDragEnd}
     >
-      <SortableContext items={items} strategy={horizontalListSortingStrategy}>
+      <SortableContext
+        items={tabOrder}
+        strategy={horizontalListSortingStrategy}
+      >
         <div className="flex flex-grow flex-shrink-0 flex-col pl-2 pr-2 ml-16">
           {/* タブの選択 */}
           <div className="flex">
-            {items.map((order, index) => (
+            {tabOrder.map((order, index) => (
               <SortableItem key={order} id={order} onDragStart={handleChange}>
                 <Tab
                   order={order}
@@ -97,7 +91,7 @@ const EditingEntrysheets = (props: {
 
           {/* 選択されたキーに対応するエントリーシートを表示 */}
           <div>
-            {items.map((order, index) => (
+            {tabOrder.map((order, index) => (
               <div
                 key={order}
                 className={order === selectedTab ? "block" : "hidden"}
