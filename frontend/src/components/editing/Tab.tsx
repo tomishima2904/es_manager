@@ -1,5 +1,6 @@
 import { EditingEntrysheetsProps } from "@/types/EntrysheetProps";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import RightClickMenuItem from "./RightClickMenuItem";
 import TabCloseButton from "./buttons/TabCloseButton";
 
 const Tab = (props: {
@@ -18,6 +19,29 @@ const Tab = (props: {
     left: number;
   }>({ top: 0, left: 0 });
 
+  const menuRef = useRef<HTMLUListElement>(null); // Ref for the menu element
+
+  // メニューが開かれているときに，メニュー領域外をクリックするとメニューを閉じるようにする
+  useEffect(() => {
+    // Add event listener to detect clicks outside the menu
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        // If menu is open and clicked outside the menu
+        setMenuVisible(false); // Close menu
+      }
+    };
+
+    if (menuVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuVisible]); // Run this effect whenever menuVisible changes
+
   const handleRightClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault(); // Prevent default right-click behavior
     setMenuPosition({ top: event.clientY, left: event.clientX }); // Set menu position
@@ -26,6 +50,10 @@ const Tab = (props: {
 
   const closeMenu = () => {
     setMenuVisible(false); // Hide menu
+  };
+
+  const splitView = () => {
+    console.log("split");
   };
 
   return (
@@ -40,12 +68,21 @@ const Tab = (props: {
     >
       <div className="flex justify-between">
         <div className="">{props.company}</div>
-        <div className="flex-none">
+        <div className="flex-none rounded-md">
           {menuVisible && (
-            <div className="absolute z-10 bg-white border border-gray-300 rounded shadow">
-              <button onClick={closeMenu}>Close Menu</button>
-              {/* <TabRightClickMenu esId={props.esId} /> */}
-            </div>
+            <ul
+              ref={menuRef} // Assign ref to the menu element
+              className="absolute z-10 bg-white border border-gray-300 rounded shadow"
+            >
+              <RightClickMenuItem
+                labelText="メニューを閉じる"
+                handleClick={closeMenu}
+              />
+              <RightClickMenuItem
+                labelText="分割して開く"
+                handleClick={splitView}
+              />
+            </ul>
           )}
           <TabCloseButton
             esId={Number(props.esId)}
