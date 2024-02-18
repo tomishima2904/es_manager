@@ -1,4 +1,8 @@
-import { UserIdContext } from "@/pages/users/[userId]/entrysheets";
+import {
+  SetSelectedTabContext,
+  SetTabOrderContext,
+  UserIdContext,
+} from "@/pages/users/[userId]/entrysheets";
 import {
   EditingEntrysheetsProps,
   EntrysheetsProps,
@@ -13,12 +17,11 @@ const CreateEntrysheetButton = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
 }): JSX.Element => {
-  const { setEntrysheets, setEditingEntrysheets, setSelectedTab, setTabOrder } =
-    props;
+  const { setEntrysheets, setEditingEntrysheets } = props;
   const userId = useContext(UserIdContext);
+  const setSelectedTab = useContext(SetSelectedTabContext);
+  const setTabOrder = useContext(SetTabOrderContext);
 
   // POSTメソッドで新しいエントリーシートを作成
   const createNewEntrysheet = async () => {

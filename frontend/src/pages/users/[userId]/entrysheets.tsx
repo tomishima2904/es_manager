@@ -22,6 +22,20 @@ export const UserIdContext = createContext<
   string | string[] | undefined | null
 >(null);
 
+// 編集中のESタブを管理する変数は深いコンポーネントまで使うのでuseContextで管理
+export const TabOrderContext = createContext<string[]>([]);
+export const SetTabOrderContext = createContext<
+  React.Dispatch<React.SetStateAction<string[]>>
+>(() => {
+  throw new Error("Context not initialized");
+});
+export const SelectedTabContext = createContext<string>("");
+export const SetSelectedTabContext = createContext<
+  React.Dispatch<React.SetStateAction<string>>
+>(() => {
+  throw new Error("Context not initialized");
+});
+
 const Entrysheets = ({ query }: GetServerSidePropsContext) => {
   // 編集中のエントリシートを管理する
   const [editingEntrysheets, setEditingEntrysheets] =
@@ -65,23 +79,25 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
   return (
     <div className="flex pr-4">
       <UserIdContext.Provider value={query.userId}>
-        <Sidebar
-          entrysheets={localEntrysheets}
-          setEntrysheets={setLocalEntrysheets}
-          setEditingEntrysheets={setEditingEntrysheets}
-          setSelectedTab={setSelectedTab}
-          setTabOrder={setTabOrder}
-        />
-        <EditingEntrysheets
-          entrysheets={localEntrysheets}
-          setEntrysheets={setLocalEntrysheets}
-          editingEntrysheets={editingEntrysheets}
-          setEditingEntrysheets={setEditingEntrysheets}
-          selectedTab={selectedTab}
-          setSelectedTab={setSelectedTab}
-          tabOrder={tabOrder}
-          setTabOrder={setTabOrder}
-        />
+        <TabOrderContext.Provider value={tabOrder}>
+          <SetTabOrderContext.Provider value={setTabOrder}>
+            <SelectedTabContext.Provider value={selectedTab}>
+              <SetSelectedTabContext.Provider value={setSelectedTab}>
+                <Sidebar
+                  entrysheets={localEntrysheets}
+                  setEntrysheets={setLocalEntrysheets}
+                  setEditingEntrysheets={setEditingEntrysheets}
+                />
+                <EditingEntrysheets
+                  entrysheets={localEntrysheets}
+                  setEntrysheets={setLocalEntrysheets}
+                  editingEntrysheets={editingEntrysheets}
+                  setEditingEntrysheets={setEditingEntrysheets}
+                />
+              </SetSelectedTabContext.Provider>
+            </SelectedTabContext.Provider>
+          </SetTabOrderContext.Provider>
+        </TabOrderContext.Provider>
       </UserIdContext.Provider>
     </div>
   );

@@ -1,4 +1,8 @@
-import { UserIdContext } from "@/pages/users/[userId]/entrysheets";
+import {
+  SetSelectedTabContext,
+  SetTabOrderContext,
+  UserIdContext,
+} from "@/pages/users/[userId]/entrysheets";
 import {
   EditingEntrysheetsProps,
   EntrysheetEntityProps,
@@ -28,16 +32,10 @@ const EntrysheetItem = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
 }): JSX.Element => {
-  const {
-    esId,
-    entrysheet,
-    setEditingEntrysheets,
-    setSelectedTab,
-    setTabOrder,
-  } = props;
+  const setSelectedTab = useContext(SetSelectedTabContext);
+  const setTabOrder = useContext(SetTabOrderContext);
+  const { esId, entrysheet, setEditingEntrysheets } = props;
   // 日時を yyyy/mm/dd hh:mm の文字列に変換
   const deadline = new Date(entrysheet.deadline);
   const formattedDate = dateFormatter(deadline);
@@ -102,11 +100,8 @@ const EntrysheetsList = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
 }): JSX.Element => {
-  const { entrysheets, setEditingEntrysheets, setSelectedTab, setTabOrder } =
-    props;
+  const { entrysheets, setEditingEntrysheets } = props;
 
   return (
     <main className="flex-1 bg-white p-4 rounded-lg">
@@ -118,8 +113,6 @@ const EntrysheetsList = (props: {
             esId={Number(esId)}
             entrysheet={entrysheets[Number(esId)]}
             setEditingEntrysheets={setEditingEntrysheets}
-            setSelectedTab={setSelectedTab}
-            setTabOrder={setTabOrder}
           />
         ))}
       </ul>

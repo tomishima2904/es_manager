@@ -1,4 +1,10 @@
 import {
+  SelectedTabContext,
+  SetSelectedTabContext,
+  SetTabOrderContext,
+  TabOrderContext,
+} from "@/pages/users/[userId]/entrysheets";
+import {
   EditingEntrysheetsProps,
   EntrysheetsProps,
 } from "@/types/EntrysheetProps";
@@ -17,6 +23,7 @@ import {
   arrayMove,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { useContext } from "react";
 import EditingEntrysheet from "./EditingEntrysheet";
 import SortableItem from "./SortableItem";
 import Tab from "./Tab";
@@ -29,21 +36,17 @@ const EditingEntrysheets = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
-  selectedTab: string;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  tabOrder: string[];
-  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
 }): JSX.Element => {
   const {
     entrysheets, // companyやevent等の情報
     setEntrysheets,
     editingEntrysheets, // 個々のES内の質問と解答の情報
     setEditingEntrysheets,
-    selectedTab,
-    setSelectedTab,
-    tabOrder,
-    setTabOrder,
   } = props;
+  const tabOrder = useContext(TabOrderContext);
+  const setTabOrder = useContext(SetTabOrderContext);
+  const selectedTab = useContext(SelectedTabContext);
+  const setSelectedTab = useContext(SetSelectedTabContext);
 
   const sensor = useSensor(PointerSensor, {
     activationConstraint: {
