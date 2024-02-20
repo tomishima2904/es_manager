@@ -11,7 +11,8 @@ const Tab = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >; // `TabCloseButton`で使用
-  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>; // `TabCloseButton`で使用
+  setTabOrders: React.Dispatch<React.SetStateAction<string[][]>>; // `TabCloseButton`で使用
+  viewId: number; // `TabCloseButton`で使用
 }): JSX.Element => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
   const [menuPosition, setMenuPosition] = useState<{
@@ -53,7 +54,21 @@ const Tab = (props: {
   };
 
   const splitView = () => {
-    console.log("split");
+    // クリックしたタブがない方のビューにESを表示
+    props.setTabOrders((prevTabOrders) => {
+      const newTabOrders = [...prevTabOrders];
+      const theOtherViewId = ~props.viewId & 1;
+      // 開いている方のタブを閉じる
+      newTabOrders[props.viewId] = prevTabOrders[props.viewId].filter(
+        (tab) => tab !== String(props.esId)
+      );
+      // 他方の画面に編集画面を移す
+      newTabOrders[theOtherViewId] = [
+        ...prevTabOrders[theOtherViewId],
+        props.esId,
+      ];
+      return newTabOrders;
+    });
   };
 
   return (
@@ -87,7 +102,8 @@ const Tab = (props: {
           <TabCloseButton
             esId={Number(props.esId)}
             setEditingEntrysheets={props.setEditingEntrysheets}
-            setTabOrder={props.setTabOrder}
+            setTabOrders={props.setTabOrders}
+            viewId={props.viewId}
           />
         </div>
       </div>

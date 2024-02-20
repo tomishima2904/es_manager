@@ -13,15 +13,15 @@ const Sidebar = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedTabs: React.Dispatch<React.SetStateAction<string[]>>;
+  setTabOrders: React.Dispatch<React.SetStateAction<string[][]>>;
 }): JSX.Element => {
   const {
     entrysheets,
     setEntrysheets,
     setEditingEntrysheets,
-    setSelectedTab,
-    setTabOrder,
+    setSelectedTabs,
+    setTabOrders,
   } = props;
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
@@ -40,15 +40,15 @@ const Sidebar = (props: {
             <CreateEntrysheetButton
               setEntrysheets={setEntrysheets}
               setEditingEntrysheets={setEditingEntrysheets}
-              setSelectedTab={setSelectedTab}
-              setTabOrder={setTabOrder}
+              setSelectedTabs={setSelectedTabs}
+              setTabOrders={setTabOrders}
             />
           </div>
           <EntrysheetsList
             entrysheets={entrysheets}
             setEditingEntrysheets={setEditingEntrysheets}
-            setSelectedTab={setSelectedTab}
-            setTabOrder={setTabOrder}
+            setSelectedTabs={setSelectedTabs}
+            setTabOrders={setTabOrders}
           />
         </aside>
       ) : (

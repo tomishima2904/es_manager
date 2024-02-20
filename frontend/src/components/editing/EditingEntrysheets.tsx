@@ -21,7 +21,6 @@ import EditingEntrysheet from "./EditingEntrysheet";
 import SortableItem from "./SortableItem";
 import Tab from "./Tab";
 
-// HACK: こちらのコンポーネントが巨大になっていると思うので細分化してもいいかも
 const EditingEntrysheets = (props: {
   entrysheets: EntrysheetsProps;
   setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
@@ -30,9 +29,10 @@ const EditingEntrysheets = (props: {
     React.SetStateAction<EditingEntrysheetsProps>
   >;
   selectedTab: string;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedTabs: React.Dispatch<React.SetStateAction<string[]>>;
   tabOrder: string[];
-  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
+  setTabOrders: React.Dispatch<React.SetStateAction<string[][]>>;
+  viewId: number;
 }): JSX.Element => {
   const {
     entrysheets, // companyやevent等の情報
@@ -40,9 +40,10 @@ const EditingEntrysheets = (props: {
     editingEntrysheets, // 個々のES内の質問と解答の情報
     setEditingEntrysheets,
     selectedTab,
-    setSelectedTab,
+    setSelectedTabs,
     tabOrder,
-    setTabOrder,
+    setTabOrders,
+    viewId,
   } = props;
 
   const sensor = useSensor(PointerSensor, {
@@ -60,11 +61,21 @@ const EditingEntrysheets = (props: {
 
     const oldIndex = tabOrder.indexOf(active.id);
     const newIndex = tabOrder.indexOf(over.id);
-    setTabOrder(arrayMove(tabOrder, oldIndex, newIndex));
+    const newTabOrder = arrayMove(tabOrder, oldIndex, newIndex);
+    setTabOrders((prevTabOrders) => {
+      const newTabOrders = [...prevTabOrders]; // 前のタブ順序配列をコピー
+      newTabOrders[viewId] = newTabOrder; // viewId番目のリストをnewTabOrderに更新
+      return newTabOrders; // 新しいタブ順序配列を返す
+    });
   };
 
   // 下記の `Tab` コンポーネントで使用
-  const handleChange = (selectedTab: string) => setSelectedTab(selectedTab);
+  const handleChange = (selectedTab: string) =>
+    setSelectedTabs((prevSelectedTabs) => {
+      const newSelectedTabs = [...prevSelectedTabs]; // 前の選択されたタブ配列をコピー
+      newSelectedTabs[viewId] = selectedTab; // tabOrderId番目の値を新しい値で置換
+      return newSelectedTabs; // 新しい選択されたタブ配列を返す
+    });
 
   return (
     <DndContext
@@ -88,7 +99,8 @@ const EditingEntrysheets = (props: {
                   company={entrysheets[Number(esId)].company}
                   onHandleChange={handleChange}
                   setEditingEntrysheets={setEditingEntrysheets}
-                  setTabOrder={setTabOrder}
+                  setTabOrders={setTabOrders}
+                  viewId={viewId}
                 />
               </SortableItem>
             ))}

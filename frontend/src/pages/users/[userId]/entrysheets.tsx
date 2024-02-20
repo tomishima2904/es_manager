@@ -1,4 +1,4 @@
-import EditingEntrysheets from "@/components/editing/EditingEntrysheets";
+import EditingEntrysheetsViewsManager from "@/components/editing/EditingEntrysheetsViewsManager";
 import Sidebar from "@/components/entrysheets/Sidebar";
 import {
   EditingEntrysheetsProps,
@@ -28,17 +28,22 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
     useState<EditingEntrysheetsProps>({});
 
   // 編集中のエントリーシートのタブの順番を管理する
-  const [tabOrder, setTabOrder] = useState<string[]>([]);
-  const [selectedTab, setSelectedTab] = useState<string>("");
+  const [tabOrders, setTabOrders] = useState<string[][]>([[], []]);
+  const [selectedTabs, setSelectedTabs] = useState<string[]>(["", ""]);
 
   // `TabCloseButton`によってタブが閉じられた場合の挙動を制御
   useEffect(() => {
-    // `tabOrder`の変化をwatch
-    if (tabOrder.length > 0 && !tabOrder.includes(selectedTab)) {
-      // `tabOrder`が空配列でなく，かつ，`selectedTab`が`tabOrder`中に存在しない場合
-      setSelectedTab(tabOrder[tabOrder.length - 1]); // `selectedTab`を更新
-    }
-  }, [tabOrder, selectedTab]);
+    tabOrders.forEach((tabOrder, index) => {
+      if (tabOrder.length > 0 && !tabOrder.includes(selectedTabs[index])) {
+        // `tabOrder`が空配列でなく，かつ，`selectedTab`が`tabOrder`中に存在しない場合
+        setSelectedTabs((prevSelectedTabs) => {
+          const newSelectedTabs = [...prevSelectedTabs];
+          newSelectedTabs[index] = tabOrder[tabOrder.length - 1];
+          return newSelectedTabs;
+        }); // `selectedTab`を更新
+      }
+    });
+  }, [tabOrders, selectedTabs]);
 
   // SWR で データフェッチ
   const url: string = `${process.env.API_HOST}/users/${query.userId}/entrysheets`;
@@ -69,18 +74,18 @@ const Entrysheets = ({ query }: GetServerSidePropsContext) => {
           entrysheets={localEntrysheets}
           setEntrysheets={setLocalEntrysheets}
           setEditingEntrysheets={setEditingEntrysheets}
-          setSelectedTab={setSelectedTab}
-          setTabOrder={setTabOrder}
+          setSelectedTabs={setSelectedTabs}
+          setTabOrders={setTabOrders}
         />
-        <EditingEntrysheets
+        <EditingEntrysheetsViewsManager
           entrysheets={localEntrysheets}
           setEntrysheets={setLocalEntrysheets}
           editingEntrysheets={editingEntrysheets}
           setEditingEntrysheets={setEditingEntrysheets}
-          selectedTab={selectedTab}
-          setSelectedTab={setSelectedTab}
-          tabOrder={tabOrder}
-          setTabOrder={setTabOrder}
+          selectedTabs={selectedTabs}
+          setSelectedTabs={setSelectedTabs}
+          tabOrders={tabOrders}
+          setTabOrders={setTabOrders}
         />
       </UserIdContext.Provider>
     </div>

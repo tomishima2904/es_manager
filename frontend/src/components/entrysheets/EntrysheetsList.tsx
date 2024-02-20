@@ -5,6 +5,7 @@ import {
   EntrysheetsProps,
 } from "@/types/EntrysheetProps";
 import dateFormatter from "@/utils/dateFormatter";
+import isElementContained from "@/utils/isElementContained";
 import { useContext } from "react";
 
 // ヘッダー行
@@ -28,15 +29,15 @@ const EntrysheetItem = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedTabs: React.Dispatch<React.SetStateAction<string[]>>;
+  setTabOrders: React.Dispatch<React.SetStateAction<string[][]>>;
 }): JSX.Element => {
   const {
     esId,
     entrysheet,
     setEditingEntrysheets,
-    setSelectedTab,
-    setTabOrder,
+    setSelectedTabs,
+    setTabOrders,
   } = props;
   // 日時を yyyy/mm/dd hh:mm の文字列に変換
   const deadline = new Date(entrysheet.deadline);
@@ -57,17 +58,19 @@ const EntrysheetItem = (props: {
         })
       );
       // タブの順序配列にクリックされたesIdをappend
-      setTabOrder((prevTabOrder) => {
+      // TODO: 今は強制的にメイン画面で開くが，右クリックで分割して開けるようにする
+      setTabOrders((prevTabOrders) => {
         const newEsId = String(esId);
 
-        // 指定したesIdが含まれていない場合のみ追加
-        if (!prevTabOrder.includes(newEsId)) {
-          const newTabOrder = [...prevTabOrder, newEsId];
-          return newTabOrder;
+        // 指定したesIdが含まれていない表示中でない場合のみ追加
+        if (!isElementContained(prevTabOrders, newEsId)) {
+          const newTabOrders = [...prevTabOrders];
+          newTabOrders[0] = [...prevTabOrders[0], newEsId];
+          return newTabOrders;
         }
 
         // 指定したesIdが含まれている場合はそのまま返す
-        return prevTabOrder;
+        return prevTabOrders;
       });
     } catch (error) {
       // エラーが発生した場合の処理
@@ -77,7 +80,12 @@ const EntrysheetItem = (props: {
 
   const handleClick = () => {
     fetchData(); // クリック時にデータをフェッチする関数を呼び出す
-    setSelectedTab(String(esId));
+    // リスト中にあるクリックしたESを編集中のESに設定
+    setSelectedTabs((prevSelectedTabs) => {
+      const newSelectedTabs = [...prevSelectedTabs]; // 前の選択されたタブ配列をコピー
+      newSelectedTabs[0] = String(esId); // tabOrderId番目の値を新しい値で置換
+      return newSelectedTabs; // 新しい選択されたタブ配列を返す
+    });
   };
 
   return (
@@ -102,10 +110,10 @@ const EntrysheetsList = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedTabs: React.Dispatch<React.SetStateAction<string[]>>;
+  setTabOrders: React.Dispatch<React.SetStateAction<string[][]>>;
 }): JSX.Element => {
-  const { entrysheets, setEditingEntrysheets, setSelectedTab, setTabOrder } =
+  const { entrysheets, setEditingEntrysheets, setSelectedTabs, setTabOrders } =
     props;
 
   return (
@@ -118,8 +126,8 @@ const EntrysheetsList = (props: {
             esId={Number(esId)}
             entrysheet={entrysheets[Number(esId)]}
             setEditingEntrysheets={setEditingEntrysheets}
-            setSelectedTab={setSelectedTab}
-            setTabOrder={setTabOrder}
+            setSelectedTabs={setSelectedTabs}
+            setTabOrders={setTabOrders}
           />
         ))}
       </ul>
