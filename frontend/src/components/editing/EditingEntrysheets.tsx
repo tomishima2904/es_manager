@@ -7,7 +7,6 @@ import {
   PointerSensor,
   closestCenter,
   useSensor,
-  useSensors,
 } from "@dnd-kit/core";
 import {
   restrictToHorizontalAxis,
@@ -18,12 +17,10 @@ import {
   arrayMove,
   horizontalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useEffect, useState } from "react";
 import EditingEntrysheet from "./EditingEntrysheet";
 import SortableItem from "./SortableItem";
-import TabCloseButton from "./buttons/TabCloseButton";
+import Tab from "./Tab";
 
-// HACK: こちらのコンポーネントが巨大になっていると思うので細分化してもいいかも
 const EditingEntrysheets = (props: {
   entrysheets: EntrysheetsProps;
   setEntrysheets: React.Dispatch<React.SetStateAction<EntrysheetsProps>>;
@@ -32,9 +29,10 @@ const EditingEntrysheets = (props: {
     React.SetStateAction<EditingEntrysheetsProps>
   >;
   selectedTab: string;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedTabs: React.Dispatch<React.SetStateAction<string[]>>;
   tabOrder: string[];
-  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
+  setTabOrders: React.Dispatch<React.SetStateAction<string[][]>>;
+  viewId: number;
 }): JSX.Element => {
   const {
     entrysheets, // companyやevent等の情報
@@ -42,81 +40,75 @@ const EditingEntrysheets = (props: {
     editingEntrysheets, // 個々のES内の質問と解答の情報
     setEditingEntrysheets,
     selectedTab,
-    setSelectedTab,
+    setSelectedTabs,
     tabOrder,
-    setTabOrder,
+    setTabOrders,
+    viewId,
   } = props;
 
-  // dnd-kit/sortableでタブをドラッグ&ドロップによるソート可能にするために使用
-  const [items, setItems] = useState<string[]>(tabOrder);
-  useEffect(() => {
-    setItems(tabOrder);
-  }, [tabOrder]);
+  const sensor = useSensor(PointerSensor, {
+    activationConstraint: {
+      distance: 5, // Set the distance threshold to 5px
+    },
+  });
 
   const handleDragEnd = ({ active, over }: any): void => {
     handleChange(active.id);
 
-    // ただクリックされた時だけの場合はこの関数は実行しない
     if (!active || !over || active.id === over.id) {
       return;
     }
 
-    const oldIndex = items.indexOf(active.id);
-    const newIndex = items.indexOf(over.id);
-    setItems(arrayMove(items, oldIndex, newIndex));
-    setTabOrder(arrayMove(tabOrder, oldIndex, newIndex));
+    const oldIndex = tabOrder.indexOf(active.id);
+    const newIndex = tabOrder.indexOf(over.id);
+    const newTabOrder = arrayMove(tabOrder, oldIndex, newIndex);
+    setTabOrders((prevTabOrders) => {
+      const newTabOrders = [...prevTabOrders]; // 前のタブ順序配列をコピー
+      newTabOrders[viewId] = newTabOrder; // viewId番目のリストをnewTabOrderに更新
+      return newTabOrders; // 新しいタブ順序配列を返す
+    });
   };
 
   // 下記の `Tab` コンポーネントで使用
-  const handleChange = (selectedTab: string) => setSelectedTab(selectedTab);
-
-  // `order`で selectedTab であるかそうでないかを判断して, スタイルを変える
-  const Tab = (props: { order: string }): JSX.Element => {
-    const { order } = props;
-    return (
-      <div
-        className={`flex-grow max-w-xs flex-shrink-0 px-4 py-2 text-sm cursor-pointer ${
-          order === selectedTab
-            ? "bg-white border-l border-r border-gray-300 border-t-2 border-t-green-300"
-            : "bg-gray-100 hover:bg-gray-200 border-r"
-        }`}
-        onClick={() => handleChange(order)}
-      >
-        <div className="flex justify-between">
-          <div className="">{entrysheets[Number(order)].company}</div>
-          <div className="flex-none">
-            <TabCloseButton
-              esId={Number(order)}
-              setEditingEntrysheets={setEditingEntrysheets}
-              setTabOrder={setTabOrder}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  };
+  const handleChange = (selectedTab: string) =>
+    setSelectedTabs((prevSelectedTabs) => {
+      const newSelectedTabs = [...prevSelectedTabs]; // 前の選択されたタブ配列をコピー
+      newSelectedTabs[viewId] = selectedTab; // tabOrderId番目の値を新しい値で置換
+      return newSelectedTabs; // 新しい選択されたタブ配列を返す
+    });
 
   return (
     <DndContext
-      sensors={useSensors(useSensor(PointerSensor))}
+      sensors={[sensor]}
       collisionDetection={closestCenter}
       modifiers={[restrictToHorizontalAxis, restrictToParentElement]} // 可動範囲を制限
       onDragEnd={handleDragEnd}
     >
-      <SortableContext items={items} strategy={horizontalListSortingStrategy}>
-        <div className="flex flex-grow flex-shrink-0 flex-col pl-2 pr-2 ml-16">
+      <SortableContext
+        items={tabOrder}
+        strategy={horizontalListSortingStrategy}
+      >
+        <div className="flex flex-grow flex-shrink-0 flex-col pr-2">
           {/* タブの選択 */}
           <div className="flex">
-            {items.map((order, index) => (
-              <SortableItem key={order} id={order} onDragStart={handleChange}>
-                <Tab order={order} />
+            {tabOrder.map((esId, index) => (
+              <SortableItem key={esId} id={esId} onDragStart={handleChange}>
+                <Tab
+                  esId={esId}
+                  selectedTab={selectedTab}
+                  company={entrysheets[Number(esId)].company}
+                  onHandleChange={handleChange}
+                  setEditingEntrysheets={setEditingEntrysheets}
+                  setTabOrders={setTabOrders}
+                  viewId={viewId}
+                />
               </SortableItem>
             ))}
           </div>
 
           {/* 選択されたキーに対応するエントリーシートを表示 */}
           <div>
-            {items.map((order, index) => (
+            {tabOrder.map((order, index) => (
               <div
                 key={order}
                 className={order === selectedTab ? "block" : "hidden"}

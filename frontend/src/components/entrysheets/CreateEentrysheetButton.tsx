@@ -13,11 +13,15 @@ const CreateEntrysheetButton = (props: {
   setEditingEntrysheets: React.Dispatch<
     React.SetStateAction<EditingEntrysheetsProps>
   >;
-  setSelectedTab: React.Dispatch<React.SetStateAction<string>>;
-  setTabOrder: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedTabs: React.Dispatch<React.SetStateAction<string[]>>;
+  setTabOrders: React.Dispatch<React.SetStateAction<string[][]>>;
 }): JSX.Element => {
-  const { setEntrysheets, setEditingEntrysheets, setSelectedTab, setTabOrder } =
-    props;
+  const {
+    setEntrysheets,
+    setEditingEntrysheets,
+    setSelectedTabs,
+    setTabOrders,
+  } = props;
   const userId = useContext(UserIdContext);
 
   // POSTメソッドで新しいエントリーシートを作成
@@ -55,13 +59,18 @@ const CreateEntrysheetButton = (props: {
       );
 
       // タブ順序配列にも追加
-      setTabOrder((prevTabOrder) => {
-        const newTabOrder = [...prevTabOrder, String(newEsId)];
-        return newTabOrder;
+      setTabOrders((prevTabOrders) => {
+        const newTabOrders = [...prevTabOrders]; // 前のタブ順序配列をコピー
+        newTabOrders[0] = [...prevTabOrders[0], String(newEsId)]; // 0番目のリストに新しい要素を追加
+        return newTabOrders; // 新しいタブ順序配列を返す
       });
 
       // 編集中のタブに選択
-      setSelectedTab(String(newEsId));
+      setSelectedTabs((prevSelectedTabs) => {
+        const newSelectedTabs = [...prevSelectedTabs]; // 前の選択されたタブ配列をコピー
+        newSelectedTabs[0] = String(newEsId); // tabOrderId番目の値を新しい値で置換
+        return newSelectedTabs; // 新しい選択されたタブ配列を返す
+      });
     } catch (error) {
       console.error("Error", error);
     }
