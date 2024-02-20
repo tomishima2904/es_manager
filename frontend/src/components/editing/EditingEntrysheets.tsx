@@ -88,9 +88,9 @@ const EditingEntrysheets = (props: {
         items={tabOrder}
         strategy={horizontalListSortingStrategy}
       >
-        <div className="flex flex-col pr-2">
+        <div className="flex flex-col">
           {/* タブの選択 */}
-          <div className="flex sticky top-0">
+          <div className="flex sticky top-0 bg-white shadow-sm">
             {tabOrder.map((esId, index) => (
               <SortableItem key={esId} id={esId} onDragStart={handleChange}>
                 <Tab

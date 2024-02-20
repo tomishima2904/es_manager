@@ -76,7 +76,7 @@ const Tab = (props: {
       className={`flex-grow max-w-xs flex-shrink-0 px-4 py-2 text-sm cursor-pointer ${
         props.esId === props.selectedTab
           ? "bg-white border-r border-gray-300 border-t-2 border-t-green-300"
-          : "bg-gray-100 hover:bg-gray-200 border-r"
+          : "bg-gray-100 hover:bg-gray-200 border-r border-t-2 border-t-gray-100 hover:border-t-gray-200"
       }`}
       onClick={() => props.onHandleChange(props.esId)}
       onContextMenu={handleRightClick} // Handle right-click event
