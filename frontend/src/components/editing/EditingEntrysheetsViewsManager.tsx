@@ -33,17 +33,20 @@ const EditingEntrysheetsViewsManager = (props: {
         (tabOrder, index) =>
           tabOrder.length > 0 && (
             <div className="flex-1 border-l border-gray-300" key={index}>
-              <EditingEntrysheets
-                entrysheets={entrysheets}
-                setEntrysheets={setEntrysheets}
-                editingEntrysheets={editingEntrysheets}
-                setEditingEntrysheets={setEditingEntrysheets}
-                selectedTab={selectedTabs[index]}
-                setSelectedTabs={setSelectedTabs}
-                tabOrder={tabOrder}
-                setTabOrders={setTabOrders}
-                viewId={index}
-              />
+              <div className="overflow-y-auto max-h-screen">
+                {/* スクロール領域 */}
+                <EditingEntrysheets
+                  entrysheets={entrysheets}
+                  setEntrysheets={setEntrysheets}
+                  editingEntrysheets={editingEntrysheets}
+                  setEditingEntrysheets={setEditingEntrysheets}
+                  selectedTab={selectedTabs[index]}
+                  setSelectedTabs={setSelectedTabs}
+                  tabOrder={tabOrder}
+                  setTabOrders={setTabOrders}
+                  viewId={index}
+                />
+              </div>
             </div>
           )
       )}
