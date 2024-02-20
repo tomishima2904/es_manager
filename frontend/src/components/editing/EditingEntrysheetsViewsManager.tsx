@@ -27,7 +27,7 @@ const EditingEntrysheetsViewsManager = (props: {
     setTabOrders,
   } = props;
   return (
-    <div className="flex ml-16 pl-2">
+    <div className="flex ml-16 pl-2 overflow-x-auto">
       {/* HACK: サイドバーとのマージンの取り方が無理矢理 */}
       {tabOrders.map(
         (tabOrder, index) =>
