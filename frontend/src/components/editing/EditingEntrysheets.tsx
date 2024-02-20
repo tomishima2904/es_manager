@@ -88,7 +88,7 @@ const EditingEntrysheets = (props: {
         items={tabOrder}
         strategy={horizontalListSortingStrategy}
       >
-        <div className="flex flex-grow flex-shrink-0 flex-col pl-2 pr-2 ml-16">
+        <div className="flex flex-grow flex-shrink-0 flex-col pr-2">
           {/* タブの選択 */}
           <div className="flex">
             {tabOrder.map((esId, index) => (
